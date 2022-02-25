@@ -6,19 +6,21 @@ import Search from './path/Search';
 import Home from "./path/Home";
 import Playing from "./path/Playing";
 import Lyric from "./path/Lyric";
-import Navbar from "./component/Navbar";
+import Result from "./path/Result";
+import Header from "./component/Navbar";
 class App extends Component {
-  
+
 render() {
     return (
       <div className="App">
-        <Navbar />
+        <Header />
         <Routes>
           <Route path="/" element={ <Search/> } />
           <Route path="/login" element={ <Login/> } />
           <Route path="/home" element={ <Home/> } />
           <Route path="/playing" element={ <Playing/> } />
-          <Route path="/lyric/:trackId" element={ <Lyric/> } />
+          <Route path="/lyric/:trackArtist/:trackId" element={ <Lyric/> } />
+          <Route path="/result=:searchTerm" element={ <Result/> } />
         </Routes>
       </div>
     );

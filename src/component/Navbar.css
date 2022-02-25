@@ -1,13 +1,5 @@
 .NavbarItems{
   background:  white ;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
 }
 
 .navbar-logo {
@@ -17,25 +9,8 @@
   cursor: pointer;
 }
 
-.fa-react {
-  margin-left: 0.5rem;
-  font-size: 1.6rem;
-}
-
-.nav-menu {
-  display: grid;
-  grid-template-columns: repeat(5, auto);
-  grid-gap: 10px;
-  list-style: none;
-  text-align: center;
-  width: 70vw;
-  justify-content: end;
-  margin-right: 2rem;
-}
-
 .nav-links {
   color: #595a5c;
-  text-decoration: none;
   padding: 5px 15px 5px 15px;
 }
 
@@ -48,7 +23,6 @@
 .nav-button {
   color: #faf5f1;
   background-color: #1db954;
-  text-decoration: none;
   padding: 5px 30px 5px 30px;
   border-radius: 50px;
 }
@@ -68,55 +42,12 @@
 }
 
 @media screen and (max-width: 960px) {
-  .NavbarItems {
-    position: sticky;
-  }
-
-  .nav-menu {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: auto;
-    position: absolute;
-    top: 60px;
-    opacity: 0;
-    left: -100%;
-
-    transition: all 0.5s ease-in-out ;
-    box-shadow: 0 10px 10px 0 rgba(0,0,0,.2);
-  }
-
-  .nav-menu.active {
-    background: #ffff;
-    opacity: 1;
-    left: 0;
-    transition: all 0.5s ease-in-out ;
-  }
-
-  .nav-links {
-    text-align: center;
-    padding: 2rem;
-    width: 100%;
-    display: table;
-    font-size: 1.5rem;
-  }
-
-  .nav-links:hover {
-    background-color: #595a5c;
-    border-radius: 0;
-  }
-
-  .navbar-logo {
-    position: absolute;
-    left: 0;
-    transform: translate(25%,20%);
-  }
 
   .menu-icon {
     display: block;
     position: absolute;
     right: 0;
-    transform: translate(-100%,25%);
+    transform: translate(-150%,20%);
     font-size: 1.8rem;
     cursor: pointer;
   }
@@ -131,9 +62,6 @@
     font-size: 2rem;
   }
 
-  Button {
-    display: none;
-  }
 }
 
   

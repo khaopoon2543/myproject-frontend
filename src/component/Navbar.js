@@ -2,40 +2,36 @@ import "./Navbar.css";
 import React, { Component } from 'react';
 import { MenuItems } from "./MenuItems";
 import axios from 'axios';
+import { Container, Navbar, Nav } from 'react-bootstrap';
+
 
 function LoginButton() {
     return (
-        <li>
-            <a className="nav-button" href="/login">
-                LOGIN
-            </a>
-        </li>
+        <Nav.Link href="/login">
+            <span className="nav-button">LOGIN</span>
+        </Nav.Link>
     );
 }
 function SpotifyButton() {
     return (
-        <li>
-            <a className="nav-button" href="/playing">
-                SPOTIFY
-            </a>
-        </li>
+        <Nav.Link href="/playing">
+            <span className="nav-button">SPOTIFY</span>
+        </Nav.Link>
     );
 }
 
-class Navbar extends Component {
+class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = {clicked: false, isUser: false};
-    }
-
-    handleClick = () => {
-        this.setState({ clicked: !this.state.clicked })
+        this.state = {
+            is_user: false
+        };
     }
 
     componentDidMount() { //check is user data
       axios.get("/home", { mode: 'cors', crossDomain: true })
         .then((response) => {
-          this.setState({ isUser: true }); //user data
+          this.setState({ is_user: true }); 
         })
         .catch(error => {
           console.log(error.response)
@@ -43,44 +39,31 @@ class Navbar extends Component {
     }
 
     render() {
-        const { isUser }  = this.state;
-        
-        let button;
-        if (isUser) {
-            button = <SpotifyButton />;
-        } else {
-            button = <LoginButton />;
-        }
+        const { is_user }  = this.state;
 
         return(
-            <nav className="NavbarItems">
-
-                <h4 className="navbar-logo">kashify</h4>
-        
-                <div className="menu-icon" onClick={this.handleClick} >
-                    <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
-                </div>
-
-                <ul className={this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
-                    {MenuItems.map((item, index) => {
-                        return (
-                            <li key={index}>
-                                <a className={item.cName} href={item.url}>
-                                {item.title}
-                                </a>
-                            </li>
-                        )
-                    })}
-                    
-                    {button}
-
-                </ul>
-
-                
-
-            </nav>
+            <Navbar expand="lg" sticky="top" className="NavbarItems">
+                <Container>
+                <Navbar.Brand href="/"><span className="navbar-logo">kashify</span></Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav>
+                        {MenuItems.map((item, index) => {
+                            return (
+                                <Nav.Link key={index} href={item.url}>
+                                    <span className={item.cName}>{item.title}</span>
+                                </Nav.Link>
+                            )
+                        })}  
+                    </Nav>
+                    <Nav className="ms-auto">
+                        {is_user ? <SpotifyButton /> : <LoginButton />}
+                    </Nav>
+                </Navbar.Collapse>
+                </Container>
+            </Navbar>
         )
     }
 }
 
-export default Navbar;
+export default Header;

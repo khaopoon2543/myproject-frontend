@@ -1,55 +1,44 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
-class Home extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        user: [],
-        user_image: [],
-        playlists: []
-      };
-    }
+function LogoutButton() {
+  return (
+    <a href="https://accounts.spotify.com/logout"><Button variant="danger"> LOGOUT </Button></a>    
+  );
+}
 
-    componentDidMount() {
+function Home (){
+
+    const [is_user, setIs_user] = useState([])
+    const [user, setUser] = useState([])
+    const [user_image, setUserImage] = useState([])
+    const [playlists, setPlaylists] = useState([])
+
+    useEffect(() => {
       axios.get("/home", { mode: 'cors', crossDomain: true })
         .then((response) => {
-          console.log(response.data.image)
-          this.setState({ user: response.data.me });//user data
-          this.setState({ user_image: response.data.image });//user data
-          //document.getElementById("user_img").src = response.data.me.images[0].url;//user profile image
+          setIs_user(true);
+          setUser(response.data.me);
+          setUserImage(response.data.image);
         })
         .catch(error => {
           console.log(error.response)
-          //this.setState({ user: ';-;' });
+          setIs_user(false);
         });
 
       axios.get("/playlist", { mode: 'cors', crossDomain: true })
         .then((response) => {
           console.log(response.data.all_tracks)
-          this.setState({ playlists: response.data.all_tracks });//user data
+          setPlaylists(response.data.all_tracks);
         })
         .catch(error => {
           console.log(error.response)
         });
-    }
+    }, []);
 
-    render() {
-
-      const { user, user_image, playlists } = this.state;
-
-      function LogoutButton() {
-        return (
-          <a href="https://accounts.spotify.com/logout"><Button variant="danger"> LOGOUT </Button></a>    
-        );
-      }
-      let logoutbutton;
-      if (user) {
-        logoutbutton = <LogoutButton />;
-      }
+    const navigate = useNavigate ();
 
       return (
         <div className="App">
@@ -58,7 +47,7 @@ class Home extends Component {
           <p> {user.display_name} </p>
           <img src={user_image} alt=''></img>
           <p> {user.id} </p>
-          {logoutbutton}
+          {is_user && <LogoutButton />}
           <br/>
 
           <Container style={{ marginTop: 50 }}>
@@ -73,13 +62,17 @@ class Home extends Component {
                             <Card.Title>{track.name}</Card.Title>
                             <Card.Text>{track.artist}</Card.Text>
                             <Card.Link href={track.url} target="_blank">
-                              <Button variant="secondary">Search</Button>
+                              <Button variant="success">Spotify</Button>
                             </Card.Link>
-                            
+                            <Button onClick={ (event) => {
+                                        navigate('/result='+ track.artist + track.name , { state: { key:track.name, artist:track.artist} })
+                                        event.preventDefault()
+                                    }}> Kashify 
+                            </Button>
                         </Card.Body>
                     </Card>
                   </Col>
-                        )
+                )
               })}
               
             </Row>
@@ -87,7 +80,6 @@ class Home extends Component {
 
         </div>
       );
-    }
 }
 
 export default Home;

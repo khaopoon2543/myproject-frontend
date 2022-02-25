@@ -23,3 +23,27 @@ img {
   max-width: 50%;  
   height: auto;  
 }
+
+p#lyric{
+  text-align: left;
+  line-height: 3;
+}
+
+span{
+  font-size: 24px;
+}
+span.nav-button{
+  font-size: 16px;
+}span.nav-links{
+  font-size: 16px;
+}
+
+span.pink-text{
+  border-bottom: 2px solid #E85394;
+} 
+  span.pink-text:hover{
+    color: white;
+    text-decoration: none;
+    background-color: #E85394;
+    cursor: pointer;
+  }
