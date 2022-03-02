@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
-
 
 function TrackParams() {
   let { trackId } = useParams();

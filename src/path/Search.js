@@ -25,7 +25,8 @@ function Search() {
                     type="search" 
                     placeholder="Search" 
                     onChange={onChangeData}
-                  />
+                    required
+                  /><br />
                   <Button type="submit">Search</Button>
               </Form> 
               <ResultSearch searchTerm={searchTerm} />

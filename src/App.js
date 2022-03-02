@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Login from './path/Login';
@@ -8,12 +8,43 @@ import Playing from "./path/Playing";
 import Lyric from "./path/Lyric";
 import Result from "./path/Result";
 import Header from "./component/Navbar";
-class App extends Component {
+import SpotifyButton from "./component/SpotifyButton";
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-render() {
+import Axios from "axios";
+Axios.defaults.baseURL = "http://localhost:5000";
+
+function App(){
+    
+    const [isOpen, setIsOpen] = useState(false); //SpotifyButton
+    const [is_user, setIs_user] = useState(false); //Header SpotifyButton
+
+    useEffect(() => {
+      axios.get("/home", { mode: 'cors', crossDomain: true })
+        .then(() => {
+          setIs_user(true); 
+        })
+        .catch(error => {
+          console.log(error.response)
+        });
+        
+      if(window.location.hash) {
+        setIsOpen(true);
+      }
+    }, []);
+
     return (
       <div className="App">
-        <Header />
+        <Header user={is_user} />
+
+        <SpotifyButton 
+          user={is_user}
+          open={isOpen}
+          onOpen={() => setIsOpen(true)}
+          onClose={() => setIsOpen(false)}
+        />
+        
         <Routes>
           <Route path="/" element={ <Search/> } />
           <Route path="/login" element={ <Login/> } />
@@ -24,7 +55,6 @@ render() {
         </Routes>
       </div>
     );
-  }
 }
 
 export default App;

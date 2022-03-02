@@ -19,7 +19,8 @@ function Result() {
           <h1>{key}</h1>
           <p>{artist}</p>
           <br />
-          <ResultSearch searchTerm={key} searchArtist={artist} />
+          {ResultSearch ? <ResultSearch searchTerm={key} searchArtist={artist} /> : 
+          <h1>None</h1>}
           
           </Container>
 

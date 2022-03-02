@@ -1,0 +1,12 @@
+img#spotify {
+    cursor: pointer;
+    position: fixed;
+    right:    0;
+    bottom:   0;
+    margin: 3px;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%,-50%);
+    z-index: 2000;
+    background:url("../images/Spotify_Icon_RGB_Black.png");
+}

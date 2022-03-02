@@ -3,15 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
-function LogoutButton() {
-  return (
-    <a href="https://accounts.spotify.com/logout"><Button variant="danger"> LOGOUT </Button></a>    
-  );
-}
-
 function Home (){
 
-    const [is_user, setIs_user] = useState([])
     const [user, setUser] = useState([])
     const [user_image, setUserImage] = useState([])
     const [playlists, setPlaylists] = useState([])
@@ -19,13 +12,11 @@ function Home (){
     useEffect(() => {
       axios.get("/home", { mode: 'cors', crossDomain: true })
         .then((response) => {
-          setIs_user(true);
           setUser(response.data.me);
           setUserImage(response.data.image);
         })
         .catch(error => {
           console.log(error.response)
-          setIs_user(false);
         });
 
       axios.get("/playlist", { mode: 'cors', crossDomain: true })
@@ -47,7 +38,6 @@ function Home (){
           <p> {user.display_name} </p>
           <img src={user_image} alt=''></img>
           <p> {user.id} </p>
-          {is_user && <LogoutButton />}
           <br/>
 
           <Container style={{ marginTop: 50 }}>
