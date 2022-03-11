@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import { MenuItems } from "./MenuItems";
-import { Container, Navbar, Nav, Alert, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 function LoginButton() {
     return (
@@ -14,6 +14,14 @@ function LogoutButton() {
         <Nav.Link href="https://accounts.spotify.com/logout">
             <span className="nav-button">LOGOUT</span>
         </Nav.Link>
+    );
+}
+
+function Playlist() {
+    return (
+        <NavDropdown title="PLAYLIST" id="basic-nav-dropdown">
+          <NavDropdown.Item href="/home">Top 50 Japan</NavDropdown.Item>
+        </NavDropdown>
     );
 }
 
@@ -33,6 +41,7 @@ function Header({ user }){
                             </Nav.Link>
                         )
                     })}  
+                    {user && <Playlist />}
                 </Nav>
                 <Nav className="ms-auto">
                     {!user ? <LoginButton /> : <LogoutButton />}

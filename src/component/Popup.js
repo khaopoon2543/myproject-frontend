@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Alert, Button } from 'react-bootstrap';
+import { Alert, Button, Spinner } from 'react-bootstrap';
 
 const POPUP_STYLES = {
     position: 'fixed',
@@ -40,6 +40,7 @@ export default function Popup({ open, children, onClose }) {
     
     const [dataTrack, setDataTrack] = useState([])
     const [song_image, setSong_image] = useState([])
+    const [loading, setLoading] = useState(true);
 
     //get data from spotify api
     useEffect(() => {
@@ -49,6 +50,8 @@ export default function Popup({ open, children, onClose }) {
               setDataTrack(response.data);
               //user profile image
               setSong_image(response.data.image);
+              setLoading(!loading);
+
           })
           .catch(error => {
               console.log(error.response)
@@ -58,7 +61,7 @@ export default function Popup({ open, children, onClose }) {
     //navigate to Result.js
     const navigate = useNavigate ();
     const onFormSubmit = e => {
-      navigate('/result='+ dataTrack.artists + dataTrack.name,
+      navigate('/result='+ dataTrack.artists.replace(/\/\//g, '') + dataTrack.name.replace(/\/\//g, ''), //App.js :searchTerm
               { state: { key:dataTrack.name, artist:dataTrack.artists }})
       e.preventDefault()
     }
@@ -68,20 +71,38 @@ export default function Popup({ open, children, onClose }) {
         window.location.reload();
     }
 
+    function isData() {
+        if (song_image.length > 0) {
+            return (
+                <div>
+                    <img src={song_image} alt='' style={IMG_SONG}/>
+                    <span style={INLINE}>{dataTrack.name}</span>
+                    <span style={INLINE}>{dataTrack.artists} </span>
+                    <Button style={INLINE} onClick={() => { onClose(); onFormSubmit(); }}> Kashify </Button>
+                    <Button style={INLINE} onClick={refreshPage}> RE </Button>
+                </div>
+            )
+        }else{
+            return (
+                <div>
+                    <h2>PLEASE
+                        <Button style={INLINE} onClick={refreshPage}> RE </Button>
+                    </h2>             
+                </div>
+            )
+        }
+    }
+
     if (!open) return null 
     return (
         <>
         {/* <div style={OVERLAY_STYLES}> */}
             <Alert style={POPUP_STYLES}>
                 {children}
-                <div>
-                    <img src={song_image} alt='' style={IMG_SONG}/> 
-                    <span style={INLINE}>{dataTrack.name}</span>
-                    <span style={INLINE}>{dataTrack.artists} </span>
-                    <Button style={INLINE} onClick={() => { onClose(); onFormSubmit(); }}> Kashify </Button>
-                    <Button style={INLINE} onClick={refreshPage}> RE </Button>
-                    
-                </div>
+                {loading ? ( 
+                    <Spinner animation="border" />
+                ) : isData()
+                }
             </Alert>
         {/* </div> */}
         </>

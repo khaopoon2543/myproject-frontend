@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import ResultSearch from "../component/ResultSearch";
+
 
 function Home (){
 
@@ -34,9 +36,8 @@ function Home (){
       return (
         <div className="App">
           
-          <h1>やったー \ (^O^) / !!! <br/> YOU GOT THE HOME</h1>
           <p> {user.display_name} </p>
-          <img src={user_image} alt=''></img>
+          <img className='thumbnail-image' src={user_image} alt=''></img>
           <p> {user.id} </p>
           <br/>
 
@@ -55,7 +56,8 @@ function Home (){
                               <Button variant="success">Spotify</Button>
                             </Card.Link>
                             <Button onClick={ (event) => {
-                                        navigate('/result='+ track.artist + track.name , { state: { key:track.name, artist:track.artist} })
+                                        navigate('/result='+ track.artist.replace(/\/\//g, '') + track.name.replace(/\/\//g, '') ,
+                                         { state: { key:track.name, artist:track.artist} })
                                         event.preventDefault()
                                     }}> Kashify 
                             </Button>
