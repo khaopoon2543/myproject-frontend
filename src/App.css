@@ -1,14 +1,28 @@
 :root {
   --black: #333333;
   --gray: #666666;
+  --grayLight: #acacac;
   --pink: #E85394;
-  --blue: #A3CAF8;
+  --blueSky: #A3CAF8;
+  --blue: #5271FF;
   --white: white;
+  --pinkPastel: #FFD8F3;
+
+  --easyBG: #D1FBE9;
+  --easySRT: #0EBFBF;
+  --intBG: #e6eeff;
+  --intSRT: #728CFF;
+  --diffBG: #FEE9F8;
+  --diffSRT: #E85394;
 }
 
 .App {
   text-align: center;
   font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+:lang(th) {
+  font-family: 'Noto Sans Thai', sans-serif;
 }
 
 img {
@@ -20,25 +34,31 @@ img.thumbnail-image {
   border-radius: 50%;
 }
 
-div#lyric{
-  text-align: left;
-  line-height: 3;
-}
-
 span.nav-button{
   font-size: 16px;
 }span.nav-links{
   font-size: 16px;
 }
 
-span.pink-text{
-  border-bottom: 2px solid var(--pink);
+div#lyric{
+  text-align: left;
+  font-weight: 300;
+  line-height: 3;
+  font-size: 20px;
+  letter-spacing: 1px;
 }
-span.pink-text:hover{
+.pink-text {
+    display: inline-block;
+}.pink-text span{
+    border-bottom: 1px solid var(--pink);
+}.pink-text span:hover{
     color: white;
     text-decoration: none;
-    background-color: var(--pink);
+    background: var(--pink);
     cursor: pointer;
+}.pink-text#active span{
+    color: white;
+    background: var(--pink);
 }
 
 .searchbar {
@@ -80,6 +100,7 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
 
+
 .filters {
   text-align: center;
   margin-bottom: 2rem;
@@ -87,18 +108,26 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 .filters * {
   display: inline-block;
 }
-.filters label {
+.filters button {
   padding: 5px 30px;
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   border-radius: 50px;
   min-width: 50px;
   line-height: normal;
   cursor: pointer;
   transition: all 0.1s;
+  background: var(--white);
   border: 2px solid  var(--pink);
   color: var(--pink);
 }
-.filters label:hover {
+.filters button:hover {
   background: var(--pink);
   color: var(--white);
 }
+
+.filters button:active, .filters button:focus {
+  background: var(--pink);
+  color: var(--white);
+}
+

@@ -4,7 +4,7 @@ import './App.css';
 import Login from './path/Login';
 import Search from './path/Search';
 import Home from "./path/Home";
-import Playing from "./path/Playing";
+import Levels from "./path/Levels";
 import Lyric from "./path/Lyric";
 import Result from "./path/Result";
 import Header from "./component/Navbar";
@@ -18,12 +18,12 @@ Axios.defaults.baseURL = "http://localhost:5000";
 function App(){
     
     const [isOpen, setIsOpen] = useState(false); //SpotifyButton
-    const [is_user, setIs_user] = useState(false); //Header SpotifyButton
+    const [isUser, setIsUser] = useState(false); //Header SpotifyButton
 
     useEffect(() => {
       axios.get("/home", { mode: 'cors', crossDomain: true })
         .then(() => {
-          setIs_user(true); 
+          setIsUser(true); 
         })
         .catch(error => {
           console.log(error.response)
@@ -36,10 +36,10 @@ function App(){
 
     return (
       <div className="App">
-        <Header user={is_user} />
+        <Header user={isUser} />
 
         <SpotifyButton 
-          user={is_user}
+          user={isUser}
           open={isOpen}
           onOpen={() => setIsOpen(true)}
           onClose={() => setIsOpen(false)}
@@ -49,9 +49,9 @@ function App(){
           <Route path="/" element={ <Search/> } />
           <Route path="/login" element={ <Login/> } />
           <Route path="/home" element={ <Home/> } />
-          <Route path="/playing" element={ <Playing/> } />
           <Route path="/lyric/:trackArtist/:trackId" element={ <Lyric/> } />
           <Route path="/result=:searchTerm" element={ <Result/> } />
+          <Route path="/levels" element={ <Levels/> } />
         </Routes>
       </div>
     );

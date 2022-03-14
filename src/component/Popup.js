@@ -16,16 +16,6 @@ const POPUP_STYLES = {
     zIndex: 1000
 }
 
-const OVERLAY_STYLES = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, .7)',
-    zIndex: 1000
-}
-
 const IMG_SONG={
     width: 70,
     height: 70
@@ -61,7 +51,7 @@ export default function Popup({ open, children, onClose }) {
     //navigate to Result.js
     const navigate = useNavigate ();
     const onFormSubmit = e => {
-      navigate('/result='+ dataTrack.artists.replace(/\/\//g, '') + dataTrack.name.replace(/\/\//g, ''), //App.js :searchTerm
+      navigate('/result='+ 'spotify', //App.js :searchTerm
               { state: { key:dataTrack.name, artist:dataTrack.artists }})
       e.preventDefault()
     }

@@ -1,0 +1,93 @@
+
+.card {
+    margin-top: 8px;
+    border: none !important;
+}.card:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+}
+.title {
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 22px;
+    color: var(--gray)
+}
+.subtitle {
+    font-weight: normal;
+    font-size: 16px;
+    margin-left: 10px;
+    color: var(--grayLight)
+}
+.artist {
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 18px;
+    color: var(--gray)
+}
+#song:hover {
+    color: var(--pink);
+}#artist:hover {
+    color: var(--blue);
+}
+.highlight {
+    font-weight: bold;
+    color: var(--pink);
+    background: none
+}.highlightArtist {
+    font-weight: bold;
+    color: var(--blue);
+    background: none
+}
+
+.tagLevel * {
+    display: inline-block;
+    height: 80%;
+    margin-bottom: -10px;
+    margin-right: 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 500;
+    letter-spacing: .5px;
+
+}
+.tagLevel p{
+    font-weight: 500;
+    font-size: 16px;
+    min-width: 150px;
+    border-radius: 0 0 15px 0;
+    padding-top: 10px;
+    line-height: 50px;
+}
+
+ /* tagLevel old design
+ .tagLevel p{ 
+    font-weight: 800;
+    font-size: 12px;
+    padding: 3px 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 50px;
+    min-width: 50px;
+    line-height: normal;
+    transition: all 0.1s;
+} 
+*/
+
+p#very-difficult, p#difficult{
+    color: var(--diffSRT);
+    background: var(--diffBG);
+}p#slightly-difficult, p#so-so {
+    color: var(--intSRT);
+    background: var(--intBG);
+}p#easy, p#very-easy{
+    color: var(--easySRT);
+    background: var(--easyBG);
+}
+
+@media screen and (max-width: 768px) {
+    .tagLevel p{
+        font-weight: 500;
+        font-size: 16px;
+        min-width: 200px;
+        padding-top: 0;
+        line-height: 30px;
+    }
+}

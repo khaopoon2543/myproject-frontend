@@ -1,0 +1,25 @@
+.levelCard {
+    border-radius: 20px !important;
+    cursor: pointer;
+    text-align: left;
+    margin: 10px ;
+}
+.header {
+    padding-top: 50px !important;
+    border-radius: 20px 20px 0 0 !important;
+}
+
+#very-difficult, #difficult{
+    color: var(--diffSRT);
+    background: var(--diffBG);
+}#slightly-difficult, #so-so {
+    color: var(--intSRT);
+    background: var(--intBG);
+}#easy, #very-easy{
+    color: var(--easySRT);
+    background: var(--easyBG);
+}
+
+.card {
+    color: var(--grayLight)
+}

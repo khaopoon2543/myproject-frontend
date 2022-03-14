@@ -15,7 +15,7 @@ export default function SpotifyButton({ user, open, onOpen, onClose }) {
 
     return (
 
-        <Container style={{ marginTop: 50 }}>
+        <Container>
             <img id='spotify' 
                 src={require('../images/Spotify_Icon_RGB_Black.png')}
                 onMouseOver={e => e.currentTarget.src = require("../images/Spotify_Icon_RGB_Green.png")}

@@ -36,8 +36,8 @@ function Header({ user }){
                 <Nav>
                     {MenuItems.map((item, index) => {
                         return (
-                            <Nav.Link key={index} href={item.url}>
-                                <span className={item.cName}>{item.title}</span>
+                            <Nav.Link key={index} href={item.url} className={item.cName}>
+                                <span>{item.title}</span>
                             </Nav.Link>
                         )
                     })}  

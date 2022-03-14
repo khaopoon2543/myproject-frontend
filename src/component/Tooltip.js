@@ -46,8 +46,10 @@ export default function Tooltip({word, dic_form, read_form, poses}) {
                 </Popover>
             )
             return (
-                <OverlayTrigger placement="top" overlay={popover}>
-                    <span className="pink-text">{word}</span>
+                <OverlayTrigger placement="top" trigger="click" overlay={popover}>
+                    <div className="pink-text">
+                        <span>{word}</span>
+                    </div>
                 </OverlayTrigger>
             )
         }   return (
