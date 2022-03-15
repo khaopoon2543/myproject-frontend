@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Col, Card, Alert, OverlayTrigger } from 'react-bootstrap';
+import { Card, Spinner } from 'react-bootstrap';
 
-export default function PopupDict({ dictList }) {
+export default function PopupDict({ dictList, isOpen }) {
   
   function isReadForm(dictList) {
     const read_form = dictList.token.read_form
@@ -13,15 +13,17 @@ export default function PopupDict({ dictList }) {
     }
   }
   const mapDict = dictList.dict && dictList.dict.length > 0 ? 
-    dictList.dict.slice(0, 2).map((dict, i) => {
+    dictList.dict.slice(0, 5).map((dict, i) => {
       return (
-            <Card style={{ width: '100%' }} key={i}>
+            <Card key={i}>
               <Card.Body>
                 <Card.Title>
-                  {isReadForm(dictList)} {dict.Type.join(' / ')}
+                  {dictList.token.word} <br/>
+                  {isReadForm(dictList)} {dict.Type.join(' / ')} <ruby>漢字<rt>かんじ</rt></ruby>
+
                 </Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                  ( {dict.Yomikata} )
+                  {dictList.token.dic_form} ( {dict.Yomikata} )
                 </Card.Subtitle>
                 <Card.Text>
                     EN : {dict.English} <br/>
@@ -33,9 +35,12 @@ export default function PopupDict({ dictList }) {
     }) : <p>;-;</p>; 
 
     return (
-        <div>
+      isOpen ?
+        <>
           {mapDict}
-        </div>    
+        </>
+      : <Spinner animation="border" />
+     
     );
 }
 

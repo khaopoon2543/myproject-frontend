@@ -3,10 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Col, Card, Row } from 'react-bootstrap';
 import ResultSearch from "../component/ResultSearch"
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+library.add(fas)
+
+
 function Result() {
 
     const { state } = useLocation();
-    const navigate = useNavigate();
     //From Search.js --> ONLY(key) //From Playing.js(Spotify) --> (key, artist)
     const { key, artist } = state;
 
@@ -17,25 +22,30 @@ function Result() {
     function showSong() { setSelectedFilter('song') }
     useEffect(() => { if ( artist ) { setSelectedFilter('spotify') } }, []);
     console.log(selectedFilter)
+    function refreshPage() {
+      window.location.reload();
+    }
      
     return (
 
         <div className="App">
 
-          <Container style={{ marginTop: 50 }}> 
+          <Container style={{ marginTop: 50, marginBottom: 50 }}> 
             <h1>{key}</h1>
             <p>{artist}</p>
-            <br />
-            <button id="back" onClick={() => navigate(-1)}>Back to Search</button> 
-            <br />
 
-            <Container style={{ marginTop: 10 }}>
-                <div className="filters">
-                  <button onClick={() => showALL()} id="focus">All</button>
-                  <button onClick={() => showLyric()}>Lyric</button>
-                  <button onClick={() => showSong()}>Song</button>
-                </div>        
-            </Container>
+            <br />
+            {(selectedFilter !== 'spotify') ? 
+              <Container style={{ marginTop: 10 }}>
+                  <div className="filters">
+                    <button onClick={() => showALL()} id={`${selectedFilter === 'all' ? "focus" : null}`}>All</button>
+                    <button onClick={() => showLyric()}>Lyric</button>
+                    <button onClick={() => showSong()}>Song</button>
+                    <button onClick={refreshPage} id="refresh"> <FontAwesomeIcon icon="fa-solid fa-arrow-rotate-right" /> </button>
+                  </div>   
+              </Container>
+            : null
+            }
 
             <ResultSearch searchTerm={key} searchArtist={artist} filter={selectedFilter} />   
           

@@ -25,8 +25,10 @@
 }
 #song:hover {
     color: var(--pink);
+    border-bottom: 1px solid var(--pink);
 }#artist:hover {
     color: var(--blue);
+    border-bottom: 1px solid var(--blue);
 }
 .highlight {
     font-weight: bold;
@@ -90,4 +92,11 @@ p#very-difficult, p#difficult{
         padding-top: 0;
         line-height: 30px;
     }
+}
+
+.sidebar .card {
+    margin-top: 8px;
+    border: 1px solid var(--gray) !important;
+}.sidebar .card:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 }

@@ -1,5 +1,6 @@
 :root {
   --black: #333333;
+  --blackLight: #353b48;
   --gray: #666666;
   --grayLight: #acacac;
   --pink: #E85394;
@@ -7,6 +8,7 @@
   --blue: #5271FF;
   --white: white;
   --pinkPastel: #FFD8F3;
+  --pinkLight: #FEE9F8;
 
   --easyBG: #D1FBE9;
   --easySRT: #0EBFBF;
@@ -19,6 +21,8 @@
 .App {
   text-align: center;
   font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
+
 }
 
 :lang(th) {
@@ -44,7 +48,7 @@ div#lyric{
   text-align: left;
   font-weight: 300;
   line-height: 3;
-  font-size: 20px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 .pink-text {
@@ -56,7 +60,7 @@ div#lyric{
     text-decoration: none;
     background: var(--pink);
     cursor: pointer;
-}.pink-text#active span{
+}.pink-text.active span{
     color: white;
     background: var(--pink);
 }
@@ -65,9 +69,14 @@ div#lyric{
   margin-bottom: auto;
   margin-top: auto;
   height: 60px;
-  background-color: #353b48;
+  background-color: var(--black);
   border-radius: 30px;
   padding: 10px;
+
+  position: -webkit-sticky;
+  position: sticky;
+  top: 80px;
+  z-index: 1;
 }
 .search_input{
   color: white;
@@ -80,7 +89,7 @@ div#lyric{
   transition: width 0.4s linear;
   padding: 0 10px;
   width: 90%;
-  caret-color:var(--pink);
+  caret-color:var(--pinkPastel);
 }
 .search_icon{
   height: 40px;
@@ -90,16 +99,11 @@ div#lyric{
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  border: 2px solid var(--pink);
+  border: .5px solid var(--white);
   text-decoration:none;
   background: white;
   color: var(--pink);
 }
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration { display: none; }
-
 
 .filters {
   text-align: center;
@@ -108,7 +112,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 .filters * {
   display: inline-block;
 }
-.filters button {
+.filters button, .loadMore button {
   padding: 5px 30px;
   margin-left: 5px;
   margin-right: 5px;
@@ -120,14 +124,55 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   background: var(--white);
   border: 2px solid  var(--pink);
   color: var(--pink);
+}.filters button:hover, .loadMore button {
+  background: var(--pink);
+  color: var(--white);
+}.filters button:active, .filters button:focus {
+  background: var(--pink);
+  color: var(--white);
 }
-.filters button:hover {
+.filters button#focus {
   background: var(--pink);
   color: var(--white);
 }
 
-.filters button:active, .filters button:focus {
-  background: var(--pink);
+.filters button#refresh {
+  padding: 9px 3px;
+  border: 2px solid  var(--blue);
+  color: var(--blue);
+}.filters button#refresh:hover {
+  background: var(--blue);
   color: var(--white);
+}.filters button#refresh:active, .filters button#refresh:focus {
+  background: var(--blue);
+  color: var(--blue);
 }
 
+.sidebar {
+  text-align: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 150px;
+  padding-top: 0px;
+  text-align: left;
+  height: 500px;
+  overflow-y: scroll;
+  height: 80vh;
+
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--pinkPastel); 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--black); 
+}

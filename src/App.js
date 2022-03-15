@@ -9,6 +9,7 @@ import Lyric from "./path/Lyric";
 import Result from "./path/Result";
 import Header from "./component/Navbar";
 import SpotifyButton from "./component/SpotifyButton";
+import SubLevels from "./path/SubLevels";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -52,6 +53,7 @@ function App(){
           <Route path="/lyric/:trackArtist/:trackId" element={ <Lyric/> } />
           <Route path="/result=:searchTerm" element={ <Result/> } />
           <Route path="/levels" element={ <Levels/> } />
+          <Route path="/levels/:sublevels" element={ <SubLevels/> } />
         </Routes>
       </div>
     );

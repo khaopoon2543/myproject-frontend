@@ -41,7 +41,7 @@ function Home (){
           <p> {user.id} </p>
           <br/>
 
-          <Container style={{ marginTop: 50 }}>
+          <Container style={{ marginTop: 50, marginBottom: 50 }}>
             <Row>
               
               {playlists.map((track, index) => {

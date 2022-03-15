@@ -12,6 +12,7 @@ function Lyric() {
   const [loading, setLoading] = useState(true);
   const { trackId, trackArtist } = useParams() 
   const [collectedWord, setCollectedWord] = useState([]); 
+  const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
       if ( trackId ) {
@@ -39,7 +40,7 @@ function Lyric() {
  
   return (
     <div className="App">
-      <Container style={{ marginTop: 50 }}>
+      <Container style={{ marginTop: 50, marginBottom: 50 }}>
       
           {loading ? ( 
             <Spinner animation="border" />
@@ -47,14 +48,14 @@ function Lyric() {
 
             <Row>
               <Title /><hr></hr>
-              <Col md={6}>
+              <Col md={7}>
 
                 <div id="lyric">
                   {tokenized_list.map((word, i) => {
                     if (word.surface === '\n'){
                       return <span key={i}><br /></span>
                     }else if(word.surface === '\n\n'){
-                      return <span key={i}><br /><br /></span>
+                      return <span key={i}><br/><br/></span>
                     }else if(word.poses[0] === '名詞' && word.poses[2] === 'サ変可能' && word.dictionary_form === ''){
                       return <span key={i}>{word.surface}</span>
                     }else if(/\s/.test(word.surface)){ //check str is space?
@@ -68,7 +69,7 @@ function Lyric() {
                                         read_form={word.dictionary_form} //reading_form
                                         poses={word.poses}
                                         onOpen={collectedWord => setCollectedWord(collectedWord)}
-                                        
+                                        isOpen={isOpen => setIsOpen(isOpen)}            
                                     />
                     }else{
                           return  <span key={i}>
@@ -79,9 +80,12 @@ function Lyric() {
                 </div> 
               </Col>
               <br/>
-              <Col md={6}>
-                  <PopupDict dictList={collectedWord} />
-              </Col>
+              { isOpen && <Col md={5}>
+                            <div className="sidebar">
+                              <PopupDict dictList={collectedWord} isOpen={isOpen} />
+                            </div>
+                          </Col>
+              }
             </Row>
 
           )}

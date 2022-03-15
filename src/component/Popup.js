@@ -8,19 +8,19 @@ const POPUP_STYLES = {
     backgroundColor: '#191414',
     left: -100,
     bottom: 0,
-    marginBottom: 0,
+    marginBottom: -1,
     padding: '20px',
     width: '100%',
     borderTopLeftRadius: 100,
     borderTopRightRadius: 100,
-    zIndex: 1000
+    zIndex: 1000,
+    border: '1px solid #191414',
+    boxShadow: "0px 7px 29px 0px #acacac"
 }
-
 const IMG_SONG={
     width: 70,
     height: 70
 }
-
 const INLINE ={
     marginLeft: '.5rem',
     color: 'white'

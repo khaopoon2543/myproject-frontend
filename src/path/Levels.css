@@ -1,3 +1,6 @@
+.levels-link {
+    text-decoration: none;
+}
 .levelCard {
     border-radius: 20px !important;
     cursor: pointer;

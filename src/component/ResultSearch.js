@@ -10,6 +10,7 @@ export default function ResultSearch(props) {
 
   const [songs_list, setSongsList] = useState([])
   const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(6);
   
   //get props from SearchForm.js or Result.js
   const searchTerm = props.searchTerm;
@@ -27,75 +28,121 @@ export default function ResultSearch(props) {
       });
   }, []);
 
+  function checkArtist(track) { return !track.singer ? track.artist : track.singer }
+
   //from spotify
-  const spotifyList = IsArtistTerm() ? 
-    songs_list
+  function spotifyAll() {
+    const spotifyList = IsArtistTerm() ? songs_list
       .filter((track) => {
         if ((
-              track.artist.toLowerCase().includes(IsArtistTerm().toLowerCase())
-              || track.artist_id.replaceAll("-", " ").includes(IsArtistTerm().toLowerCase())
-            )&&(
-              track.name.toLowerCase().includes(searchTerm.toLowerCase())
-              || track.song_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-            )){
-          return track
-        } 
-      }) 
-    : null;
-  const spotifyArtistList = IsArtistTerm() ? 
-    songs_list
+          checkArtist(track).toLowerCase().includes(IsArtistTerm().toLowerCase())
+          || track.artist_id.replaceAll("-", "").includes(IsArtistTerm().toLowerCase())
+        )&&(
+          track.name.toLowerCase().includes(searchTerm.toLowerCase())
+          || track.song_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+        )){ return track } 
+      }) : null;
+    return spotifyList
+  }
+  function spotifyArtist() {
+    const spotifyArtistList = IsArtistTerm() ? songs_list
       .filter((track) => {
-        if ((track.artist.toLowerCase().includes(IsArtistTerm().toLowerCase())
-            || track.artist_id.replaceAll("-", " ").includes(IsArtistTerm().toLowerCase())
-            )){
-          return track
-        } 
-      }) 
-    : null;
+        if ((checkArtist(track).toLowerCase().includes(IsArtistTerm().toLowerCase())
+            || track.artist_id.replaceAll("-", "").includes(IsArtistTerm().toLowerCase())
+            )){ return track } 
+      }) : null;
+    return spotifyArtistList
+  }
 
   //(default) from SearchForm
-  const allList = songs_list
-    .filter((track) => {
-      if (searchTerm == "") { return "" } 
-      else if (track.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-              || track.artist.toLowerCase().includes(searchTerm.toLowerCase())
-              || track.artist_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-              || track.song_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-              ){
-        return track
-      }
-    })
-  const artistList = songs_list
+  function filterAll() {
+    const allList = songs_list
       .filter((track) => {
         if (searchTerm == "") { return "" } 
-        else if ((track.artist.toLowerCase().includes(searchTerm.toLowerCase())
-            || track.artist_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-            )){
-          return track
-        } 
-    }) 
+        else if (track.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                || checkArtist(track).toLowerCase().includes(searchTerm.toLowerCase())
+                || track.artist_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+                || track.song_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+                ){ return track }
+      })
+    return allList
+  }
+  function filterArtist() {
+    const artistList = songs_list
+      .filter((track) => {
+        if (searchTerm == "") { return "" } 
+        else if ((checkArtist(track).toLowerCase().includes(searchTerm.toLowerCase())
+                || track.artist_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+                )){ return track } 
+      })
+    return artistList
+  }
+  function filterSong() {
+    const tracksList = songs_list
+      .filter((track) => {
+        if (searchTerm == "") { return "" } 
+        else if ((track.name.toLowerCase().includes(searchTerm.toLowerCase())
+                || track.song_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+                )){ return track } 
+      })
+    return tracksList
+  }
+  function filterLyric() {
+    const lyricsList = songs_list
+      .filter((track) => {
+        if (searchTerm == "") { return "" } 
+        else if (findWordAndNeighbours(searchTerm, track.lyric)) { return track } 
+      })
+    return lyricsList
+  }
 
-  //check is spotifyList?
+  //check is spotifyAll()?
   function isFormSpotify() {
+    const spotifyList = spotifyAll()
+    const spotifyArtistList = spotifyArtist()
     if(spotifyList && spotifyList.length > 0) {
       return spotifyList
     } else if(spotifyArtistList && spotifyArtistList.length > 0) {
       return spotifyArtistList
-    } return allList
+    } return filterAll()
   }
 
   //select list will show?!
   function isShowList() {
     const filter = IsFilter()
     if (filter === 'lyric') {
-      return artistList
+      return filterLyric()
     }else if (filter === 'song') {
-      return allList
+      return filterSong()
+    }else if (filter === 'artist') {
+      return filterArtist()
     }else if (filter === 'spotify') { //from Spotify
       return isFormSpotify()
     }
-    return allList //default filter --> all
+    return filterAll() //default filter --> all
   } 
+
+  function loadMore() { 
+    setVisible(visible + 10)
+  }
+
+  //test Regex
+  function findWordAndNeighbours(searchTerm, lyric) {
+    if (searchTerm == "" || !lyric) {
+        return false;
+    }
+    else {
+        var re = new RegExp('((\\S+[\\b\\s]?)' + searchTerm + '([\\b\\s]?\\S+))', 'i'),
+        matches = lyric.match(re);
+        if (matches) {
+          var foundWords = lyric.match(re)[0].split(/\s+/),
+              foundFragment = foundWords.join(' ');
+              return foundFragment
+        }
+    }
+  }
+  //const ii = "だあれも知らない私の\nホントの生まれた意味など\n秘密の部屋で作られた\n化学によく似た夜から"
+  //console.log(findWordAndNeighbours(searchTerm, ii))
 
   return (
     <React.Fragment>
@@ -105,10 +152,9 @@ export default function ResultSearch(props) {
         <><Col md={12}>
         {isShowList().length > 0 ? (
           isShowList()
-          .slice(0, 10) //selected elements in an array
+          .slice(0, visible) //selected elements in an array
           .map((track, index) => {
             return (
-
                 <Card className='card flex-md-row flex-wrap' key={index}>
                   <TagLevels levelScore={track.readability_score} /> 
                     <Card.Body style={{ textAlign: 'left' }}>
@@ -142,8 +188,8 @@ export default function ResultSearch(props) {
                             highlightClassName='highlightArtist'
                             searchWords={[searchTerm,IsArtistTerm()]}
                             autoEscape={true}
-                            textToHighlight={track.artist}
-                          > <p>{track.artist}</p>
+                            textToHighlight={!track.singer ? track.artist : track.singer}
+                          > <p>{!track.singer ? track.artist : track.singer}</p>
                           </Highlighter>
                       </Link>
 
@@ -156,10 +202,10 @@ export default function ResultSearch(props) {
                             > {track.artist_id}
                           </Highlighter>
                       )</span>
-                      
+
+                    
                   </Card.Body>
                 </Card>
-              
             )
           })
         ) : (
@@ -167,6 +213,17 @@ export default function ResultSearch(props) {
           { searchTerm == "" ? (null) : (<p>No Song foud ;-;</p>) } 
           </>
         )}
+
+        {isShowList().length > 10 ?
+          (<>
+            {visible < isShowList().length &&
+              <div className="loadMore" style={{ marginTop: 20 }}>
+                <button onClick={() => loadMore()}> Load More </button>
+              </div>
+            }
+          </>)
+        : null
+        }
         </Col></>
       )
     
