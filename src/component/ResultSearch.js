@@ -156,7 +156,9 @@ export default function ResultSearch(props) {
           .map((track, index) => {
             return (
                 <Card className='card flex-md-row flex-wrap' key={index}>
-                  <TagLevels levelScore={track.readability_score} /> 
+                  <div className="tagLevel d-flex justify-content-start">
+                    <TagLevels levelScore={track.readability_score} /> 
+                  </div>
                     <Card.Body style={{ textAlign: 'left' }}>
 
                       <Link to={"/lyric/" + track.artist_id + '/' + track.song_id} 
@@ -202,7 +204,21 @@ export default function ResultSearch(props) {
                             > {track.artist_id}
                           </Highlighter>
                       )</span>
+                      
+                      <br/>
 
+                      { IsFilter() === 'lyric' ?
+                      <Highlighter
+                        highlightClassName='highlight'
+                        searchWords={[searchTerm]}
+                        autoEscape={true}
+                        textToHighlight={findWordAndNeighbours(searchTerm, track.lyric)}
+                        > <span className='subtitle'>
+                          {findWordAndNeighbours(searchTerm, track.lyric)}
+                          </span>
+                      </Highlighter> 
+
+                      : null}
                     
                   </Card.Body>
                 </Card>

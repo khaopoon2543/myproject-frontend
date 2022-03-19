@@ -19,10 +19,8 @@ export default function TagLevels({ levelScore }) {
     }
     
     return (
-        <div className="tagLevel d-flex justify-content-start">
             <p id={checkLevel().replaceAll(" ", "-").toLowerCase()}>
                 {checkLevel()}
             </p>
-        </div>
     );
 }

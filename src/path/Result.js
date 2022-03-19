@@ -20,6 +20,7 @@ function Result() {
     function showALL() { setSelectedFilter('all') }
     function showLyric() { setSelectedFilter('lyric') }
     function showSong() { setSelectedFilter('song') }
+    function showArtist() { setSelectedFilter('artist') }
     useEffect(() => { if ( artist ) { setSelectedFilter('spotify') } }, []);
     console.log(selectedFilter)
     function refreshPage() {
@@ -30,17 +31,19 @@ function Result() {
 
         <div className="App">
 
-          <Container style={{ marginTop: 50, marginBottom: 50 }}> 
+          <Container style={{ marginTop: 50, marginBottom: 50 }}>
+            <span>Results</span>
             <h1>{key}</h1>
-            <p>{artist}</p>
+            {artist && <p>{artist}</p>}
 
             <br />
             {(selectedFilter !== 'spotify') ? 
               <Container style={{ marginTop: 10 }}>
                   <div className="filters">
-                    <button onClick={() => showALL()} id={`${selectedFilter === 'all' ? "focus" : null}`}>All</button>
-                    <button onClick={() => showLyric()}>Lyric</button>
+                    <button onClick={() => showALL()} id={`${selectedFilter === 'all' ? "focus" : null}`}>Song・Artist</button>
                     <button onClick={() => showSong()}>Song</button>
+                    <button onClick={() => showArtist()}>Artist</button>
+                    <button onClick={() => showLyric()}>Lyric</button>
                     <button onClick={refreshPage} id="refresh"> <FontAwesomeIcon icon="fa-solid fa-arrow-rotate-right" /> </button>
                   </div>   
               </Container>

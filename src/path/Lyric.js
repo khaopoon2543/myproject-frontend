@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Spinner, Card } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import Tooltip from '../component/Tooltipp';
 import PopupDict from '../component/PopupDict';
+import useIsMobile from '../component/useIsMobile';
+import TagLevels from "../component/TagLevels";
 
 function Lyric() {
 
@@ -14,48 +16,61 @@ function Lyric() {
   const [collectedWord, setCollectedWord] = useState([]); 
   const [isOpen, setIsOpen] = useState(false)
 
-    useEffect(() => {
-      if ( trackId ) {
-        axios.get('/lyric/'+ trackArtist + '/' + trackId , { mode: 'cors', crossDomain: true })
-          .then((response) => {
-            setTokenizedList(response.data.tokenized_list);
-            setTitle(response.data.title);
-            setLoading(!loading);
-            console.log(response)
-          })
-          .catch(error => {
-            console.log(error)
-          });
-      }
-    }, [ trackId ]);
+  useEffect(() => {
+    if ( trackId ) {
+      axios.get('/lyric/'+ trackArtist + '/' + trackId , { mode: 'cors', crossDomain: true })
+      .then((response) => {
+        setTokenizedList(response.data.tokenized_list);
+        setTitle(response.data.title);
+        setLoading(!loading);
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      });
+    }
+  }, [ trackId ]);
 
-    function Title() {
-      return  <div>
-                <h1>{title.name}</h1>
-                <p>{title.artist}</p>
-                <p>{trackId} {trackArtist}</p>
+  function Title() {
+    return <Container fluid className="titleLyric">
+              <h1>{title.name}</h1>
+              <p>{title.artist}</p>
+              <div className="tagLevel">
+                <TagLevels levelScore={title.readability_score}/>
               </div>
-    };
-    //console.log(collectedWord);
- 
+            </Container>
+  };
+  //console.log(collectedWord);
+
+  const screenSize = useIsMobile()
+
   return (
     <div className="App">
-      <Container style={{ marginTop: 50, marginBottom: 50 }}>
-      
-          {loading ? ( 
-            <Spinner animation="border" />
-          ) : (
+      {loading ? ( 
+        <Spinner animation="border" />
+      ) : (
+        <>
+        <Title />
+        <Container style={{ marginBottom: 50 }} fluid="lg">
+          <Row>  
+            {screenSize===false &&
+              <Col md={5} lg={5} xl={4} style={{ marginTop: 50 }}>
+                <PopupDict dictList={collectedWord} isOpen={isOpen} />
+              </Col>
+              }
 
-            <Row>
-              <Title /><hr></hr>
-              <Col md={7}>
-
+              <Col md={7} lg={7} xl={8} style={{ marginTop: 50 }}>
                 <div id="lyric">
+                  {screenSize===true &&
+                    <Container className="sidebar-mobile" fluid>
+                      <PopupDict dictList={collectedWord} isOpen={isOpen} />
+                    </Container>
+                  }
                   {tokenized_list.map((word, i) => {
                     if (word.surface === '\n'){
-                      return <span key={i}><br /></span>
+                      return <br key={i}/>
                     }else if(word.surface === '\n\n'){
-                      return <span key={i}><br/><br/></span>
+                      return <p key={i}><br/></p>
                     }else if(word.poses[0] === '名詞' && word.poses[2] === 'サ変可能' && word.dictionary_form === ''){
                       return <span key={i}>{word.surface}</span>
                     }else if(/\s/.test(word.surface)){ //check str is space?
@@ -78,19 +93,11 @@ function Lyric() {
                     } 
                   })}
                 </div> 
-              </Col>
-              <br/>
-              { isOpen && <Col md={5}>
-                            <div className="sidebar">
-                              <PopupDict dictList={collectedWord} isOpen={isOpen} />
-                            </div>
-                          </Col>
-              }
-            </Row>
-
-          )}
-     
-      </Container>
+              </Col>              
+          </Row>
+        </Container>
+        </>
+      )}     
     </div>
     );
     

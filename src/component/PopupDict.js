@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Card, Spinner } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 export default function PopupDict({ dictList, isOpen }) {
   
@@ -12,22 +11,45 @@ export default function PopupDict({ dictList, isOpen }) {
         return read_form
     }
   }
+  //<ruby>漢字<rt>かんじ</rt></ruby>
+  function splitDictEng(dictEng) {
+    if (dictEng === null) { return null }
+    const re = new RegExp('[(][0-9]+[)]', 'i')
+    const matches = dictEng.match(re)
+    if (matches) {
+      let foundWords = dictEng.split(re)
+      let text = [];
+      for (let i=1; i<foundWords.length; i++) {
+        text.push(<span key={i}>({i}) {foundWords[i].replace(/\,$/,'')} <br/></span>);
+      }
+      return text
+    } return dictEng
+  }
+  function splitPos(dictPos) {
+    let text = []
+    dictPos.map((word,i) => {
+      text.push(<span key={i}>{word}</span>);
+    })
+    return text
+  }
+  
   const mapDict = dictList.dict && dictList.dict.length > 0 ? 
     dictList.dict.slice(0, 5).map((dict, i) => {
       return (
-            <Card key={i}>
+            <Card key={i} >
               <Card.Body>
-                <Card.Title>
-                  {dictList.token.word} <br/>
-                  {isReadForm(dictList)} {dict.Type.join(' / ')} <ruby>漢字<rt>かんじ</rt></ruby>
-
+                <Card.Title className="mb-4"> 
+                  <span className="font-semi-bold black-text"> {dict.Kanji} </span> 
+                  <span>({dict.Yomikata})</span>
                 </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {dictList.token.dic_form} ( {dict.Yomikata} )
+                <Card.Subtitle className="mb-2" id="tagPos">
+                  <p>{splitPos(dict.Type)}</p>
                 </Card.Subtitle>
-                <Card.Text>
-                    EN : {dict.English} <br/>
-                    TH : {dict.Thai} <br/>
+                <Card.Text lang="th" id="dictTh" className="font-semi-bold">
+                  {dict.Thai}
+                </Card.Text>
+                <Card.Text lang="th" id="dictEn" className="font-semi-bold">
+                  {splitDictEng(dict.English)}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -37,10 +59,34 @@ export default function PopupDict({ dictList, isOpen }) {
     return (
       isOpen ?
         <>
-          {mapDict}
+        <div className="sidebar">
+          <div id="header" className="d-flex justify-content-left align-items-center">
+            <h2 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h2>
+            <h2 className="font-light">({isReadForm(dictList)})</h2>
+          </div>
+          <div className="scroll">       
+            {mapDict}
+          </div>
+        </div> 
         </>
-      : <Spinner animation="border" />
-     
+      : 
+        <>
+        <div className="sidebar" lang="th">
+          <div id="header">
+            <h2>ความหมายคำศัพท์</h2>
+          </div>
+           
+            <Card className="card">  
+              <Card.Body>    
+                <Card.Title className="mb-2 font-semi-bold"> 
+                  <span>ลองเลือกคำที่</span>
+                  <button className="pink-text font-semi-bold black-text">ขีดเส้นใต้</button>
+                  <span>แล้วเรียนรู้ความหมายของคำศัพท์ได้เลย!</span>
+                </Card.Title>
+              </Card.Body> 
+            </Card>
+        </div> 
+        </>
     );
 }
 

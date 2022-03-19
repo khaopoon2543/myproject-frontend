@@ -22,9 +22,17 @@
   text-align: center;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-family: 'Noto Sans JP', sans-serif;
-
+  background-color: var(--white);
 }
-
+.font-light {
+  font-weight: 100 !important;
+}.font-semi-bold {
+  font-weight: 500 !important;
+}.font-bold {
+  font-weight: 900 !important;
+}.black-text {
+  color: var(--gray);
+}
 :lang(th) {
   font-family: 'Noto Sans Thai', sans-serif;
 }
@@ -44,26 +52,7 @@ span.nav-button{
   font-size: 16px;
 }
 
-div#lyric{
-  text-align: left;
-  font-weight: 300;
-  line-height: 3;
-  font-size: 24px;
-  letter-spacing: 1px;
-}
-.pink-text {
-    display: inline-block;
-}.pink-text span{
-    border-bottom: 1px solid var(--pink);
-}.pink-text span:hover{
-    color: white;
-    text-decoration: none;
-    background: var(--pink);
-    cursor: pointer;
-}.pink-text.active span{
-    color: white;
-    background: var(--pink);
-}
+/* ----------------------------- Search ----------------------------- */
 
 .searchbar {
   margin-bottom: auto;
@@ -105,6 +94,8 @@ div#lyric{
   color: var(--pink);
 }
 
+/* ----------------------------- Result ----------------------------- */
+
 .filters {
   text-align: center;
   margin-bottom: 2rem;
@@ -122,17 +113,23 @@ div#lyric{
   cursor: pointer;
   transition: all 0.1s;
   background: var(--white);
+}.filters button {
+  border: 2px solid  var(--black);
+  color: var(--black);
+}.loadMore button {
   border: 2px solid  var(--pink);
   color: var(--pink);
-}.filters button:hover, .loadMore button {
+}.filters button:hover {
+  box-shadow: var(--pinkPastel) 0px 0px 50px;
+  background: var(--black);
+  color: var(--white);
+}.loadMore button:hover {
+  box-shadow: var(--pinkPastel) 0px 10px 50px;
   background: var(--pink);
   color: var(--white);
-}.filters button:active, .filters button:focus {
-  background: var(--pink);
-  color: var(--white);
-}
-.filters button#focus {
-  background: var(--pink);
+}.filters button:active, .filters button:focus, .filters button#focus{
+  box-shadow: var(--pinkPastel) 0px 0px 50px;
+  background: var(--black);
   color: var(--white);
 }
 
@@ -148,31 +145,135 @@ div#lyric{
   color: var(--blue);
 }
 
-.sidebar {
-  text-align: center;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 150px;
-  padding-top: 0px;
-  text-align: left;
-  height: 500px;
-  overflow-y: scroll;
-  height: 80vh;
+/* ----------------------------- Lyric ----------------------------- */
 
+.titleLyric {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 50px;
+}
+div#lyric{
+  text-align: left;
+  font-weight: 300;
+  line-height: 1.5;
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+div#lyric span{
+  display: inline-block;
+  margin-bottom: 25px; /* line height lyric */
+  padding:0;margin:0;
+}
+button.pink-text {
+    display: inline-block;
+  }button, button:focus{
+    outline: none;
+    background: transparent;
+    border: 1px solid transparent;
+  }button:active{
+    outline: none;
+    background: transparent;
+  }
+  button.pink-text {
+    border-bottom: 1px solid var(--pink);
+    padding:0;margin:0;
+    font-weight: 300;
+    margin-bottom: 25px; /* line height lyric */
+  }button.pink-text:hover {
+    color: white;
+    text-decoration: none;
+    background: var(--pink);
+    cursor: pointer;
+  }button.pink-text:active, button.pink-text:focus{
+    color: white;
+    background: var(--pink);
+}
+
+
+/* -------------- sidebar-dict -------------- */
+.sidebar .card {
+  margin-top: 0px;
+  border: 2px solid var(--pinkPastel) !important;
+  border-radius: 0 0 0 0;
+  border-top: 0 !important;
+  margin-bottom: 0;
+}
+.sidebar {
+  position: sticky;
+  text-align: left;
+  top: 220px;
+}.scroll {
+  overflow-y: scroll;
+  height: 50vh;
+}.sidebar #header{
+  background-color: var(--black);
+  color: var(--white);
+  padding: 10px;
+  margin-right: 5px;
+  border-radius: 10px 10px 0 0;
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
-}
-/* Track */
+  width: 5px;
+}/* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
-/* Handle */
+  background: var(--white); 
+}/* Handle */
 ::-webkit-scrollbar-thumb {
   background: var(--pinkPastel); 
-}
-/* Handle on hover */
+}/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--black); 
+  background: var(--pinkPastel); 
+}
+
+.scroll .card:hover {
+  box-shadow: none !important;
+}
+#dictTh {
+  font-size: 18px;
+  color: var(--pink);
+}#dictEn {
+  font-size: 16px;
+}
+#tagPos span{ 
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  border-radius: 50px;
+  min-width: 50px;
+  line-height: normal;
+  transition: all 0.1s;
+  color: var(--diffSRT);
+  background: var(--diffBG);
+} 
+
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    position: sticky;
+    top: 0;
+    width: auto;
+  }.scroll {
+    overflow-y: scroll;
+    height: 30vh ;
+  }
+  #lyric .sidebar-mobile{
+    position: sticky;
+    top: 70px;
+    background-color: var(--white);
+    margin-top: -30px;
+    margin-bottom: 50px;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0px;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  }
+  #tagPos span{ 
+    font-size: 12px;
+    text-align: center;
+    padding: 5px 30px !important;
+    margin-right: 10px !important;
+  }
 }

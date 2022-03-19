@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from 'react-bootstrap';
 import ResultSearch from "../component/ResultSearch";
@@ -9,7 +9,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
 function Search() {
-    const [searchTerm, setSearchTerm] = useState([])
+    const [searchTerm, setSearchTerm] = useState('')
+    const inputSearch = useRef('')
 
     const navigate = useNavigate ();
     const onFormSubmit = event => {
@@ -18,10 +19,14 @@ function Search() {
     }
     const onChangeData = event => { setSearchTerm(event.target.value.replaceAll(" ", "")) } 
 
+    useEffect(() => {
+      inputSearch.current = searchTerm
+    }, [searchTerm])
+
     return (
           <Container style={{ marginTop: 50, marginBottom: 50 }}>
-            <h1>ค้นหาเพลง</h1>
-            <h3>ใส่ชื่อเพลงหรือชื่อศิลปินในช่องค้นหาได้เลย!</h3>
+            <h1 lang="th">ค้นหาเพลง</h1>
+            <h3 lang="th">ใส่ชื่อเพลงหรือชื่อศิลปินในช่องค้นหาได้เลย!</h3>
 
               <form onSubmit={onFormSubmit} className="searchbar">
                   <input className="search_input"
@@ -33,9 +38,12 @@ function Search() {
                   <button type="submit" className="search_icon"><i className="fas fa-search"></i></button>
               </form>
               <br/>
-              <Container style={{ marginTop: 20 }}>
-                <ResultSearch searchTerm={searchTerm} />
-              </Container>    
+              {searchTerm.length > 0 && 
+                <Container style={{ marginTop: 0 }}>
+                  <ResultSearch searchTerm={inputSearch.current} />
+                </Container> 
+              }
+                 
           </Container>
  
     );

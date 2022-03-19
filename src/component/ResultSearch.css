@@ -1,6 +1,5 @@
-
 .card {
-    margin-top: 8px;
+    margin-bottom: 8px;
     border: none !important;
 }.card:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
@@ -48,7 +47,6 @@
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 500;
     letter-spacing: .5px;
-
 }
 .tagLevel p{
     font-weight: 500;
@@ -58,7 +56,6 @@
     padding-top: 10px;
     line-height: 50px;
 }
-
  /* tagLevel old design
  .tagLevel p{ 
     font-weight: 800;
@@ -70,9 +67,7 @@
     min-width: 50px;
     line-height: normal;
     transition: all 0.1s;
-} 
-*/
-
+} */
 p#very-difficult, p#difficult{
     color: var(--diffSRT);
     background: var(--diffBG);
@@ -92,11 +87,4 @@ p#very-difficult, p#difficult{
         padding-top: 0;
         line-height: 30px;
     }
-}
-
-.sidebar .card {
-    margin-top: 8px;
-    border: 1px solid var(--gray) !important;
-}.sidebar .card:hover {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 }
