@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Alert, Button, Spinner } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
 import useIsMobile from '../component/useIsMobile';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -69,10 +69,10 @@ export default function Popup({ open, children, onClose }) {
     
     //navigate to Result.js
     const navigate = useNavigate ();
-    const onFormSubmit = e => {
+    const onFormSubmit = event => {
       navigate('/result='+ 'spotify', //App.js :searchTerm
               { state: { key:dataTrack.name, artist:dataTrack.artists }})
-      e.preventDefault()
+      event.preventDefault()
     }
     const screenSize = useIsMobile()
 

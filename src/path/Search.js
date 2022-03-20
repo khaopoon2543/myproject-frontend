@@ -9,13 +9,15 @@ library.add(fas)
 function Search() {
 
     return (
-          <Container style={{ marginTop: 50, marginBottom: 50 }}>
-            <h1 lang="th">ค้นหาเพลง</h1>
-            <h3 lang="th">ใส่ชื่อเพลงหรือชื่อศิลปินในช่องค้นหาได้เลย!</h3>
+        <Container style={{ marginTop: 50, marginBottom: 50 }}>
+          <h1 lang="th" className="font-bold">ค้นหาเพลง</h1>
+          <h4 lang="th">ใส่ชื่อเพลงหรือชื่อศิลปินในช่องค้นหาได้เลย!</h4>
+          
+          <div style={{ marginTop: 30 }}>
+            <SearchBar />
+          </div>
 
-          <SearchBar />
-
-          </Container>
+        </Container>
  
     );
 }

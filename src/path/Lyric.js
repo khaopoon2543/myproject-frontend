@@ -15,6 +15,7 @@ function Lyric() {
   const { trackId, trackArtist } = useParams() 
   const [collectedWord, setCollectedWord] = useState([]); 
   const [isOpen, setIsOpen] = useState(false)
+  const screenSize = useIsMobile()
 
   useEffect(() => {
     if ( trackId ) {
@@ -42,8 +43,6 @@ function Lyric() {
   };
   //console.log(collectedWord);
 
-  const screenSize = useIsMobile()
-
   return (
     <div className="App">
       {loading ? ( 
@@ -51,7 +50,7 @@ function Lyric() {
       ) : (
         <>
         <Title />
-        <Container style={{ marginBottom: 50 }} fluid="lg">
+        <Container style={{ marginBottom: 50, marginLeft: screenSize ? 10 : 50 }} fluid="lg">
           <Row>  
             {screenSize===false &&
               <Col md={5} lg={5} style={{ marginTop: 50 }}>

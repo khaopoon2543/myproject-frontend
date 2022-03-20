@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Link } from "react-router-dom";
 import { Col, Card, Spinner } from 'react-bootstrap';
 import Highlighter from "react-highlight-words";
 import "./ResultSearch.css";
@@ -11,15 +11,16 @@ export default function ResultSearch(props) {
   const [songs_list, setSongsList] = useState([])
   const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(6);
+  const navigate = useNavigate ();
   
   //get props from SearchForm.js or Result.js
   const searchTerm = props.searchTerm;
   function IsArtistTerm() { return props.searchArtist; }
   function IsFilter() { return props.filter; } //all lyric song spotify
   function IsLevel() { return props.level; } //level from SubLevel.js
+  function IsSubArtists() { return props.subArtists; } //level from SubArtists.js
 
   useEffect(() => {
-
     axios.get("/result" , { mode: 'cors', crossDomain: true })
       .then((response) => {
         setSongsList(response.data);
@@ -28,10 +29,10 @@ export default function ResultSearch(props) {
       .catch(error => {
         console.log(error.response)
       });
-
   }, []);
 
   function checkArtist(track) { return !track.singer ? track.artist : track.singer }
+  function loadMore() { setVisible(visible + 10) }
 
   //from spotify
   function spotifyAll() {
@@ -76,6 +77,7 @@ export default function ResultSearch(props) {
         if (searchTerm == "") { return "" } 
         else if ((checkArtist(track).toLowerCase().includes(searchTerm.toLowerCase())
                 || track.artist_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+                || track.artist_id.includes(searchTerm.toLowerCase()) //search from SubArtist.js
                 )){ return track } 
       })
     return artistList
@@ -124,10 +126,6 @@ export default function ResultSearch(props) {
     }
     return filterAll() //default filter --> all
   } 
-
-  function loadMore() { 
-    setVisible(visible + 10)
-  }
 
   //test Regex
   function findWordAndNeighbours(searchTerm, lyric) {
@@ -211,25 +209,42 @@ export default function ResultSearch(props) {
                         </Highlighter>
                       )</span> 
                       <br/>
-                      <Link to={"/artist/" + track.artist_id} 
-                        className='artist' id="artist">
-                          <Highlighter
+
+                      {!IsSubArtists() ?
+                        <>
+                        <button className='artist' id="artist" 
+                          onClick={event => { navigate('/artists/'+ track.artist_id,
+                          { state: { artistName: !track.singer ? track.artist : track.singer } }) 
+                          event.preventDefault()}}
+                        > <Highlighter
                             highlightClassName='highlightArtist'
                             searchWords={[searchTerm,IsArtistTerm()]}
                             autoEscape={true}
                             textToHighlight={!track.singer ? track.artist : track.singer}
                           > <p>{!track.singer ? track.artist : track.singer}</p>
                           </Highlighter>
-                      </Link>
-                      <span className='subtitle'>
+                        </button>
+                        <span className='subtitle'>
                           (<Highlighter
                             highlightClassName='highlightArtist'
                             searchWords={[searchTerm]}
                             autoEscape={true}
                             textToHighlight={track.artist_id.replace(/-/g, ' ')}
                             > {track.artist_id}
-                          </Highlighter>
-                      )</span> 
+                          </Highlighter>)
+                        </span> 
+                        </>
+                      : //IsSubArtists() === true
+                        <>
+                        <button className='artist' id="sub-artist">
+                          <p>{!track.singer ? track.artist : track.singer}</p>
+                        </button>
+                        <button className='subtitle' id="sub-artist">
+                          {track.artist_id.replace(/-/g, ' ')}
+                        </button> 
+                        </>
+                      }
+
                       <br/>
                       { IsFilter() === 'lyric' ?
                       <Highlighter
@@ -250,7 +265,11 @@ export default function ResultSearch(props) {
         })
         ) : (
           <>
-          { searchTerm == "" ? (null) : (<p>No Song foud ;-;</p>) } 
+          { searchTerm == "" ? (null) : (
+            <div style={{ marginTop: 100 }}>
+              <p>No Result Found (T^T)</p>
+            </div>
+          ) } 
           </>
         )}
 

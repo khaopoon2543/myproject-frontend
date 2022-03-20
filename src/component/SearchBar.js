@@ -18,10 +18,10 @@ function SearchBar({ level }) {
         navigate('/result='+ searchTerm , { state: { key:searchTerm, level:level } })
         event.preventDefault()
     }
-    const onChangeData = event => { setSearchTerm(event.target.value.replaceAll(" ", "")) } 
+    const onChangeData = event => { setSearchTerm(event.target.value) } 
     
     useEffect(() => {
-      inputSearch.current.value = searchTerm
+      inputSearch.current.value = searchTerm //.replaceAll(" ", "")
     }, [searchTerm])
 
     return (

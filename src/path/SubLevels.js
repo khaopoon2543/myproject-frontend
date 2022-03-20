@@ -4,13 +4,13 @@ import { LevelsItems } from "../component/LevelsItems";
 import SearchBar from "../component/SearchBar";
 
 function SubLevels() {
-    const { sublevels } = useParams() 
+    const { subLevels } = useParams() 
 
     return (
           <Container style={{ marginTop: 20, marginBottom: 50 }}>
             
             {LevelsItems.map((item, index) => {
-              if (item.id === sublevels) {
+              if (item.id === subLevels) {
                 return (
                 <Row key={index}>
                   <Col md={6}>

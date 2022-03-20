@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import ResultSearch from "../component/ResultSearch"
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-library.add(fas)
-
 
 function Result() {
 
@@ -22,10 +16,7 @@ function Result() {
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
     console.log(selectedFilter)
-    function refreshPage() {
-      window.location.reload();
-    }
-     
+
     return (
 
         <div className="App">
@@ -50,7 +41,6 @@ function Result() {
                     <button onClick={() => showSong()}>Song</button>
                     <button onClick={() => showArtist()}>Artist</button>
                     <button onClick={() => showLyric()}>Lyric</button>
-                    <button onClick={refreshPage} id="refresh"> <FontAwesomeIcon icon="fa-solid fa-arrow-rotate-right" /> </button>
                   </div>   
               </Container>
             : null

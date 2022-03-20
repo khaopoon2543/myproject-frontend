@@ -116,7 +116,7 @@ span.nav-button{
 }.filters button {
   border: 2px solid  var(--black);
   color: var(--black);
-}.loadMore button {
+}.loadMore button, .loadMore button:focus {
   border: 2px solid  var(--pink);
   color: var(--pink);
 }.filters button:hover {
@@ -127,22 +127,26 @@ span.nav-button{
   box-shadow: var(--pinkPastel) 0px 10px 50px;
   background: var(--pink);
   color: var(--white);
-}.filters button:active, .filters button:focus, .filters button#focus{
+}.filters button:active, .filters button:focus, .filters button#focus {
   box-shadow: var(--pinkPastel) 0px 0px 50px;
   background: var(--black);
   color: var(--white);
 }
 
-.filters button#refresh {
+/* ----------------------------- Artists ----------------------------- */
+
+.filters button#circle {
+  margin: 10px;
   padding: 9px 3px;
-  border: 2px solid  var(--blue);
-  color: var(--blue);
-}.filters button#refresh:hover {
-  background: var(--blue);
+  border: 2px solid  var(--grayLight);
+  color: var(--grayLight);
+}.filters button#circle:hover {
+  background: var(--grayLight);
   color: var(--white);
-}.filters button#refresh:active, .filters button#refresh:focus {
-  background: var(--blue);
-  color: var(--blue);
+}.filters button#circle:active, .filters button#circle:focus {
+  border: 2px solid  var(--black);
+  background: var(--black);
+  color: var(--white);
 }
 
 /* ----------------------------- Lyric ----------------------------- */
@@ -211,12 +215,12 @@ button.pink-text {
   background-color: var(--black);
   color: var(--white);
   padding: 10px;
-  margin-right: 5px;
+  margin-right: 10px;
   border-radius: 10px 10px 0 0;
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
 }/* Track */
 ::-webkit-scrollbar-track {
   background: var(--white); 
@@ -267,7 +271,7 @@ button.pink-text {
     background-color: var(--white);
     margin-top: -30px;
     margin-bottom: 50px;
-    padding-left: 10px;
+    padding-left: 0;
     padding-right: 0;
     border-radius: 0px;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;

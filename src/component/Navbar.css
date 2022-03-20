@@ -51,7 +51,7 @@
   }
 }
 
-.nav-links span {
+.nav-links span, .nav-links-active span {
   color: var(--black);
   font-weight: 500;
   letter-spacing: .5px;
@@ -59,7 +59,7 @@
   overflow: hidden;
   margin-right: 10px;
 }
-.nav-links span:after {
+.nav-links span:after, .nav-links-active span {
   z-index: -1;
   content: "";
   position: absolute;
