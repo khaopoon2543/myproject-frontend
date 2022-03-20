@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./ResultSearch.css";
 
 export default function TagLevels({ levelScore }) {

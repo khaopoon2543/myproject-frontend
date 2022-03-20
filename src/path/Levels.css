@@ -1,15 +1,28 @@
-.levels-link {
+.card {
+    color: var(--grayLight)
+}.levels-link {
     text-decoration: none;
-}
-.levelCard {
+}.levelCard {
     border-radius: 20px !important;
     cursor: pointer;
     text-align: left;
     margin: 10px ;
-}
-.header {
+}.header {
     padding-top: 50px !important;
     border-radius: 20px 20px 0 0 !important;
+}
+
+#sub-level.card:hover {
+    box-shadow: none !important;
+    cursor: default;
+}#sub-level .card-title.h5{
+    font-size: 50px;
+}#sub-level .card-subtitle.h6{
+    font-size: 30px;
+}#sub-level .header {
+    padding-top: auto;
+    border-radius: 20px !important;
+    width: 100%;
 }
 
 #very-difficult, #difficult{
@@ -21,8 +34,4 @@
 }#easy, #very-easy{
     color: var(--easySRT);
     background: var(--easyBG);
-}
-
-.card {
-    color: var(--grayLight)
 }

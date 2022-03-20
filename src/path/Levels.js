@@ -22,7 +22,7 @@ function Levels() {
                       </Card.Header>
                       <Card.Body>
                         <Card.Text lang="th">
-                          {item.text}
+                          {item.textTh}
                         </Card.Text>
                       </Card.Body>
                     </Card> 

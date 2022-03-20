@@ -36,7 +36,7 @@ export default function PopupDict({ dictList, isOpen }) {
   const mapDict = dictList.dict && dictList.dict.length > 0 ? 
     dictList.dict.slice(0, 5).map((dict, i) => {
       return (
-            <Card key={i} >
+            <Card key={i} id="dict">
               <Card.Body>
                 <Card.Title className="mb-4"> 
                   <span className="font-semi-bold black-text"> {dict.Kanji} </span> 
@@ -75,8 +75,8 @@ export default function PopupDict({ dictList, isOpen }) {
           <div id="header">
             <h2>ความหมายคำศัพท์</h2>
           </div>
-           
-            <Card className="card">  
+          <div className="scroll"> 
+            <Card>  
               <Card.Body>    
                 <Card.Title className="mb-2 font-semi-bold"> 
                   <span>ลองเลือกคำที่</span>
@@ -85,6 +85,7 @@ export default function PopupDict({ dictList, isOpen }) {
                 </Card.Title>
               </Card.Body> 
             </Card>
+          </div>
         </div> 
         </>
     );

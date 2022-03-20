@@ -35,7 +35,7 @@ function Lyric() {
     return <Container fluid className="titleLyric">
               <h1>{title.name}</h1>
               <p>{title.artist}</p>
-              <div className="tagLevel">
+              <div className="tagLevel" id="title-lyric">
                 <TagLevels levelScore={title.readability_score}/>
               </div>
             </Container>
@@ -54,12 +54,12 @@ function Lyric() {
         <Container style={{ marginBottom: 50 }} fluid="lg">
           <Row>  
             {screenSize===false &&
-              <Col md={5} lg={5} xl={4} style={{ marginTop: 50 }}>
+              <Col md={5} lg={5} style={{ marginTop: 50 }}>
                 <PopupDict dictList={collectedWord} isOpen={isOpen} />
               </Col>
               }
 
-              <Col md={7} lg={7} xl={8} style={{ marginTop: 50 }}>
+              <Col md={7} lg={7} style={{ marginTop: 50 }}>
                 <div id="lyric">
                   {screenSize===true &&
                     <Container className="sidebar-mobile" fluid>
@@ -77,7 +77,7 @@ function Lyric() {
                       return <span key={i}> </span>
 
                     //}else if(['助詞','助動詞','空白','補助記号','記号','代名詞','接尾辞','接頭辞'].indexOf(word.poses[0]) === -1 ){  //Value does not exists!
-                    }else if(['名詞','動詞','形容詞','形容動詞','連体詞','副詞','接続詞','感動詞'].includes(word.poses[0])){  //Value does exists!
+                    }else if(['名詞','動詞','形容詞','形状詞','連体詞','副詞','接続詞','感動詞'].includes(word.poses[0])){  //Value does exists!
                       return   <Tooltip key={i} 
                                         word={word.surface}  
                                         dic_form={word.reading_form} 

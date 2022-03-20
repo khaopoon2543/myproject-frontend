@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Container, Col, Card, Row } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import ResultSearch from "../component/ResultSearch"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,16 +12,15 @@ library.add(fas)
 function Result() {
 
     const { state } = useLocation();
-    //From Search.js --> ONLY(key) //From Playing.js(Spotify) --> (key, artist)
-    const { key, artist } = state;
+    //From Search.js --> ONLY(key) OR(key,level) //From Playing.js(Spotify) --> (key, artist)
+    const { key, artist, level } = state;
 
     //filter
-    const [selectedFilter, setSelectedFilter] = useState('all')
+    const [selectedFilter, setSelectedFilter] = useState(!artist ? 'all' : 'spotify')
     function showALL() { setSelectedFilter('all') }
     function showLyric() { setSelectedFilter('lyric') }
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
-    useEffect(() => { if ( artist ) { setSelectedFilter('spotify') } }, []);
     console.log(selectedFilter)
     function refreshPage() {
       window.location.reload();
@@ -35,6 +34,13 @@ function Result() {
             <span>Results</span>
             <h1>{key}</h1>
             {artist && <p>{artist}</p>}
+
+            {level && <div className="tagLevel" id="title-lyric">
+                        <p id={level}>
+                            {level}
+                        </p>
+                      </div>
+            }
 
             <br />
             {(selectedFilter !== 'spotify') ? 
@@ -50,7 +56,7 @@ function Result() {
             : null
             }
 
-            <ResultSearch searchTerm={key} searchArtist={artist} filter={selectedFilter} />   
+            <ResultSearch searchTerm={key} searchArtist={artist} filter={selectedFilter} level={!level ? null : level} />   
           
           </Container>
 

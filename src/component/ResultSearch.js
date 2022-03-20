@@ -16,9 +16,11 @@ export default function ResultSearch(props) {
   const searchTerm = props.searchTerm;
   function IsArtistTerm() { return props.searchArtist; }
   function IsFilter() { return props.filter; } //all lyric song spotify
+  function IsLevel() { return props.level; } //level from SubLevel.js
 
   useEffect(() => {
-    axios.get("/result", { mode: 'cors', crossDomain: true })
+
+    axios.get("/result" , { mode: 'cors', crossDomain: true })
       .then((response) => {
         setSongsList(response.data);
         setLoading(!loading);
@@ -26,6 +28,7 @@ export default function ResultSearch(props) {
       .catch(error => {
         console.log(error.response)
       });
+
   }, []);
 
   function checkArtist(track) { return !track.singer ? track.artist : track.singer }
@@ -144,23 +147,50 @@ export default function ResultSearch(props) {
   //const ii = "だあれも知らない私の\nホントの生まれた意味など\n秘密の部屋で作られた\n化学によく似た夜から"
   //console.log(findWordAndNeighbours(searchTerm, ii))
 
+  function checkLevel(levelScore) {
+    if (0.5 <= levelScore && levelScore <= 1.49) {
+        return 'very-difficult'
+    } else if (1.5 <= levelScore && levelScore <= 2.49) {
+        return 'difficult'
+    } else if (2.5 <= levelScore && levelScore <= 3.49) {
+        return 'slightly-difficult'
+    } else if (3.5 <= levelScore && levelScore <= 4.49) {
+        return 'so-so'
+    } else if (4.5 <= levelScore && levelScore <= 5.49) {
+        return 'easy'
+    }
+    return 'very-easy'
+  }
+
+  function reallyShowList() {
+    const songs_list = isShowList()
+    const tracksList = songs_list
+    .filter((track) => {
+      if (IsLevel()) { 
+        if (checkLevel(track.readability_score) === IsLevel()) { return track } 
+        else { return null }
+      } 
+      else { return track }
+    })
+    return tracksList
+  }
+
   return (
     <React.Fragment>
     {loading ? ( 
-        <Spinner animation="border" />
+      <Spinner animation="border" />
       ) : ( 
-        <><Col md={12}>
-        {isShowList().length > 0 ? (
-          isShowList()
-          .slice(0, visible) //selected elements in an array
-          .map((track, index) => {
-            return (
+      <><Col md={12}>
+      {reallyShowList().length > 0 ? (
+        reallyShowList()
+        .slice(0, visible) //selected elements in an array
+        .map((track, index) => {
+          return (
                 <Card className='card flex-md-row flex-wrap' key={index}>
                   <div className="tagLevel d-flex justify-content-start">
-                    <TagLevels levelScore={track.readability_score} /> 
+                    <TagLevels levelScore={track.readability_score}/>
                   </div>
                     <Card.Body style={{ textAlign: 'left' }}>
-
                       <Link to={"/lyric/" + track.artist_id + '/' + track.song_id} 
                         className='title' id="song"> 
                         <Highlighter
@@ -171,7 +201,6 @@ export default function ResultSearch(props) {
                         > <h3 className='title' id="song">{track.name}</h3> 
                         </Highlighter>
                       </Link>
-
                       <span className='subtitle'>
                       (<Highlighter
                           highlightClassName='highlight'
@@ -181,9 +210,7 @@ export default function ResultSearch(props) {
                         > {track.song_id}
                         </Highlighter>
                       )</span> 
-
                       <br/>
-
                       <Link to={"/artist/" + track.artist_id} 
                         className='artist' id="artist">
                           <Highlighter
@@ -194,7 +221,6 @@ export default function ResultSearch(props) {
                           > <p>{!track.singer ? track.artist : track.singer}</p>
                           </Highlighter>
                       </Link>
-
                       <span className='subtitle'>
                           (<Highlighter
                             highlightClassName='highlightArtist'
@@ -203,10 +229,8 @@ export default function ResultSearch(props) {
                             textToHighlight={track.artist_id.replace(/-/g, ' ')}
                             > {track.artist_id}
                           </Highlighter>
-                      )</span>
-                      
+                      )</span> 
                       <br/>
-
                       { IsFilter() === 'lyric' ?
                       <Highlighter
                         highlightClassName='highlight'
@@ -222,17 +246,17 @@ export default function ResultSearch(props) {
                     
                   </Card.Body>
                 </Card>
-            )
-          })
+          )
+        })
         ) : (
           <>
           { searchTerm == "" ? (null) : (<p>No Song foud ;-;</p>) } 
           </>
         )}
 
-        {isShowList().length > 10 ?
+        {reallyShowList().length > 10 ?
           (<>
-            {visible < isShowList().length &&
+            {visible < reallyShowList().length &&
               <div className="loadMore" style={{ marginTop: 20 }}>
                 <button onClick={() => loadMore()}> Load More </button>
               </div>

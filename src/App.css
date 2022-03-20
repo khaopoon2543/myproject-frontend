@@ -156,7 +156,7 @@ div#lyric{
   text-align: left;
   font-weight: 300;
   line-height: 1.5;
-  font-size: 24px;
+  font-size: 22px;
   letter-spacing: 1px;
 }
 div#lyric span{
@@ -189,8 +189,10 @@ button.pink-text {
     background: var(--pink);
 }
 
-
 /* -------------- sidebar-dict -------------- */
+#dict.card {
+  color: var(--grayLight)
+}
 .sidebar .card {
   margin-top: 0px;
   border: 2px solid var(--pinkPastel) !important;
@@ -265,7 +267,7 @@ button.pink-text {
     background-color: var(--white);
     margin-top: -30px;
     margin-bottom: 50px;
-    padding-left: 0;
+    padding-left: 10px;
     padding-right: 0;
     border-radius: 0px;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
@@ -277,3 +279,49 @@ button.pink-text {
     margin-right: 10px !important;
   }
 }
+
+/* ----------------------------- Popup Spotify ----------------------------- */
+
+.banner {
+  display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 20px;
+ }
+ .banner img {
+  float: left; 
+  margin: 5px;
+  margin-right: 10px;
+ }
+ .banner span, .banner button {
+  float: left; 
+  margin-top: 5px;
+  vertical-align: top;
+  color: var(--pinkPastel);
+ }
+ .banner button {
+  background-color: #ffffff1f;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
+ }
+ .banner button:hover {
+  color: var(--pinkLight);
+  background-color: #ffffff3d;
+ }
+
+ @media only screen and (max-width: 768px) {
+  .banner {
+    display: block;
+    float: left; 
+    font-size: 16px;
+   } 
+   .banner button {
+    font-size: 12px;
+    padding: 0.5em;
+    margin-top: 0px;
+   }
+  }
