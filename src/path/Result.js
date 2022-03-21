@@ -16,6 +16,11 @@ function Result() {
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
     console.log(selectedFilter)
+    function isFocus(filter) {
+      if (selectedFilter === filter){
+        return "focus"
+      } return null
+    }
 
     return (
 
@@ -33,20 +38,20 @@ function Result() {
                       </div>
             }
 
-            <br />
-            {(selectedFilter !== 'spotify') ? 
-              <Container style={{ marginTop: 10 }}>
-                  <div className="filters">
-                    <button onClick={() => showALL()} id={`${selectedFilter === 'all' ? "focus" : null}`}>Song・Artist</button>
-                    <button onClick={() => showSong()}>Song</button>
-                    <button onClick={() => showArtist()}>Artist</button>
-                    <button onClick={() => showLyric()}>Lyric</button>
-                  </div>   
-              </Container>
+          <br/>
+          {(selectedFilter !== 'spotify') ? 
+            <Container style={{ marginTop: 10 }}>
+              <div className="filters">
+                <button onClick={() => showALL()} id={isFocus('all')}>Song・Artist</button>
+                <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
+                <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
+                <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
+              </div>   
+            </Container>
             : null
-            }
+          }
 
-            <ResultSearch searchTerm={key} searchArtist={artist} filter={selectedFilter} level={!level ? null : level} />   
+          <ResultSearch searchTerm={key} searchArtist={artist} filter={selectedFilter} level={!level ? null : level} />   
           
           </Container>
 

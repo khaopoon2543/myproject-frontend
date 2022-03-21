@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import ResultSearch from "./ResultSearch";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,18 +11,44 @@ library.add(fas)
 function SearchBar({ level }) {
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedFilter, setSelectedFilter] = useState('all')
-    const inputSearch = useRef('')
+    //const inputSearch = useRef('')
+    const [typing, setTyping] = useState('')
 
     const navigate = useNavigate ();
     const onFormSubmit = event => {
         navigate('/result='+ searchTerm , { state: { key:searchTerm, level:level } })
         event.preventDefault()
     }
-    const onChangeData = event => { setSearchTerm(event.target.value) } 
+    const onChangeData = event  => { 
+      setSearchTerm(event.target.value);
+    } 
     
     useEffect(() => {
-      inputSearch.current.value = searchTerm //.replaceAll(" ", "")
+      //inputSearch.current.value = searchTerm //.replaceAll(" ", "")
+      const newTimer = setTimeout(() => {
+        setTyping(searchTerm)
+      }, 500)
+      return () => {clearTimeout(newTimer)}
+
     }, [searchTerm])
+
+    function showResultSubLevel() {
+      if (searchTerm==='') {
+        return 'show' 
+      } return selectedFilter
+    }
+
+    //filter
+    function showALL() { setSelectedFilter('all') }
+    function showLyric() { setSelectedFilter('lyric') }
+    function showSong() { setSelectedFilter('song') }
+    function showArtist() { setSelectedFilter('artist') }
+    console.log(selectedFilter)
+    function isFocus(filter) {
+      if (selectedFilter === filter){
+        return "focus"
+      } return null
+    }
 
     return (
       <>
@@ -31,17 +57,29 @@ function SearchBar({ level }) {
               type="text" 
               placeholder="Let's Search!" 
               onChange={onChangeData}
-              ref={inputSearch}
+              //ref={inputSearch}
               required
             />
             <button type="submit" className="search_icon"><i className="fas fa-search"></i></button>
         </form>
+
         <br/>
-        {searchTerm.length > 0 && 
-          <Container style={{ marginTop: 0 }}>
-            <ResultSearch searchTerm={inputSearch.current.value} filter={selectedFilter} level={!level ? null : level} />
-          </Container> 
-        }         
+        {(selectedFilter !== 'spotify') ? 
+          <Container style={{ marginTop: 10 }}>
+            <div className="filters">
+              <button onClick={() => showALL()} id={isFocus('all')}>Song・Artist</button>
+              <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
+              <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
+              <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
+            </div>  
+          </Container>
+          : null
+        }
+        
+          <Container style={{ marginTop: 10 }}>
+            <ResultSearch searchTerm={typing!=='' && typing} filter={!level ? selectedFilter : showResultSubLevel()} level={!level ? null : level} />
+          </Container>  
+      
       </> 
     );
 }

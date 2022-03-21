@@ -9,7 +9,7 @@ import TagLevels from "./TagLevels";
 export default function ResultSearch(props) {
 
   const [songs_list, setSongsList] = useState([])
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(6);
   const navigate = useNavigate ();
   
@@ -21,10 +21,11 @@ export default function ResultSearch(props) {
   function IsSubArtists() { return props.subArtists; } //level from SubArtists.js
 
   useEffect(() => {
+    setLoading(true);
     axios.get("/result" , { mode: 'cors', crossDomain: true })
       .then((response) => {
         setSongsList(response.data);
-        setLoading(!loading);
+        setLoading(false);
       })
       .catch(error => {
         console.log(error.response)
@@ -123,8 +124,10 @@ export default function ResultSearch(props) {
       return filterArtist()
     }else if (filter === 'spotify') { //from Spotify
       return isFormSpotify()
+    }else if (filter === 'show') { //from Spotify
+      return songs_list //show result (no searchTerm) at SubLevel.js
     }
-    return filterAll() //default filter --> all
+    return filterAll() //default filter 'all'
   } 
 
   //test Regex
@@ -163,13 +166,13 @@ export default function ResultSearch(props) {
   function reallyShowList() {
     const songs_list = isShowList()
     const tracksList = songs_list
-    .filter((track) => {
-      if (IsLevel()) { 
-        if (checkLevel(track.readability_score) === IsLevel()) { return track } 
-        else { return null }
-      } 
-      else { return track }
-    })
+      .filter((track) => {
+        if (IsLevel()) { 
+          if (checkLevel(track.readability_score) === IsLevel()) { return track } 
+          else { return null }
+        } 
+        else { return track }
+      })
     return tracksList
   }
 

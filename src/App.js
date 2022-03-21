@@ -12,6 +12,7 @@ import SpotifyButton from "./component/SpotifyButton";
 import SubLevels from "./path/SubLevels";
 import Artists from "./path/Artists";
 import SubArtists from "./path/SubArtists";
+import About from "./path/About";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -58,6 +59,7 @@ function App(){
           <Route path="/levels/:subLevels" element={ <SubLevels/> } />
           <Route path="/artists" element={ <Artists/> } />
           <Route path="/artists/:subArtists" element={ <SubArtists/> } />
+          <Route path="/about" element={ <About/> } />
         </Routes>
       </div>
     );
