@@ -6,6 +6,8 @@ import Tooltip from '../component/Tooltipp';
 import PopupDict from '../component/PopupDict';
 import useIsMobile from '../component/useIsMobile';
 import TagLevels from "../component/TagLevels";
+import { toHiragana } from 'wanakana';
+
 
 function Lyric() {
 
@@ -19,7 +21,7 @@ function Lyric() {
 
   useEffect(() => {
     if ( trackId ) {
-      axios.get('/lyric/'+ trackArtist + '/' + trackId , { mode: 'cors', crossDomain: true })
+      axios.get('https://sudachi-api.herokuapp.com/lyric/'+ trackArtist + '/' + trackId , { mode: 'cors', crossDomain: true })
       .then((response) => {
         setTokenizedList(response.data.tokenized_list);
         setTitle(response.data.title);
@@ -79,8 +81,8 @@ function Lyric() {
                     }else if(['名詞','動詞','形容詞','形状詞','連体詞','副詞','接続詞','感動詞'].includes(word.poses[0])){  //Value does exists!
                       return   <Tooltip key={i} 
                                         word={word.surface}  
-                                        dic_form={word.reading_form} 
-                                        read_form={word.dictionary_form} //reading_form
+                                        dic_form={word.dictionary_form} 
+                                        read_form={toHiragana(word.reading_form, { passRomaji: true })} //reading_form
                                         poses={word.poses}
                                         onOpen={collectedWord => setCollectedWord(collectedWord)}
                                         isOpen={isOpen => setIsOpen(isOpen)}            
