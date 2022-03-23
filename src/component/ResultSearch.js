@@ -30,7 +30,7 @@ export default function ResultSearch(props) {
       .catch(error => {
         console.log(error.response)
       });
-  }, []);
+    }, []);
 
   function checkArtist(track) { return !track.singer ? track.artist : track.singer }
   function loadMore() { setVisible(visible + 10) }
@@ -41,10 +41,10 @@ export default function ResultSearch(props) {
       .filter((track) => {
         if ((
           checkArtist(track).toLowerCase().includes(IsArtistTerm().toLowerCase())
-          || track.artist_id.replaceAll("-", "").includes(IsArtistTerm().toLowerCase())
+          || track.artist_id.replaceAll("-", " ").includes(IsArtistTerm().toLowerCase())
         )&&(
           track.name.toLowerCase().includes(searchTerm.toLowerCase())
-          || track.song_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+          || track.song_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
         )){ return track } 
       }) : null;
     return spotifyList
@@ -53,7 +53,7 @@ export default function ResultSearch(props) {
     const spotifyArtistList = IsArtistTerm() ? songs_list
       .filter((track) => {
         if ((checkArtist(track).toLowerCase().includes(IsArtistTerm().toLowerCase())
-            || track.artist_id.replaceAll("-", "").includes(IsArtistTerm().toLowerCase())
+            || track.artist_id.replaceAll("-", " ").includes(IsArtistTerm().toLowerCase())
             )){ return track } 
       }) : null;
     return spotifyArtistList
@@ -66,8 +66,8 @@ export default function ResultSearch(props) {
         if (searchTerm == "") { return "" } 
         else if (track.name.toLowerCase().includes(searchTerm.toLowerCase()) 
                 || checkArtist(track).toLowerCase().includes(searchTerm.toLowerCase())
-                || track.artist_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
-                || track.song_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+                || track.artist_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
+                || track.song_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
                 ){ return track }
       })
     return allList
@@ -77,18 +77,29 @@ export default function ResultSearch(props) {
       .filter((track) => {
         if (searchTerm == "") { return "" } 
         else if ((checkArtist(track).toLowerCase().includes(searchTerm.toLowerCase())
-                || track.artist_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+                || track.artist_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
                 || track.artist_id.includes(searchTerm.toLowerCase()) //search from SubArtist.js
                 )){ return track } 
       })
     return artistList
+  }
+  function filterSeries() {
+    const seriesList = songs_list
+      .filter((track) => {
+        if (searchTerm == "") { return "" } 
+        else if ((track.series.id.toLowerCase().includes(searchTerm.toLowerCase())
+                || track.series.name.replaceAll("-", " ").includes(searchTerm.toLowerCase())
+                || track.series.id.includes(searchTerm.toLowerCase()) //search from SubSeries.js
+                )){ return track }
+      })
+    return seriesList
   }
   function filterSong() {
     const tracksList = songs_list
       .filter((track) => {
         if (searchTerm == "") { return "" } 
         else if ((track.name.toLowerCase().includes(searchTerm.toLowerCase())
-                || track.song_id.replaceAll("-", "").includes(searchTerm.toLowerCase())
+                || track.song_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
                 )){ return track } 
       })
     return tracksList
@@ -208,7 +219,7 @@ export default function ResultSearch(props) {
                           searchWords={[searchTerm]}
                           autoEscape={true}
                           textToHighlight={track.song_id.replace(/-/g, ' ')}
-                        > {track.song_id}
+                        > {track.song_id.replace(/-/g, ' ')}
                         </Highlighter>
                       )</span> 
                       <br/>
@@ -233,7 +244,7 @@ export default function ResultSearch(props) {
                             searchWords={[searchTerm]}
                             autoEscape={true}
                             textToHighlight={track.artist_id.replace(/-/g, ' ')}
-                            > {track.artist_id}
+                            > {track.artist_id.replace(/-/g, ' ')}
                           </Highlighter>)
                         </span> 
                         </>

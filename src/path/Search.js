@@ -10,7 +10,7 @@ function Search() {
 
     return (
         <Container style={{ marginTop: 50, marginBottom: 50 }}>
-          <h1 lang="th" className="font-bold">ค้นหาเพลง</h1>
+          <h1 lang="th" className="font-bold">ค้นหาเพลง <FontAwesomeIcon icon="fa-solid fa-music" /></h1>
           <h4 lang="th">ใส่ชื่อเพลงหรือชื่อศิลปินในช่องค้นหาได้เลย!</h4>
           
           <div style={{ marginTop: 30 }}>

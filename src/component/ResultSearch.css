@@ -1,27 +1,28 @@
 .card {
     margin-bottom: 8px;
+    padding-bottom: 10px;
     border: none !important;
 }.card:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 }
 .title { /* LINK (use link) */
-    font-weight: 500;
-    text-decoration: none;
     font-size: 22px;
-    color: var(--gray)
-}
-.subtitle {
-    font-weight: normal;
-    font-size: 16px;
-    margin-left: 10px;
-    color: var(--grayLight)
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--gray);
 }
 .artist { /* BUTTONS (use navigate) */
-    font-weight: normal;
+    font-size: 16px;
+    font-weight: 300;
     text-decoration: none;
-    font-size: 18px;
     color: var(--gray);
     padding: 0;
+}
+.subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    margin-left: 10px;
+    color: var(--grayLight)
 }
 #song:hover {
     color: var(--pink);
@@ -98,7 +99,7 @@ p#very-difficult, p#difficult{
     }
 }
 
-/* ----------------------------- ResultArtists.js ----------------------------- */
+/* ----------------------------- ResultData.js ----------------------------- */
 #result-artist {
     margin-left: 10px;
 }#result-artist:hover {

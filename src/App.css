@@ -80,38 +80,50 @@ span.nav-button{
   width: 90%;
   caret-color:var(--pinkPastel);
 }
-.search_icon{
+.input_icon{
   height: 40px;
   width: 40px;
-  float: right;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  border: .5px solid var(--white);
   text-decoration:none;
-  background: white;
-  color: var(--pink);
-}
+  transition: all 0.25s;
+} #search_icon {
+    float: left;
+    background: #ffffff1f;
+    color: var(--white);
+  }#active_icon {
+    float: left;
+    background: var(--pinkPastel);
+    color: var(--black);
+  }#active_icon:hover {
+    background: var(--white);
+    color: var(--pink);
+  }#clear_icon {
+    position: absolute;
+    right:10px; top:10px;
+    color: var(--white);
+  }#clear_icon:hover {
+    background: #ffffff1f;
+  }
 
 /* ----------------------------- Result ----------------------------- */
 
 .filters {
   text-align: center;
   margin-bottom: 2rem;
-}
-.filters * {
+}.filters * {
   display: inline-block;
+  margin-bottom: 10px;
 }
 .filters button, .loadMore button {
   padding: 5px 30px;
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 50px;
-  min-width: 50px;
-  line-height: normal;
   cursor: pointer;
-  transition: all 0.1s;
+  transition: all 0.25s;
   background: var(--white);
 }.filters button {
   border: 2px solid  var(--black);
@@ -136,6 +148,7 @@ span.nav-button{
 /* ----------------------------- Artists ----------------------------- */
 
 .filters button#circle {
+  min-width: 50px;
   margin: 10px;
   padding: 9px 3px;
   border: 2px solid  var(--grayLight);

@@ -41,9 +41,13 @@ function Lyric() {
               <div className="tagLevel" id="title-lyric">
                 <TagLevels levelScore={title.readability_score}/>
               </div>
-            </Container>
+           </Container>
   };
-  //console.log(collectedWord);
+  function checkKatakana(surface, reading_form) {
+    if (surface !== reading_form) {
+      return toHiragana(reading_form, { passRomaji: true })
+    } return reading_form
+  }
 
   return (
     <div className="App">
@@ -82,7 +86,7 @@ function Lyric() {
                       return   <Tooltip key={i} 
                                         word={word.surface}  
                                         dic_form={word.dictionary_form} 
-                                        read_form={toHiragana(word.reading_form, { passRomaji: true })} //reading_form
+                                        read_form= {checkKatakana(word.surface,word.reading_form)}//reading_form
                                         poses={word.poses}
                                         onOpen={collectedWord => setCollectedWord(collectedWord)}
                                         isOpen={isOpen => setIsOpen(isOpen)}            

@@ -8,7 +8,7 @@ const BUTTON_MOBILE = { marginLeft: 5, marginRight: 5 }
 const alphabet = [ 'a','b','c','d','e','f','g','h','i','j','k','l','m',
                    'n','o','p','q','r','s','t','u','v','w','x','y','z','#' ]
 
-function Artists() {
+function Series() {
     const screenSize = useIsMobile()
     const [selectedAlpha, setSelectedAlpha] = useState(null)
 
@@ -28,7 +28,7 @@ function Artists() {
         <div className="App">
           <Container style={{ marginTop: 50, marginBottom: 50 }} > 
             <h1 className="font-bold">
-                ARTISTS {selectedAlpha && <strong style={{ color: "var(--pink)" }}>{selectedAlpha.toUpperCase()}</strong>}
+                SERIES {selectedAlpha && <strong style={{ color: "var(--pink)" }}>{selectedAlpha.toUpperCase()}</strong>}
             </h1>
             <Row style={{ marginTop: 30 }}>
                 <Col md={12}>
@@ -38,7 +38,7 @@ function Artists() {
                 </Col>
                 {selectedAlpha !== null && 
                   <Container style={{ marginTop: 0 }}>
-                    <ResultData src="artists" alphabet={selectedAlpha} />   
+                    <ResultData src="series" alphabet={selectedAlpha} />   
                   </Container> 
                 }    
             </Row> 
@@ -49,4 +49,4 @@ function Artists() {
     
 }
 
-export default Artists;
+export default Series;
