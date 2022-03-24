@@ -1,9 +1,14 @@
 .card {
-    margin-bottom: 8px;
-    padding-bottom: 10px;
+    border-radius: 20px !important;
+    margin-bottom: 10px; 
+/*} .card:hover { */
     border: none !important;
-}.card:hover {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    border-color: var(--white);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 50px;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px; */
+}
+.card-body {
+    text-align: left;
 }
 .title { /* LINK (use link) */
     font-size: 22px;
@@ -45,8 +50,7 @@
 }
 
 .tagLevel * {
-    display: inline-block;
-    height: 80%;
+    height: auto;
     margin-bottom: -10px;
     margin-right: 10px;
     font-family: 'Noto Sans JP', sans-serif;
@@ -57,9 +61,9 @@
     font-weight: 500;
     font-size: 16px;
     min-width: 150px;
-    border-radius: 0 0 15px 0;
-    padding-top: 10px;
-    line-height: 50px;
+    border-radius: 20px;
+    margin: 10px;
+    line-height: 80px;
 }
 #title-lyric p{
     font-size: 12px;
@@ -95,8 +99,9 @@ p#very-difficult, p#difficult{
     .tagLevel p{
         font-weight: 500;
         font-size: 16px;
-        min-width: 200px;
+        width: auto;
         padding-top: 0;
+        margin-bottom: 0;
         line-height: 30px;
     }
 }

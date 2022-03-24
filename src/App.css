@@ -9,6 +9,7 @@
   --white: white;
   --pinkPastel: #FFD8F3;
   --pinkLight: #FEE9F8;
+  --background: #f6f6f9;
 
   --easyBG: #D1FBE9;
   --easySRT: #0EBFBF;
@@ -22,7 +23,6 @@
   text-align: center;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-family: 'Noto Sans JP', sans-serif;
-  background-color: var(--white);
 }
 .font-light {
   font-weight: 100 !important;
@@ -76,11 +76,12 @@ span.nav-button{
   caret-color:transparent;
   line-height: 40px;
   transition: width 0.4s linear;
-  padding: 0 10px;
+  padding: 0 10px 0 30px;
   width: 90%;
   caret-color:var(--pinkPastel);
 }
 .input_icon{
+  position: absolute;
   height: 40px;
   width: 40px;
   display: flex;
@@ -90,10 +91,12 @@ span.nav-button{
   text-decoration:none;
   transition: all 0.25s;
 } #search_icon {
+    left:10px; top:10px;
     float: left;
     background: #ffffff1f;
     color: var(--white);
   }#active_icon {
+    left:10px; top:10px;
     float: left;
     background: var(--pinkPastel);
     color: var(--black);

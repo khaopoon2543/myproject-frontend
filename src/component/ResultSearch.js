@@ -209,11 +209,11 @@ export default function ResultSearch(props) {
         .slice(0, visible) //selected elements in an array
         .map((track, index) => {
           return (
-                <Card className='card flex-md-row flex-wrap' key={index}>
-                  <div className="tagLevel d-flex justify-content-start">
+                <Card className='flex-wrap flex-md-row' key={index}>
+                  <div className="tagLevel d-flex">
                     <TagLevels levelScore={track.readability_score}/>
                   </div>
-                    <Card.Body style={{ textAlign: 'left' }}>
+                    <Card.Body>
                       <Link to={"/lyric/" + track.artist_id + '/' + track.song_id} 
                         className='title' id="song"> 
                         <Highlighter
@@ -301,7 +301,7 @@ export default function ResultSearch(props) {
         {reallyShowList().length > 10 ?
           (<>
             {visible < reallyShowList().length &&
-              <div className="loadMore" style={{ marginTop: 20 }}>
+              <div className="loadMore" style={{ marginTop: 50 }}>
                 <button onClick={() => loadMore()}> Load More </button>
               </div>
             }
