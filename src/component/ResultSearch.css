@@ -11,12 +11,14 @@
     text-decoration: none;
     color: var(--gray);
 }
-.artist { /* BUTTONS (use navigate) */
+.artist { 
     font-size: 16px;
     font-weight: 300;
     text-decoration: none;
     color: var(--gray);
     padding: 0;
+}button .artist { /* BUTTONS (use navigate) */
+    font-weight: 400;
 }
 .subtitle {
     font-size: 14px;

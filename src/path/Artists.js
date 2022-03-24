@@ -17,7 +17,7 @@ function Artists() {
         for (var i = 0; i < alphabet.length; i++) { 
           const thisAlpha = alphabet[i]
           text.push(
-            <button id="circle" key={i} onClick={() => setSelectedAlpha(thisAlpha)}>
+            <button id="circle" key={i} onClick={() => setSelectedAlpha(thisAlpha) }>
               {thisAlpha.toUpperCase()} 
             </button>
           );

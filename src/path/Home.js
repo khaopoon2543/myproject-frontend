@@ -36,14 +36,16 @@ function Home (){
       return (
         <div className="App">
           
-          <p> {user.display_name} </p>
+          {/* <p> {user.display_name} </p> 
           <img className='thumbnail-image' src={user_image} alt=''></img>
           <p> {user.id} </p>
           <br/>
+          */}
 
           <Container style={{ marginTop: 50, marginBottom: 50 }}>
             <Row>
-              
+              <h1 className="font-bold">TOP 50 JAPAN</h1>
+
               {playlists.map((track, index) => {
                 return (
                   <Col md={4} key={index}>

@@ -20,16 +20,27 @@ export default function ResultSearch(props) {
   function IsLevel() { return props.level; } //level from SubLevel.js
   function IsSubArtists() { return props.subArtists; } //level from SubArtists.js
 
-  useEffect(() => {
+  const fetchResult = async () => {
     setLoading(true);
-    axios.get("/result" , { mode: 'cors', crossDomain: true })
-      .then((response) => {
-        setSongsList(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.log(error.response)
+    try {
+      const response = await axios.get('/result', 
+        { mode: 'cors', crossDomain: true,
+          params: { 
+            searchTerm : searchTerm,
+            searchArtist : IsArtistTerm(),             
+            filter : IsFilter(),             
+            level : IsLevel()
+          }
+        
       });
+      setSongsList(response.data)
+      setLoading(false);
+    } catch (error) { // catch error
+      throw new Error(error.message)
+    }
+  }
+  useEffect(() => {
+    fetchResult();
     }, []);
 
   function checkArtist(track) { return !track.singer ? track.artist : track.singer }

@@ -56,7 +56,7 @@ function SearchBar({ level }) {
     }
 
     return (
-      <div>
+      <div style={{zoom: '90%'}}> 
         <form onSubmit={onFormSubmit} className="searchbar" style={isMobileSizeBar()}>
           <input className="search_input"
               type="text" 

@@ -15,26 +15,14 @@ export default function ResultData(props) {
     const navigate = useNavigate ();
 
     useEffect(() => {
-      if (src==='artists') {
-        axios.get("/artists" , { mode: 'cors', crossDomain: true })
-          .then((response) => {
-            setDataList(response.data);
-            setLoading(!loading);
-          })
-          .catch(error => {
-            console.log(error.response)
-          });
-      }
-      if (src==='series') {
-        axios.get("/series" , { mode: 'cors', crossDomain: true })
-          .then((response) => {
-            setDataList(response.data);
-            setLoading(!loading);
-          })
-          .catch(error => {
-            console.log(error.response)
-          });
-      }
+      axios.get(`/${src}` , { mode: 'cors', crossDomain: true })
+        .then((response) => {
+          setDataList(response.data);
+          setLoading(!loading);
+        })
+        .catch(error => {
+          console.log(error.response)
+        });
     }, []);
     
     function filterData() {
@@ -120,32 +108,28 @@ export default function ResultData(props) {
     }
 
     return (
+      
       <React.Fragment>
-        {loading ? ( 
-          <Spinner animation="border" />
-        ) : ( 
-        <>
-          <Col md={12}>
-            {filterData().length > 0 ? (showList()) 
-            : (<>{ alphabet === null && null }</>)
-            }
-
-        {filterData().length > 10 ? //loading
-          (<> {visible < filterData().length &&
-                <div className="loadMore" style={{ marginTop: 20 }}>
-                  <button onClick={() => loadMore()}> Load More </button>
-                </div>
-          }</>)
-        : null
+        {loading ? 
+          ( 
+            <Spinner animation="border" />
+          ) : 
+          ( <>
+            <Col md={12}>
+              {filterData().length > 0 ? (showList()) 
+              : (<>{ alphabet === null && null }</>)
+              }
+              {filterData().length > 10 ? //loading
+                (<> {visible < filterData().length &&
+                      <div className="loadMore" style={{ marginTop: 20 }}>
+                        <button onClick={() => loadMore()}> Load More </button>
+                      </div>
+                }</>)
+                : null
+              }
+            </Col>
+          </>)
         }
-
-          </Col>
-        </>
-      )
-    
-    }
-    </React.Fragment>
-    )
-
-
+      </React.Fragment>  
+    ) 
 }

@@ -61,8 +61,8 @@ export default function PopupDict({ dictList, isOpen }) {
         <>
         <div className="sidebar">
           <div id="header" className="d-flex justify-content-left align-items-center">
-            <h2 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h2>
-            <h2 className="font-light">({isReadForm(dictList)})</h2>
+            <h1 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h1>
+            <h3 className="font-light">({isReadForm(dictList)})</h3>
           </div>
           <div className="scroll">       
             {mapDict}

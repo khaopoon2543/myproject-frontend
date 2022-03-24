@@ -56,7 +56,7 @@ function Lyric() {
       ) : (
         <>
         <Title />
-        <Container style={{ marginBottom: 50, marginLeft: screenSize ? 10 : 50 }} fluid="lg">
+        <Container style={{ marginBottom: 50 }} fluid="lg"> {/* marginLeft: screenSize ? 10 : 50 */}
           <Row>  
             {screenSize===false &&
               <Col md={5} lg={5} style={{ marginTop: 50 }}>
