@@ -49,23 +49,26 @@ export default function Popup({ open, children, onClose }) {
     
     const [dataTrack, setDataTrack] = useState([])
     const [song_image, setSong_image] = useState([])
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     //get data from spotify api
     useEffect(() => {
-      axios.get("/playing", { mode: 'cors', crossDomain: true }) 
-          .then((response) => {
-              //song data
-              setDataTrack(response.data);
-              //user profile image
-              setSong_image(response.data.image);
-              setLoading(!loading);
+        if ( open ) {
+            setLoading(true);
+            axios.get("/playing", { mode: 'cors', crossDomain: true }) 
+                .then((response) => {
+                    //song data
+                    setDataTrack(response.data);
+                    //user profile image
+                    setSong_image(response.data.image);
+                    setLoading(false);
 
-          })
-          .catch(error => {
-              console.log(error.response)
-          });
-    }, []);
+                })
+                .catch(error => {
+                    console.log(error.response)
+                });
+        }
+    }, [ open ]);
     
     //navigate to Result.js
     const navigate = useNavigate ();
@@ -93,8 +96,6 @@ export default function Popup({ open, children, onClose }) {
                     <span>
                         <button onClick={() => { onClose(); onFormSubmit(); }}> 
                         <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> Kashify </button>
-                        <button onClick={refreshPage}> 
-                        <FontAwesomeIcon icon="fa-solid fa-arrow-rotate-right" /></button>
                     </span>
                   </div>
                 </div>

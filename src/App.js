@@ -10,9 +10,8 @@ import Result from "./path/Result";
 import Header from "./component/Navbar";
 import SpotifyButton from "./component/SpotifyButton";
 import SubLevels from "./path/SubLevels";
-import Artists from "./path/Artists";
-import SubArtists from "./path/SubArtists";
-import Series from "./path/Series";
+import Data from "./path/Data";
+import SubData from "./path/SubData";
 import About from "./path/About";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -58,9 +57,11 @@ function App(){
           <Route path="/result=:searchTerm" element={ <Result/> } />
           <Route path="/levels" element={ <Levels/> } />
           <Route path="/levels/:subLevels" element={ <SubLevels/> } />
-          <Route path="/artists" element={ <Artists/> } />
-          <Route path="/artists/:subArtists" element={ <SubArtists/> } />
-          <Route path="/series" element={ <Series/> } />
+          <Route path="/artists" element={ <Data src="artists" /> } />
+          <Route path="/artists/:subArtists" element={ <SubData/> } />
+          <Route path="/series" element={ <Data src="series"/> } />
+          <Route path="/series/:subSeries" element={ <SubData/> } />
+
 
           <Route path="/about" element={ <About/> } />
         </Routes>

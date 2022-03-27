@@ -15,6 +15,7 @@ function Result() {
     function showLyric() { setSelectedFilter('lyric') }
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
+    function showSeries() { setSelectedFilter('series') }
     console.log(selectedFilter)
     function isFocus(filter) {
       if (selectedFilter === filter){
@@ -45,6 +46,7 @@ function Result() {
                 <button onClick={() => showALL()} id={isFocus('all')}>Song・Artist</button>
                 <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
                 <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
+                <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>
                 <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
               </div>   
             </Container>

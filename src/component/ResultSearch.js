@@ -10,154 +10,58 @@ export default function ResultSearch(props) {
 
   const [songs_list, setSongsList] = useState([])
   const [loading, setLoading] = useState(false);
-  const [visible, setVisible] = useState(6);
+  const [visible, setVisible] = useState(20);
+  function loadMore() { setVisible(visible + 10) }
   const navigate = useNavigate ();
   
   //get props from SearchForm.js or Result.js
-  const searchTerm = props.searchTerm;
-  function IsArtistTerm() { return props.searchArtist; }
-  function IsFilter() { return props.filter; } //all lyric song spotify
-  function IsLevel() { return props.level; } //level from SubLevel.js
-  function IsSubArtists() { return props.subArtists; } //level from SubArtists.js
+  const searchTerm = props.searchTerm && props.searchTerm.replace(/\s\s+/g, ' ');
+  const searchArtist = props.searchArtist;
+  const filter = props.filter; //all lyric song spotify
+  const level = props.level; //level from SubLevel.js
+  const subArtists = props.subArtists; //subArtists from SubData.js
+  const subSeries = props.subSeries; //subSeries from SubData.js
 
-  const fetchResult = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('/result', 
-        { mode: 'cors', crossDomain: true,
-          params: { 
-            searchTerm : searchTerm,
-            searchArtist : IsArtistTerm(),             
-            filter : IsFilter(),             
-            level : IsLevel()
-          }
-        
-      });
-      setSongsList(response.data)
-      setLoading(false);
-    } catch (error) { // catch error
-      throw new Error(error.message)
-    }
-  }
   useEffect(() => {
-    fetchResult();
-    }, []);
-
-  function checkArtist(track) { return !track.singer ? track.artist : track.singer }
-  function loadMore() { setVisible(visible + 10) }
-
-  //from spotify
-  function spotifyAll() {
-    const spotifyList = IsArtistTerm() ? songs_list
-      .filter((track) => {
-        if ((
-          checkArtist(track).toLowerCase().includes(IsArtistTerm().toLowerCase())
-          || track.artist_id.replaceAll("-", " ").includes(IsArtistTerm().toLowerCase())
-        )&&(
-          track.name.toLowerCase().includes(searchTerm.toLowerCase())
-          || track.song_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-        )){ return track } 
-      }) : null;
-    return spotifyList
-  }
-  function spotifyArtist() {
-    const spotifyArtistList = IsArtistTerm() ? songs_list
-      .filter((track) => {
-        if ((checkArtist(track).toLowerCase().includes(IsArtistTerm().toLowerCase())
-            || track.artist_id.replaceAll("-", " ").includes(IsArtistTerm().toLowerCase())
-            )){ return track } 
-      }) : null;
-    return spotifyArtistList
-  }
-
-  //(default) from SearchForm
-  function filterAll() {
-    const allList = songs_list
-      .filter((track) => {
-        if (searchTerm == "") { return "" } 
-        else if (track.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-                || checkArtist(track).toLowerCase().includes(searchTerm.toLowerCase())
-                || track.artist_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-                || track.song_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-                ){ return track }
-      })
-    return allList
-  }
-  function filterArtist() {
-    const artistList = songs_list
-      .filter((track) => {
-        if (searchTerm == "") { return "" } 
-        else if ((checkArtist(track).toLowerCase().includes(searchTerm.toLowerCase())
-                || track.artist_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-                || track.artist_id.includes(searchTerm.toLowerCase()) //search from SubArtist.js
-                )){ return track } 
-      })
-    return artistList
-  }
-  function filterSeries() {
-    const seriesList = songs_list
-      .filter((track) => {
-        if (searchTerm == "") { return "" } 
-        else if ((track.series.id.toLowerCase().includes(searchTerm.toLowerCase())
-                || track.series.name.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-                || track.series.id.includes(searchTerm.toLowerCase()) //search from SubSeries.js
-                )){ return track }
-      })
-    return seriesList
-  }
-  function filterSong() {
-    const tracksList = songs_list
-      .filter((track) => {
-        if (searchTerm == "") { return "" } 
-        else if ((track.name.toLowerCase().includes(searchTerm.toLowerCase())
-                || track.song_id.replaceAll("-", " ").includes(searchTerm.toLowerCase())
-                )){ return track } 
-      })
-    return tracksList
-  }
-  function filterLyric() {
-    const lyricsList = songs_list
-      .filter((track) => {
-        if (searchTerm == "") { return "" } 
-        else if (findWordAndNeighbours(searchTerm, track.lyric)) { return track } 
-      })
-    return lyricsList
-  }
-
-  //check is spotifyAll()?
-  function isFormSpotify() {
-    const spotifyList = spotifyAll()
-    const spotifyArtistList = spotifyArtist()
-    if(spotifyList && spotifyList.length > 0) {
-      return spotifyList
-    } else if(spotifyArtistList && spotifyArtistList.length > 0) {
-      return spotifyArtistList
-    } return filterAll()
-  }
-
-  //select list will show?!
-  function isShowList() {
-    const filter = IsFilter()
-    if (filter === 'lyric') {
-      return filterLyric()
-    }else if (filter === 'song') {
-      return filterSong()
-    }else if (filter === 'artist') {
-      return filterArtist()
-    }else if (filter === 'spotify') { //from Spotify
-      return isFormSpotify()
-    }else if (filter === 'show') { //from Spotify
-      return songs_list //show result (no searchTerm) at SubLevel.js
+    if ( filter,searchTerm ) {
+      setLoading(true);
+      axios.get('/result' , { mode: 'cors', crossDomain: true,
+                  params: { searchTerm : searchTerm,
+                            searchArtist : searchArtist,             
+                            filter : filter,             
+                            level : level }
+              })
+              .then((response) => {
+                setSongsList(response.data);
+                setLoading(false);
+              })
+              .catch(error => {
+                console.log(error.response)
+              });
     }
-    return filterAll() //default filter 'all'
-  } 
+  }, [ filter,searchTerm ]);
+
+  useEffect(() => { //from SubLevels.js
+    if ( filter==='show' ) {
+      setLoading(true);
+      axios.get('/result' , { mode: 'cors', crossDomain: true,
+                  params: { filter : filter }            
+              })
+              .then((response) => {
+                setSongsList(response.data);
+                setLoading(false);
+              })
+              .catch(error => {
+                console.log(error.response)
+              });
+    }
+  }, [ filter ]);
 
   //test Regex
   function findWordAndNeighbours(searchTerm, lyric) {
     if (searchTerm == "" || !lyric) {
         return false;
-    }
-    else {
+    } else {
         var re = new RegExp('((\\S+[\\b\\s]?)' + searchTerm + '([\\b\\s]?\\S+))', 'i'),
         matches = lyric.match(re);
         if (matches) {
@@ -167,8 +71,6 @@ export default function ResultSearch(props) {
         }
     }
   }
-  //const ii = "だあれも知らない私の\nホントの生まれた意味など\n秘密の部屋で作られた\n化学によく似た夜から"
-  //console.log(findWordAndNeighbours(searchTerm, ii))
 
   function checkLevel(levelScore) {
     if (0.5 <= levelScore && levelScore <= 1.49) {
@@ -186,16 +88,40 @@ export default function ResultSearch(props) {
   }
 
   function reallyShowList() {
-    const songs_list = isShowList()
     const tracksList = songs_list
       .filter((track) => {
-        if (IsLevel()) { 
-          if (checkLevel(track.readability_score) === IsLevel()) { return track } 
+        if (level) { 
+          if (checkLevel(track.readability_score) === level) { return track } 
           else { return null }
         } 
         else { return track }
       })
     return tracksList
+  }
+
+  function isOnlyNameSeries(track) {
+    if (track.series_info) {
+        return (
+          <><br/>
+            「{track.series_info.type}」
+
+            {!subSeries ? 
+              <button className='artist' id="artist"
+                onClick={event => { navigate('/series/'+ track.series.id.replaceAll(" ","-"),
+                { state: { seriesName: track.series_info.name } }) 
+                event.preventDefault()}}
+              > {track.series_info.name} &nbsp; 
+              </button>
+            : <>{track.series_info.name} &nbsp;</>
+            }
+
+              {track.series.theme}
+          </>
+    )} else if (track.series && track.series.name) { 
+        return (
+          <><br/>{track.series.name}</>
+    )}  console.log(track.name , track.series)
+        return null 
   }
 
   return (
@@ -209,12 +135,12 @@ export default function ResultSearch(props) {
         .slice(0, visible) //selected elements in an array
         .map((track, index) => {
           return (
-                <Card className='flex-wrap flex-md-row' key={index}>
+                <Card className='lyric flex-wrap flex-md-row' key={index}>
                   <div className="tagLevel d-flex">
                     <TagLevels levelScore={track.readability_score}/>
                   </div>
                     <Card.Body>
-                      <Link to={"/lyric/" + track.artist_id + '/' + track.song_id} 
+                      <Link to={"/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")} 
                         className='title' id="song"> 
                         <Highlighter
                             highlightClassName='highlight'
@@ -229,21 +155,21 @@ export default function ResultSearch(props) {
                           highlightClassName='highlight'
                           searchWords={[searchTerm]}
                           autoEscape={true}
-                          textToHighlight={track.song_id.replace(/-/g, ' ')}
-                        > {track.song_id.replace(/-/g, ' ')}
+                          textToHighlight={track.song_id}
+                        > {track.song_id}
                         </Highlighter>
                       )</span> 
                       <br/>
 
-                      {!IsSubArtists() ?
+                      {!subArtists ?
                         <>
                         <button className='artist' id="artist" 
-                          onClick={event => { navigate('/artists/'+ track.artist_id,
+                          onClick={event => { navigate('/artists/'+ track.artist_id.replaceAll(" ","-"),
                           { state: { artistName: !track.singer ? track.artist : track.singer } }) 
                           event.preventDefault()}}
                         > <Highlighter
                             highlightClassName='highlightArtist'
-                            searchWords={[searchTerm,IsArtistTerm()]}
+                            searchWords={[searchTerm,searchArtist]}
                             autoEscape={true}
                             textToHighlight={!track.singer ? track.artist : track.singer}
                           > <p>{!track.singer ? track.artist : track.singer}</p>
@@ -254,24 +180,24 @@ export default function ResultSearch(props) {
                             highlightClassName='highlightArtist'
                             searchWords={[searchTerm]}
                             autoEscape={true}
-                            textToHighlight={track.artist_id.replace(/-/g, ' ')}
-                            > {track.artist_id.replace(/-/g, ' ')}
+                            textToHighlight={track.artist_id}
+                            > {track.artist_id}
                           </Highlighter>)
                         </span> 
                         </>
-                      : //IsSubArtists() === true
+                      : //subArtists === true
                         <>
-                        <button className='artist' id="sub-artist">
+                        <button className='artist' id="sub-data">
                           <p>{!track.singer ? track.artist : track.singer}</p>
                         </button>
-                        <button className='subtitle' id="sub-artist">
-                          {track.artist_id.replace(/-/g, ' ')}
+                        <button className='subtitle' id="sub-data">
+                          {track.artist_id}
                         </button> 
                         </>
                       }
 
-                      <br/>
-                      { IsFilter() === 'lyric' ?
+                      { filter === 'lyric' ?
+                      <><br/>
                       <Highlighter
                         highlightClassName='highlight'
                         searchWords={[searchTerm]}
@@ -280,9 +206,10 @@ export default function ResultSearch(props) {
                         > <span className='subtitle'>
                           {findWordAndNeighbours(searchTerm, track.lyric)}
                           </span>
-                      </Highlighter> 
-
+                      </Highlighter></> 
                       : null}
+
+                      {filter === "series" && isOnlyNameSeries(track)}
                     
                   </Card.Body>
                 </Card>

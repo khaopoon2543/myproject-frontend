@@ -2,10 +2,6 @@
   background:  var(--white) ;
   font-family: 'Noto Sans JP', sans-serif;
 }
-.NavbarItems *{
-  background:  var(--white) ;
-}
-
 .navbar-logo {
   font-family: 'Monoton', cursive;
   font-size: 30px;

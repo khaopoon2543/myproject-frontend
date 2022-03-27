@@ -114,8 +114,8 @@ p#very-difficult, p#difficult{
     border-bottom: none !important;
 }
 
-/* ----------------------------- SubArtists.js ----------------------------- */
-#sub-artist:hover {
+/* ----------------------------- SubData.js ----------------------------- */
+#sub-data:hover {
     color: none;
     border-bottom: 1px solid var(--white);
     cursor: text;

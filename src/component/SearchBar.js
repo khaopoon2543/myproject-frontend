@@ -89,7 +89,12 @@ function SearchBar({ level }) {
         }
         
           <Container style={{ marginTop: 10 }}>
-            <ResultData src="artists" searchTerm={typing!=='' && typing} />   
+            {selectedFilter==='artist' &&
+              <ResultData src="artists" searchTerm={typing!=='' && typing} />   
+            }
+            {selectedFilter==='series' &&
+              <ResultData src="series" searchTerm={typing!=='' && typing} />   
+            }
             <ResultSearch searchTerm={typing!=='' && typing} filter={!level ? selectedFilter : showResultSubLevel()} level={!level ? null : level} />
           </Container>  
       

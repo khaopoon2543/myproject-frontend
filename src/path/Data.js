@@ -8,7 +8,8 @@ const BUTTON_MOBILE = { marginLeft: 5, marginRight: 5 }
 const alphabet = [ 'a','b','c','d','e','f','g','h','i','j','k','l','m',
                    'n','o','p','q','r','s','t','u','v','w','x','y','z','#' ]
 
-function Series() {
+function Data(props) { // ARTISTS & SERIES
+    const src = props.src
     const screenSize = useIsMobile()
     const [selectedAlpha, setSelectedAlpha] = useState(null)
 
@@ -17,7 +18,7 @@ function Series() {
         for (var i = 0; i < alphabet.length; i++) { 
           const thisAlpha = alphabet[i]
           text.push(
-            <button id="circle" key={i} onClick={() => setSelectedAlpha(thisAlpha)}>
+            <button id="circle" key={i} onClick={() => setSelectedAlpha(thisAlpha) }>
               {thisAlpha.toUpperCase()} 
             </button>
           );
@@ -28,7 +29,7 @@ function Series() {
         <div className="App">
           <Container style={{ marginTop: 50, marginBottom: 50 }} > 
             <h1 className="font-bold">
-                SERIES {selectedAlpha && <strong style={{ color: "var(--pink)" }}>{selectedAlpha.toUpperCase()}</strong>}
+                {src.toUpperCase()} {selectedAlpha && <strong style={{ color: "var(--pink)" }}>{selectedAlpha.toUpperCase()}</strong>}
             </h1>
             <Row style={{ marginTop: 30 }}>
                 <Col md={12}>
@@ -38,15 +39,13 @@ function Series() {
                 </Col>
                 {selectedAlpha !== null && 
                   <Container style={{ marginTop: 0 }}>
-                    <ResultData src="series" alphabet={selectedAlpha} />   
+                    <ResultData src={src} alphabet={selectedAlpha} />   
                   </Container> 
                 }    
             </Row> 
             
           </Container>
         </div>
-    );
-    
+    );   
 }
-
-export default Series;
+export default Data;
