@@ -7,14 +7,19 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 50px;
     /* box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px; */
 }
+a:link, a:hover { /* LINK (in ResultSearch.js) */
+    text-decoration: none;
+}
 .card-body {
     text-align: left;
 }
-.title { /* LINK (use link) */
+.title {
     font-size: 22px;
     font-weight: 400;
     text-decoration: none;
     color: var(--gray);
+}button#song.title { /* BUTTONS (use navigate in ResultSearch.js) */
+    padding: 0;
 }
 .artist { 
     font-size: 16px;
@@ -22,8 +27,11 @@
     text-decoration: none;
     color: var(--gray);
     padding: 0;
-}button .artist { /* BUTTONS (use navigate) */
+}button .artist { /* BUTTONS (use navigate in ResultData.js) */
     font-weight: 400;
+    font-size: 20px;
+    margin: 0;
+    margin-bottom: 5px;
 }
 .subtitle {
     font-size: 14px;
@@ -32,26 +40,24 @@
     color: var(--grayLight)
 }
 #song:hover {
-    color: var(--pink);
-    border-bottom: 1px solid var(--pink);
+    color: var(--black);
+    text-decoration: underline solid var(--black) 1px;
 }#artist:hover {
-    color: var(--blue);
-    border-bottom: 1px solid var(--blue);
+    color: var(--black);
+    /* border-bottom: 1px solid var(--black); */
+    text-decoration: underline solid var(--black) 1px;
 }
 
-.highlight {
-    font-weight: bold;
-    color: var(--pink);
-    background: none
-}.highlightArtist {
-    font-weight: bold;
-    color: var(--blue);
-    background: none
+.highlight, .highlightArtist {
+    font-weight: 400;
+    color: var(--black);
+    background: var(--pinkLight);
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .tagLevel * {
     height: auto;
-    margin-bottom: -10px;
     margin-right: 10px;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 500;
@@ -64,13 +70,6 @@
     border-radius: 20px;
     margin: 10px;
     line-height: 80px;
-}
-#title-lyric p{
-    font-size: 12px;
-    border-radius: 25px;
-    padding-top: 0px;
-    line-height: 30px;
-
 }
  /* tagLevel old design
  .tagLevel p{ 
@@ -115,8 +114,23 @@ p#very-difficult, p#difficult{
 }
 
 /* ----------------------------- SubData.js ----------------------------- */
-#sub-data:hover {
+#title-lyric p{ 
+    font-weight: 600;
+    letter-spacing: 1px;
+    width: 80px;
+    margin: 0 auto;
+    font-size: 14px;
+    border-radius: 25px;
+    padding-top: 0px;
+    line-height: 30px;
+} p#sub-data { 
+    color: var(--grayLight);
+}
+span#sub-data {
+    font-weight: 400;
+    color: var(--grayLight);
+} #sub-data:hover {
     color: none;
-    border-bottom: 1px solid var(--white);
+    border-bottom: none;
     cursor: text;
 }

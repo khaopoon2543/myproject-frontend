@@ -146,6 +146,8 @@ span.nav-button{
   box-shadow: var(--pinkPastel) 0px 0px 50px;
   background: var(--black);
   color: var(--white);
+  transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
+
 }
 
 /* ----------------------------- Artists ----------------------------- */
@@ -176,7 +178,7 @@ div#lyric{
   text-align: left;
   font-weight: 300;
   line-height: 1.5;
-  font-size: 22px;
+  font-size: 20px;
   letter-spacing: 1px;
 }
 div#lyric span{
@@ -208,10 +210,23 @@ button.pink-text {
     color: white;
     background: var(--pink);
 }
+@media only screen and (max-width: 768px) {
+  div#lyric{
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 2;
+    margin-left: 10px;
+  }
+  button.pink-text {
+    margin-bottom: 10px; /* line height lyric */
+  }
+}
+
 
 /* -------------- sidebar-dict -------------- */
 #dict.card {
-  color: var(--grayLight)
+  color: var(--grayLight);
+  border-radius: 0 !important;
 }
 .sidebar .card {
   margin-top: 0px;
@@ -224,7 +239,11 @@ button.pink-text {
   position: sticky;
   text-align: left;
   top: 220px;
-}.scroll {
+}
+#no-scroll {
+  margin-right: 10px;
+}
+.scroll {
   overflow-y: scroll;
   height: 50vh;
 }.sidebar #header{
@@ -248,7 +267,7 @@ button.pink-text {
   background: var(--pinkPastel); 
 }
 
-.scroll .card:hover {
+.scroll .card {
   box-shadow: none !important;
 }
 #dictTh {
@@ -257,17 +276,14 @@ button.pink-text {
 }#dictEn {
   font-size: 16px;
 }
-#tagPos span{ 
+span#tagPos{ 
+  display: inline-block;
   font-weight: 600;
   font-size: 12px;
   padding: 3px 20px;
-  margin-top: 10px;
-  margin-bottom: 20px;
   margin-right: 5px;
   border-radius: 50px;
   min-width: 50px;
-  line-height: normal;
-  transition: all 0.1s;
   color: var(--diffSRT);
   background: var(--diffBG);
 } 
@@ -287,16 +303,22 @@ button.pink-text {
     background-color: var(--white);
     margin-top: -30px;
     margin-bottom: 50px;
+    padding: 20px;
     padding-left: 0;
     padding-right: 0;
     border-radius: 0px;
-    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+    box-shadow: var(--pinkLight) 0 10px 2px -2px;
   }
-  #tagPos span{ 
-    font-size: 12px;
+  span#tagPos{ 
+    font-size: 10px;
     text-align: center;
-    padding: 5px 30px !important;
+    padding: 5px 20px !important;
     margin-right: 10px !important;
+  }
+  #dictTh {
+    font-size: 16px;
+  }#dictEn {
+    font-size: 14px;
   }
 }
 
@@ -322,8 +344,8 @@ button.pink-text {
  .banner button {
   background-color: #ffffff1f;
   border-radius: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
   font-size: 16px;
   padding-left: 20px;
   padding-right: 20px;
@@ -342,6 +364,9 @@ button.pink-text {
    .banner button {
     font-size: 12px;
     padding: 0.5em;
-    margin-top: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    letter-spacing: 2px;
+    margin-top: 10px;
    }
   }

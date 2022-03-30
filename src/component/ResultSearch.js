@@ -23,7 +23,7 @@ export default function ResultSearch(props) {
   const subSeries = props.subSeries; //subSeries from SubData.js
 
   useEffect(() => {
-    if ( filter,searchTerm ) {
+    if ( filter || searchTerm || filter, searchTerm ) {
       setLoading(true);
       axios.get('/result' , { mode: 'cors', crossDomain: true,
                   params: { searchTerm : searchTerm,
@@ -39,13 +39,14 @@ export default function ResultSearch(props) {
                 console.log(error.response)
               });
     }
-  }, [ filter,searchTerm ]);
+  }, [ filter || searchTerm || filter, searchTerm ]);
 
-  useEffect(() => { //from SubLevels.js
-    if ( filter==='show' ) {
+  useEffect(() => {
+    if ( filter==='show' && level) {
       setLoading(true);
       axios.get('/result' , { mode: 'cors', crossDomain: true,
-                  params: { filter : filter }            
+                  params: { filter : filter,             
+                            level : level }
               })
               .then((response) => {
                 setSongsList(response.data);
@@ -55,14 +56,14 @@ export default function ResultSearch(props) {
                 console.log(error.response)
               });
     }
-  }, [ filter ]);
+  }, [ filter && level ]);
 
   //test Regex
   function findWordAndNeighbours(searchTerm, lyric) {
     if (searchTerm == "" || !lyric) {
         return false;
     } else {
-        var re = new RegExp('((\\S+[\\b\\s]?)' + searchTerm + '([\\b\\s]?\\S+))', 'i'),
+        var re = new RegExp('((?:^|[\r\n]|\\S+[\\b\\s]?)' + searchTerm + '(?:$|[\r\n]|[\\b\\s]?\\S+))', 'i'),
         matches = lyric.match(re);
         if (matches) {
           var foundWords = lyric.match(re)[0].split(/\s+/),
@@ -86,7 +87,7 @@ export default function ResultSearch(props) {
     }
     return 'very-easy'
   }
-
+ 
   function reallyShowList() {
     const tracksList = songs_list
       .filter((track) => {
@@ -99,29 +100,98 @@ export default function ResultSearch(props) {
     return tracksList
   }
 
-  function isOnlyNameSeries(track) {
+  function isOnlyNameSeries(track) { //filter Series
     if (track.series_info) {
         return (
-          <><br/>
-            「{track.series_info.type}」
-
-            {!subSeries ? 
-              <button className='artist' id="artist"
-                onClick={event => { navigate('/series/'+ track.series.id.replaceAll(" ","-"),
-                { state: { seriesName: track.series_info.name } }) 
-                event.preventDefault()}}
-              > {track.series_info.name} &nbsp; 
-              </button>
-            : <>{track.series_info.name} &nbsp;</>
-            }
-
-              {track.series.theme}
+          <>
+            <br/>
+              <span id="sub-data">「{track.series_info.type}」</span>
+              {!subSeries ? 
+                <button className='artist' id="artist"
+                  onClick={event => { navigate('/series/'+ track.series.id.replaceAll(" ","-"),
+                  { state: { seriesName: track.series_info.name } }) 
+                  event.preventDefault()}}
+                > {track.series_info.name} &nbsp; 
+                </button>
+              
+              : //subSeries === true
+                <span id="sub-data">{track.series_info.name} &nbsp;</span>
+              }
+              <span id="sub-data">{track.series.theme}</span>
           </>
-    )} else if (track.series && track.series.name) { 
-        return (
-          <><br/>{track.series.name}</>
-    )}  console.log(track.name , track.series)
-        return null 
+        )
+    } else if (track.series && track.series.name) { 
+        return ( <><br/>{track.series.name}</>)
+    }  return null 
+        //if change filter from another to 'series' & searchTerm no result in 'series'
+        //then app NOT setState(setSongsList) in useEffect!!
+  }
+
+  function highlight(searchTerm, track, type) {
+    if (type==='title-subtitle-song') { //----------------------- title-subtitle-song ----------------------- //
+      return(
+        <>
+        <button className='title' id="song" 
+          onClick={event => {navigate("/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")) 
+          event.preventDefault()}}
+        > <Highlighter
+            highlightClassName='highlight'
+            searchWords={[searchTerm]}
+            autoEscape={true}
+            textToHighlight={track.name}
+          > <h3 className='title' id="song">{track.name}</h3> 
+          </Highlighter>
+        </button>
+        <span className='subtitle'>
+        (<Highlighter
+            highlightClassName='highlight'
+            searchWords={[searchTerm]}
+            autoEscape={true}
+            textToHighlight={track.song_id}
+        > {track.song_id}
+        </Highlighter>
+        )</span> 
+        </>
+      )
+    } else if (type==='title-subtitle-artist') { //----------------------- title-subtitle-artist ----------------------- //
+      return(
+        <>
+        <button className='artist' id='artist'
+          onClick={event => { navigate("/artists/"+ track.artist_id.replaceAll(" ","-"),
+          { state: { artistName: !track.singer ? track.artist : track.singer } }) 
+          event.preventDefault()}}
+        > <Highlighter
+            highlightClassName='highlightArtist'
+            searchWords={[searchTerm,searchArtist]}
+            autoEscape={true}
+            textToHighlight={!track.singer ? track.artist : track.singer}
+          > <p>{!track.singer ? track.artist : track.singer}</p>
+          </Highlighter>
+        </button> 
+        <span className='subtitle'>
+          (<Highlighter
+            highlightClassName='highlightArtist'
+            searchWords={[searchTerm]}
+            autoEscape={true}
+            textToHighlight={track.artist_id}
+            > {track.artist_id}
+          </Highlighter>)
+        </span>
+        </>
+      )
+    } else if (type==='lyric') { //----------------------- lyric ----------------------- //
+      return(
+        <Highlighter
+          highlightClassName='highlight'
+          searchWords={[searchTerm]}
+          autoEscape={true}
+          textToHighlight={findWordAndNeighbours(searchTerm, track.lyric)}
+          > <span className='subtitle'>
+            {findWordAndNeighbours(searchTerm, track.lyric)}
+            </span>
+        </Highlighter>
+      )
+    }
   }
 
   return (
@@ -130,98 +200,49 @@ export default function ResultSearch(props) {
       <Spinner animation="border" />
       ) : ( 
       <><Col md={12}>
-      {reallyShowList().length > 0 ? (
-        reallyShowList()
-        .slice(0, visible) //selected elements in an array
-        .map((track, index) => {
-          return (
-                <Card className='lyric flex-wrap flex-md-row' key={index}>
-                  <div className="tagLevel d-flex">
-                    <TagLevels levelScore={track.readability_score}/>
-                  </div>
-                    <Card.Body>
-                      <Link to={"/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")} 
-                        className='title' id="song"> 
-                        <Highlighter
-                            highlightClassName='highlight'
-                            searchWords={[searchTerm]}
-                            autoEscape={true}
-                            textToHighlight={track.name}
-                        > <h3 className='title' id="song">{track.name}</h3> 
-                        </Highlighter>
-                      </Link>
-                      <span className='subtitle'>
-                      (<Highlighter
-                          highlightClassName='highlight'
-                          searchWords={[searchTerm]}
-                          autoEscape={true}
-                          textToHighlight={track.song_id}
-                        > {track.song_id}
-                        </Highlighter>
-                      )</span> 
-                      <br/>
 
-                      {!subArtists ?
-                        <>
-                        <button className='artist' id="artist" 
-                          onClick={event => { navigate('/artists/'+ track.artist_id.replaceAll(" ","-"),
-                          { state: { artistName: !track.singer ? track.artist : track.singer } }) 
-                          event.preventDefault()}}
-                        > <Highlighter
-                            highlightClassName='highlightArtist'
-                            searchWords={[searchTerm,searchArtist]}
-                            autoEscape={true}
-                            textToHighlight={!track.singer ? track.artist : track.singer}
-                          > <p>{!track.singer ? track.artist : track.singer}</p>
-                          </Highlighter>
-                        </button>
-                        <span className='subtitle'>
-                          (<Highlighter
-                            highlightClassName='highlightArtist'
-                            searchWords={[searchTerm]}
-                            autoEscape={true}
-                            textToHighlight={track.artist_id}
-                            > {track.artist_id}
-                          </Highlighter>)
-                        </span> 
-                        </>
-                      : //subArtists === true
-                        <>
-                        <button className='artist' id="sub-data">
-                          <p>{!track.singer ? track.artist : track.singer}</p>
-                        </button>
-                        <button className='subtitle' id="sub-data">
-                          {track.artist_id}
-                        </button> 
-                        </>
-                      }
+        {reallyShowList().length > 0 ? (
+          reallyShowList()
+          .slice(0, visible) //selected elements in an array
+          .map((track, index) => {
+            return (
+            <Link key={index} to={"/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")}>
+              <Card className='lyric flex-wrap flex-md-row'>
+                <div className="tagLevel d-flex">
+                  <TagLevels levelScore={track.readability_score}/>
+                </div>
+                <Card.Body>
+                  {highlight(searchTerm, track, 'title-subtitle-song')}
+                  <br/>
 
-                      { filter === 'lyric' ?
-                      <><br/>
-                      <Highlighter
-                        highlightClassName='highlight'
-                        searchWords={[searchTerm]}
-                        autoEscape={true}
-                        textToHighlight={findWordAndNeighbours(searchTerm, track.lyric)}
-                        > <span className='subtitle'>
-                          {findWordAndNeighbours(searchTerm, track.lyric)}
-                          </span>
-                      </Highlighter></> 
-                      : null}
+                  {(!subArtists || track.singer) ?
+                    highlight(searchTerm, track, 'title-subtitle-artist')
+                  : //subArtists === true
+                    <>
+                      <span id="sub-data">{!track.singer ? track.artist : track.singer}</span>
+                    </>
+                  }
 
-                      {filter === "series" && isOnlyNameSeries(track)}
-                    
-                  </Card.Body>
-                </Card>
-          )
-        })
+                  {filter==='lyric' ?
+                    <><br/>
+                      {highlight(searchTerm, track, 'lyric')}
+                    </>
+                  : null
+                  }
+
+                  {filter==="series" && isOnlyNameSeries(track)}   
+                </Card.Body>
+              </Card>
+            </Link>
+            )
+          })
         ) : (
           <>
-          { searchTerm == "" ? (null) : (
+          {searchTerm == "" ? (null) : (
             <div style={{ marginTop: 100 }}>
               <p>No Result Found (T^T)</p>
             </div>
-          ) } 
+          )} 
           </>
         )}
 
@@ -235,7 +256,8 @@ export default function ResultSearch(props) {
           </>)
         : null
         }
-        </Col></>
+
+      </Col></>
       )
     
     }

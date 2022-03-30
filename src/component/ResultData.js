@@ -68,7 +68,7 @@ export default function ResultData(props) {
                   <Card.Body style={{textAlign: 'left'}}>
                   <button className='artist' 
                     onClick={event => { navigate( '/series/'+ series.series_id.replaceAll(" ","-"), 
-                                      { state: { seriesName: series.name } }) 
+                                      { state: { seriesName: series.name, seriesType: series.type } }) 
                                       event.preventDefault()
                     }}
                   > <h3 className='artist' id="result-artist" style={{textAlign: 'left'}}>

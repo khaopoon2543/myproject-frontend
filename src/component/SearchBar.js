@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Spinner } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import ResultSearch from "./ResultSearch";
 import useIsMobile from '../component/useIsMobile';
 import ResultData from './ResultData';
@@ -13,7 +13,7 @@ library.add(fas)
 
 function SearchBar({ level }) {
     const [searchTerm, setSearchTerm] = useState('')
-    const [selectedFilter, setSelectedFilter] = useState('all')
+    const [selectedFilter, setSelectedFilter] = useState(level==='' ? 'all': 'show')
     //const inputSearch = useRef('')
     const [typing, setTyping] = useState('')
     const screenSize = useIsMobile()
@@ -25,6 +25,9 @@ function SearchBar({ level }) {
     }
     const onChangeData = event  => { 
       setSearchTerm(event.target.value);
+      if (selectedFilter==='show') {
+        setSelectedFilter('all')
+      }
     }
     
     useEffect(() => {
@@ -33,19 +36,14 @@ function SearchBar({ level }) {
       return () => {clearTimeout(newTimer)}
     }, [searchTerm])
 
-    function showResultSubLevel() {
-      if (searchTerm==='') {
-        return 'show' 
-      } return selectedFilter
-    }
-
     //filter
+    function showShow() { setSelectedFilter('show') }
     function showALL() { setSelectedFilter('all') }
     function showLyric() { setSelectedFilter('lyric') }
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
     function showSeries() { setSelectedFilter('series') }
-    console.log(selectedFilter)
+
     function isFocus(filter) {
       if (selectedFilter === filter){
         return "focus"
@@ -75,9 +73,10 @@ function SearchBar({ level }) {
         </form>
 
         <br/>
-        {(selectedFilter !== 'spotify') ? 
+        {(selectedFilter!=='spotify') ? 
           <Container style={{ marginTop: 10 }}>
             <div className="filters">
+              <button onClick={() => showShow()} id={isFocus('show')}>All</button>
               <button onClick={() => showALL()} id={isFocus('all')}>Song・Artist</button>
               <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
               <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
@@ -95,7 +94,9 @@ function SearchBar({ level }) {
             {selectedFilter==='series' &&
               <ResultData src="series" searchTerm={typing!=='' && typing} />   
             }
-            <ResultSearch searchTerm={typing!=='' && typing} filter={!level ? selectedFilter : showResultSubLevel()} level={!level ? null : level} />
+            {(selectedFilter==='show' || typing) &&
+              <ResultSearch searchTerm={typing!=='' && typing} filter={selectedFilter} level={!level ? null : level} />
+            }
           </Container>  
       
       </div> 

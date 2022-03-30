@@ -11,8 +11,8 @@ function LoginButton() {
 }
 function LogoutButton() {
     return (
-        <Nav.Link href="https://accounts.spotify.com/logout">
-            <span className="nav-button">LOGOUT</span>
+        <Nav.Link href="/home">
+            <span className="nav-button">PLAYLIST</span>
         </Nav.Link>
     );
 }

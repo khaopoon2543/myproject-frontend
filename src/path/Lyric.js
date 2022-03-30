@@ -48,23 +48,36 @@ function Lyric() {
       return toHiragana(reading_form, { passRomaji: true })
     } return reading_form
   }
+  
+  const spinner = {
+      flex: 1,
+      marginTop:240,
+      justifyContent: 'center',
+      alignItems:'center'
+  }
+  const inSpinner = {
+      flex: 1,
+      alignSelf:'center'
+  }
 
   return (
     <div className="App">
       {loading ? ( 
-        <Spinner animation="border" />
+        <div style={spinner}>
+          <Spinner animation="border" style={inSpinner}/>
+        </div>
       ) : (
         <>
         <Title />
         <Container style={{ marginBottom: 50 }} fluid="lg"> {/* marginLeft: screenSize ? 10 : 50 */}
           <Row>  
             {screenSize===false &&
-              <Col md={5} lg={5} style={{ marginTop: 50 }}>
+              <Col md={6} lg={5} style={{ marginTop: 50 }}>
                 <PopupDict dictList={collectedWord} isOpen={isOpen} />
               </Col>
               }
 
-              <Col md={7} lg={7} style={{ marginTop: 50 }}>
+              <Col md={6} lg={7} style={{ marginTop: 50 }}>
                 <div id="lyric">
                   {screenSize===true &&
                     <Container className="sidebar-mobile" fluid>

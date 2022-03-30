@@ -3,12 +3,15 @@ import { Card } from 'react-bootstrap';
 export default function PopupDict({ dictList, isOpen }) {
   
   function isReadForm(dictList) {
+    const surface = dictList.token.word
     const read_form = dictList.token.read_form
     const dic_form = dictList.token.dic_form
     if (!read_form) {
         return dic_form
+    }else if (surface===read_form) {
+        return null
     }else {
-        return read_form
+      return read_form
     }
   }
   //<ruby>漢字<rt>かんじ</rt></ruby>
@@ -28,7 +31,7 @@ export default function PopupDict({ dictList, isOpen }) {
   function splitPos(dictPos) {
     let text = []
     dictPos.map((word,i) => {
-      text.push(<span key={i}>{word}</span>);
+      text.push(<span key={i} id="tagPos">{word}</span>);
     })
     return text
   }
@@ -38,19 +41,18 @@ export default function PopupDict({ dictList, isOpen }) {
       return (
             <Card key={i} id="dict">
               <Card.Body>
-                <Card.Title className="mb-4"> 
+                <Card.Title className="mb-3"> 
                   <span className="font-semi-bold black-text"> {dict.Kanji} </span> 
-                  <span>({dict.Yomikata})</span>
+                  {dict.Kanji!==dict.Yomikata && <span>({dict.Yomikata})</span>}
+                  &nbsp;&nbsp;&nbsp;{splitPos(dict.Type)}
                 </Card.Title>
-                <Card.Subtitle className="mb-2" id="tagPos">
-                  <p>{splitPos(dict.Type)}</p>
-                </Card.Subtitle>
-                <Card.Text lang="th" id="dictTh" className="font-semi-bold">
+            
+                <div lang="th" id="dictTh" className="font-semi-bold mb-1">
                   {dict.Thai}
-                </Card.Text>
-                <Card.Text lang="th" id="dictEn" className="font-semi-bold">
+                </div>
+                <div lang="th" id="dictEn">
                   {splitDictEng(dict.English)}
-                </Card.Text>
+                </div>
               </Card.Body>
             </Card>
       )
@@ -61,8 +63,10 @@ export default function PopupDict({ dictList, isOpen }) {
         <>
         <div className="sidebar">
           <div id="header" className="d-flex justify-content-left align-items-center">
-            <h1 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h1>
-            <h3 className="font-light">({isReadForm(dictList)})</h3>
+            <h2 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h2>
+            {isReadForm(dictList)!==null ?
+              <h3 className="font-light">({isReadForm(dictList)})</h3>
+            : null }
           </div>
           <div className="scroll">       
             {mapDict}
@@ -72,13 +76,13 @@ export default function PopupDict({ dictList, isOpen }) {
       : 
         <>
         <div className="sidebar" lang="th">
-          <div id="header">
-            <h2>ความหมายคำศัพท์</h2>
+          <div id="header" >
+            <h3>ความหมายคำศัพท์</h3>
           </div>
-          <div className="scroll"> 
-            <Card>  
+          <div className="scroll" id="no-scroll">  
+            <Card id="dict">  
               <Card.Body>    
-                <Card.Title className="mb-2 font-semi-bold"> 
+                <Card.Title className="font-semi-bold"> 
                   <span>ลองเลือกคำที่</span>
                   <button className="pink-text font-semi-bold black-text">ขีดเส้นใต้</button>
                   <span>แล้วเรียนรู้ความหมายของคำศัพท์ได้เลย!</span>

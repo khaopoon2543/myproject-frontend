@@ -25,7 +25,7 @@ function Result() {
 
     return (
 
-        <div className="App">
+        <div className="App" style={{zoom: '90%'}}>
 
           <Container style={{ marginTop: 50, marginBottom: 50 }}>
             <span>Results</span>

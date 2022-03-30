@@ -4,7 +4,7 @@ import ResultSearch from "../component/ResultSearch";
 
 function SubData() {
     const { state } = useLocation();
-    const { artistName, seriesName } = state;
+    const { artistName, seriesName, seriesType } = state;
     const { subArtists, subSeries } = useParams();
 
     return (
@@ -12,19 +12,24 @@ function SubData() {
         {artistName ?
           <>
           <h1>{artistName}</h1>  
-          <p className='subtitle' id="sub-data">
-            {subArtists.replace(/-/g, ' ')}
-          </p>  
+          <div className="tagLevel" id="title-lyric">
+            <p className='subtitle' id="sub-data">
+              {subArtists.replace(/-/g, ' ')}
+            </p> 
+          </div> 
           <Container style={{ marginTop: 30 }}>
             <ResultSearch searchTerm={artistName} filter={'artist'} subArtists={true} />
           </Container> 
           </>
         : 
           <>
-          <h1>{seriesName}</h1>  
-          <p className='subtitle' id="sub-data">
-            {subSeries.replace(/-/g, ' ')}
-          </p>  
+          <h4>「{seriesType}」</h4>
+          <h1> {seriesName} </h1>  
+          <div className="tagLevel" id="title-lyric">
+            <p className='subtitle' id="sub-data">
+              {subSeries.replace(/-/g, ' ')}
+            </p>
+          </div>   
           <Container style={{ marginTop: 30 }}>
             <ResultSearch searchTerm={seriesName} filter={'series'} subSeries={true}/>
           </Container> 

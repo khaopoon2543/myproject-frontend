@@ -103,13 +103,17 @@ export default function Popup({ open, children, onClose }) {
         }else{
             return (
                 <div>
-                    <h2>PLEASE
-                        <button style={INLINE} onClick={refreshPage}>
-                            <FontAwesomeIcon icon="fa-solid fa-arrow-rotate-right" /></button>
-                    </h2>             
+                    <h2>PLEASE CLICK AGAIN</h2>             
                 </div>
             )
         }
+    }
+
+    const inSpinner = {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems:'center',
+        color: 'white'
     }
 
     if (!open) return null 
@@ -119,7 +123,11 @@ export default function Popup({ open, children, onClose }) {
             <Alert style={!screenSize ? POPUP_STYLES : POPUP_STYLES_MOBILE}>
                 {children}
                 {loading ? ( 
-                    <Spinner animation="border" />
+                    <div className="banner">
+                        <div className="wrapper">
+                            <Spinner animation="border" style={inSpinner}/>
+                        </div>
+                    </div>
                 ) : isData()
                 }
             </Alert>
