@@ -37,22 +37,25 @@ export default function ResultData(props) {
           .slice(0, visible) //selected elements in an array
           .map((artist, index) => {
               return (
-              <Card className='card flex-md-row flex-wrap' key={index}>
-                  <Card.Body style={{textAlign: 'left'}}>
-                  <button className='artist' 
-                    onClick={event => { navigate( '/artists/'+ artist.artist_id.replaceAll(" ","-"), 
-                                      { state: { artistName: artist.name } }) 
-                                      event.preventDefault()
-                    }}
-                  > <h3 className='artist' id="result-artist" style={{textAlign: 'left'}}>
-                      {artist.name}
-                    </h3>
-                    <p className='subtitle' style={{textAlign: 'left', marginBottom: 0 }}>
+                <Card className='data flex-wrap flex-md-row' key={index} 
+                  onClick={event => { navigate( '/artists/'+ artist.artist_id.replaceAll(" ","-"), 
+                          { state: { artistName: artist.name } }) 
+                          event.preventDefault()
+                  }}
+                > <div className="tagLevel d-flex">
+                    <p id="tag-data" style={{fontSize:20}}>{artist.alphabet}</p>
+                  </div>
+                  <Card.Body>
+                    <button className='artist' id='data'> 
+                      <span className='artist' id="result-data">
+                        {artist.name}
+                      </span>
+                    </button>
+                    <p className='subtitle'>
                       {artist.artist_id}
                     </p>  
-                  </button>
                   </Card.Body>
-              </Card>
+                </Card>
           )})
         )
       return show
@@ -64,22 +67,26 @@ export default function ResultData(props) {
           .slice(0, visible) //selected elements in an array
           .map((series, index) => {
               return (
-              <Card className='card flex-md-row flex-wrap' key={index}>
-                  <Card.Body style={{textAlign: 'left'}}>
-                  <button className='artist' 
-                    onClick={event => { navigate( '/series/'+ series.series_id.replaceAll(" ","-"), 
-                                      { state: { seriesName: series.name, seriesType: series.type } }) 
-                                      event.preventDefault()
-                    }}
-                  > <h3 className='artist' id="result-artist" style={{textAlign: 'left'}}>
-                      「{series.type}」 {series.name}
-                    </h3>
-                    <p className='subtitle' style={{textAlign: 'left', marginBottom: 0 }}>
+                <Card className='data flex-wrap flex-md-row' key={index} 
+                  onClick={event => { navigate( '/series/'+ series.series_id.replaceAll(" ","-"), 
+                          { state: { seriesName: series.name, seriesType: series.type } }) 
+                          event.preventDefault()
+                  }}
+                >
+                  <div className="tagLevel d-flex">
+                    <p id="tag-data">「{series.type}」</p>
+                  </div>
+                  <Card.Body>
+                    <button className='artist' id='data'> 
+                      <span className='artist' id="result-data">
+                          {series.name}
+                      </span>
+                    </button>
+                    <p className='subtitle'>
                       {series.series_id}
                     </p>  
-                  </button>
                   </Card.Body>
-              </Card>
+                </Card>
           )})
         )
       return show
@@ -91,12 +98,20 @@ export default function ResultData(props) {
       } return isSeries()
     }
 
+    function showLoading() {
+      if (alphabet) { //is Data.js (Artist or Series)
+        return (<Spinner animation="border" />)
+      } else { //is SearchBar.js
+        return null
+      }
+    }
+
     return (
       
       <React.Fragment>
         {loading ? 
           ( 
-            <Spinner animation="border" />
+            showLoading()
           ) : 
           ( <>
             <Col md={12}>

@@ -17,7 +17,8 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Axios from "axios";
-Axios.defaults.baseURL = "https://kashify-backend.herokuapp.com"; //https://kashify-backend.herokuapp.com //http://localhost:5000
+Axios.defaults.baseURL = "http://localhost:5000"; 
+//https://kashify-backend.herokuapp.com //http://localhost:5000
 
 function App(){
     

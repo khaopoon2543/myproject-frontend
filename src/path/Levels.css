@@ -1,28 +1,38 @@
-.card {
-    color: var(--grayLight)
+.card#level {
+    color: var(--grayLight);
+}.card-header {
+    padding: 30px !important;
+    border-radius: 20px  !important;
+    border-bottom: none !important;
+    margin: 20px;
 }.levels-link {
     text-decoration: none;
 }.levelCard {
+    box-shadow: none !important;
     border-radius: 20px !important;
     cursor: pointer;
+    text-align: center;
+}.levelCard:hover {
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 50px !important;
+}.levelText {
     text-align: left;
-    margin: 10px ;
-}.header {
-    padding-top: 50px !important;
-    border-radius: 20px 20px 0 0 !important;
+    color: var(--grayLight);
 }
 
-#sub-level.card:hover {
+#sub-level {
     box-shadow: none !important;
-    cursor: default;
+    cursor: text;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 80px;
+    z-index: 1;
 }#sub-level .card-title.h5{
     font-size: 50px;
 }#sub-level .card-subtitle.h6{
     font-size: 30px;
-}#sub-level .header {
+}#sub-level .card-header {
     padding-top: auto;
     border-radius: 20px !important;
-    width: 100%;
 }
 
 #very-difficult, #difficult{
@@ -35,3 +45,14 @@
     color: var(--easySRT);
     background: var(--easyBG);
 }
+#tag-data {
+    color: var(--pinkLight);
+    background: var(--blackLight);
+}
+
+@media only screen and (max-width: 768px) {
+    #sub-level {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+  }

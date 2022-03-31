@@ -1,4 +1,5 @@
 import { Card } from 'react-bootstrap';
+import { isKatakana, isHiragana } from 'wanakana';
 
 export default function PopupDict({ dictList, isOpen }) {
   
@@ -8,10 +9,10 @@ export default function PopupDict({ dictList, isOpen }) {
     const dic_form = dictList.token.dic_form
     if (!read_form) {
         return dic_form
-    }else if (surface===read_form) {
+    }else if (isKatakana(surface) || isHiragana(surface)) {
         return null
     }else {
-      return read_form
+      return read_form //isKanji --> show read_form
     }
   }
   //<ruby>漢字<rt>かんじ</rt></ruby>
@@ -63,9 +64,9 @@ export default function PopupDict({ dictList, isOpen }) {
         <>
         <div className="sidebar">
           <div id="header" className="d-flex justify-content-left align-items-center">
-            <h2 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h2>
+            <h3 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h3>
             {isReadForm(dictList)!==null ?
-              <h3 className="font-light">({isReadForm(dictList)})</h3>
+              <h4 className="font-light">({isReadForm(dictList)})</h4>
             : null }
           </div>
           <div className="scroll">       

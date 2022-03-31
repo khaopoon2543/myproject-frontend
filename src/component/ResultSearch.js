@@ -5,6 +5,8 @@ import { Col, Card, Spinner } from 'react-bootstrap';
 import Highlighter from "react-highlight-words";
 import "./ResultSearch.css";
 import TagLevels from "./TagLevels";
+import { Loading } from "./Loading";
+
 
 export default function ResultSearch(props) {
 
@@ -23,38 +25,54 @@ export default function ResultSearch(props) {
   const subSeries = props.subSeries; //subSeries from SubData.js
 
   useEffect(() => {
-    if ( filter || searchTerm || filter, searchTerm ) {
-      setLoading(true);
-      axios.get('/result' , { mode: 'cors', crossDomain: true,
+    let isMounted = true; 
+    fetchData();
+    return () => { isMounted = false };
+    
+    function fetchData() {
+      if ( filter || searchTerm || filter, searchTerm ) {
+        setLoading(true);
+        axios.get('/result' , { mode: 'cors', crossDomain: true,
                   params: { searchTerm : searchTerm,
                             searchArtist : searchArtist,             
                             filter : filter,             
-                            level : level }
-              })
-              .then((response) => {
-                setSongsList(response.data);
-                setLoading(false);
-              })
-              .catch(error => {
-                console.log(error.response)
-              });
-    }
+                            level : level,
+                            subArtists : subArtists
+                          }
+                  })
+                  .then((response) => {
+                    if (isMounted) {
+                      setSongsList(response.data);
+                    }
+                    setLoading(false);
+                  })
+                  .catch(error => {
+                    console.log(error.response)
+                  });   
+
+    }}
   }, [ filter || searchTerm || filter, searchTerm ]);
 
   useEffect(() => {
-    if ( filter==='show' && level) {
-      setLoading(true);
-      axios.get('/result' , { mode: 'cors', crossDomain: true,
-                  params: { filter : filter,             
-                            level : level }
-              })
-              .then((response) => {
-                setSongsList(response.data);
-                setLoading(false);
-              })
-              .catch(error => {
-                console.log(error.response)
-              });
+    let isMounted = true; 
+    fetchDataLevel();
+    return () => { isMounted = false };
+    
+    function fetchDataLevel() {
+      if ( filter==='show' && level) {
+        setLoading(true);
+        axios.get('/result' , { mode: 'cors', crossDomain: true,
+                    params: { filter : filter,             
+                              level : level }
+                })
+                .then((response) => {
+                  setSongsList(response.data);
+                  setLoading(false);
+                })
+                .catch(error => {
+                  console.log(error.response)
+                });
+      }
     }
   }, [ filter && level ]);
 
@@ -105,7 +123,8 @@ export default function ResultSearch(props) {
         return (
           <>
             <br/>
-              <span id="sub-data">「{track.series_info.type}」</span>
+              <span id="sub-data">{track.series_info.type}</span>
+              <span id="sub-data">「</span>
               {!subSeries ? 
                 <button className='artist' id="artist"
                   onClick={event => { navigate('/series/'+ track.series.id.replaceAll(" ","-"),
@@ -117,6 +136,7 @@ export default function ResultSearch(props) {
               : //subSeries === true
                 <span id="sub-data">{track.series_info.name} &nbsp;</span>
               }
+              <span id="sub-data">」</span>
               <span id="sub-data">{track.series.theme}</span>
           </>
         )
@@ -197,10 +217,11 @@ export default function ResultSearch(props) {
   return (
     <React.Fragment>
     {loading ? ( 
-      <Spinner animation="border" />
+        
+        <Loading />
+
       ) : ( 
       <><Col md={12}>
-
         {reallyShowList().length > 0 ? (
           reallyShowList()
           .slice(0, visible) //selected elements in an array

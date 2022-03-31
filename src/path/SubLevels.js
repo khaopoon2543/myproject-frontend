@@ -13,32 +13,24 @@ function SubLevels() {
               if (item.id === subLevels) {
                 return (
                 <Row key={index}>
-                  <Col md={6}>
-                    <Card className={item.cName} id="sub-level">
-                      <div className="tagLevel" style={{ width:'100%' }}>
-                        <Card.Header className="header" id={item.id}> 
-                          <Card.Title className="font-bold">{item.title}</Card.Title>
-                          <Card.Subtitle>{item.subtitle}</Card.Subtitle>
-                        </Card.Header>                      
-                      </div>
+                  <Col md={3}>
+                    <Card className="levelCard" id="sub-level">
+                      <Card.Header id={item.id}> 
+                        <Card.Title className="font-bold">{item.title}</Card.Title>
+                        <Card.Subtitle>{item.subtitle}</Card.Subtitle>
+                      </Card.Header> 
+
+                      <Card.Body className="levelText" id="sub-level">
+                        <Card.Text>
+                          <span lang="en">{item.textEn}</span><br/>
+                          <span lang="th">{item.textTh}</span>
+                        </Card.Text>
+                      </Card.Body>
                     </Card>
                   </Col> 
-
-                  <Col md={6}>
-                    <Card className={item.cName} id="sub-level">
-                      <p lang="en">
-                          {item.textEn}
-                      </p>
-                      <p lang="th">
-                        {item.textTh}
-                      </p>
-                    </Card>
-                  </Col> 
-
-                  <Container style={{ marginTop: 30 }}>
+                  <Col md={9}>
                     <SearchBar level={item.id} />
-                  </Container>
-
+                  </Col>
                 </Row>     
               )}
             })}     

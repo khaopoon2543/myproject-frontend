@@ -5,7 +5,6 @@ import ResultSearch from "./ResultSearch";
 import useIsMobile from '../component/useIsMobile';
 import ResultData from './ResultData';
 
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -13,7 +12,7 @@ library.add(fas)
 
 function SearchBar({ level }) {
     const [searchTerm, setSearchTerm] = useState('')
-    const [selectedFilter, setSelectedFilter] = useState(level==='' ? 'all': 'show')
+    const [selectedFilter, setSelectedFilter] = useState(level==='' ? 'song': 'show')
     //const inputSearch = useRef('')
     const [typing, setTyping] = useState('')
     const screenSize = useIsMobile()
@@ -26,7 +25,7 @@ function SearchBar({ level }) {
     const onChangeData = event  => { 
       setSearchTerm(event.target.value);
       if (selectedFilter==='show') {
-        setSelectedFilter('all')
+        setSelectedFilter('song')
       }
     }
     
@@ -37,8 +36,7 @@ function SearchBar({ level }) {
     }, [searchTerm])
 
     //filter
-    function showShow() { setSelectedFilter('show') }
-    function showALL() { setSelectedFilter('all') }
+    //function showALL() { setSelectedFilter('all') }
     function showLyric() { setSelectedFilter('lyric') }
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
@@ -55,6 +53,7 @@ function SearchBar({ level }) {
 
     return (
       <div style={{zoom: '90%'}}> 
+        <div className="bg-search">
         <form onSubmit={onFormSubmit} className="searchbar" style={isMobileSizeBar()}>
           <input className="search_input"
               type="text" 
@@ -71,13 +70,12 @@ function SearchBar({ level }) {
             <FontAwesomeIcon icon="fa-solid fa-xmark" /></button>
           }
         </form>
+        </div>
 
         <br/>
         {(selectedFilter!=='spotify') ? 
           <Container style={{ marginTop: 10 }}>
             <div className="filters">
-              <button onClick={() => showShow()} id={isFocus('show')}>All</button>
-              <button onClick={() => showALL()} id={isFocus('all')}>Song・Artist</button>
               <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
               <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
               <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>
@@ -88,10 +86,10 @@ function SearchBar({ level }) {
         }
         
           <Container style={{ marginTop: 10 }}>
-            {selectedFilter==='artist' &&
+            {(!level && selectedFilter==='artist' && typing) &&
               <ResultData src="artists" searchTerm={typing!=='' && typing} />   
             }
-            {selectedFilter==='series' &&
+            {(!level && selectedFilter==='series' && typing) &&
               <ResultData src="series" searchTerm={typing!=='' && typing} />   
             }
             {(selectedFilter==='show' || typing) &&

@@ -10,12 +10,11 @@ function Result() {
     const { key, artist, level } = state;
 
     //filter
-    const [selectedFilter, setSelectedFilter] = useState(!artist ? 'all' : 'spotify')
-    function showALL() { setSelectedFilter('all') }
-    function showLyric() { setSelectedFilter('lyric') }
+    const [selectedFilter, setSelectedFilter] = useState(!artist ? 'song' : 'spotify')
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
     function showSeries() { setSelectedFilter('series') }
+    function showLyric() { setSelectedFilter('lyric') }
     console.log(selectedFilter)
     function isFocus(filter) {
       if (selectedFilter === filter){
@@ -32,18 +31,16 @@ function Result() {
             <h1>{key}</h1>
             {artist && <p>{artist}</p>}
 
-            {level && <div className="tagLevel" id="title-lyric">
-                        <p id={level}>
-                            {level}
-                        </p>
-                      </div>
+            {level && 
+              <div className="tagLevel" id="title-lyric">
+                <p id={level}> {level} </p>
+              </div>
             }
 
           <br/>
           {(selectedFilter !== 'spotify') ? 
             <Container style={{ marginTop: 10 }}>
               <div className="filters">
-                <button onClick={() => showALL()} id={isFocus('all')}>Song・Artist</button>
                 <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
                 <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
                 <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>

@@ -14,8 +14,8 @@ function Levels() {
                 return (
                   <Col md={6} key={index} style={{ paddingLeft: 20, paddingRight: 20}}>
                     <Link to={"/levels/" + item.id } className="levels-link"> 
-                      <Card className={item.cName}>
-                        <Card.Header className="header" id={item.id}> 
+                      <Card className="levelCard" id="level">
+                        <Card.Header id={item.id}> 
                           <Card.Title className="font-bold" style={{ fontSize: 30 }}>
                             {item.title}
                           </Card.Title>
