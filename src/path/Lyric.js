@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Tooltip from '../component/Tooltipp';
 import PopupDict from '../component/PopupDict';
 import useIsMobile from '../component/useIsMobile';
 import TagLevels from "../component/TagLevels";
 import { LoadingIMG } from "../component/Loading";
 import { toHiragana } from 'wanakana';
+import { useNavigate } from "react-router-dom";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+library.add(fas)
 
 function Lyric() {
 
@@ -35,14 +40,33 @@ function Lyric() {
     }
   }, [ trackId ]);
 
+  const navigate = useNavigate ();
+
   function Title() {
     return <Container className="titleLyric" fluid>
-              <h2 className="font-semi-bold">{title.name}</h2>
-              <h5 className="font-light">{title.artist}</h5>
-              <div className="tagLevel" id="title-lyric">
-                <TagLevels levelScore={title.readability_score}/>
-              </div>
-           </Container>
+            <Container className="text-left">
+                <h1 className="font-semi-bold">{title.name}</h1>
+                <h5 className="font-light">{title.artist}</h5>
+            </Container>
+            <br/>
+            <Container className="items-center">
+                <div className="tagLevel" id="title-lyric">
+                  <TagLevels levelScore={title.readability_score}/>
+                </div>
+                <div className="banner">
+                  <button onClick={ (event) => {
+                    navigate('/spotify/'+ trackArtist + '/' + trackId,
+                      { state: { trackName:title.name, 
+                                 trackArtist:title.artist,
+                                 trackArtistId:trackArtist.replace(/-/," ")
+                                } })
+                      event.preventDefault()
+                      }}
+                  > <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> Spotify
+                  </button> 
+                </div>    
+            </Container>
+          </Container>
   };
   function checkKatakana(surface, reading_form) {
     if (surface !== reading_form) {

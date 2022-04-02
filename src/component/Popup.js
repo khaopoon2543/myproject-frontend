@@ -45,7 +45,7 @@ const INLINE ={
     color: 'white'
 }
 
-export default function Popup({ open, children, onClose }) {
+export default function Popup({ open, onClose }) {
     
     const [dataTrack, setDataTrack] = useState([])
     const [song_image, setSong_image] = useState([])
@@ -79,11 +79,6 @@ export default function Popup({ open, children, onClose }) {
     }
     const screenSize = useIsMobile()
 
-    function refreshPage() {
-        window.location.hash = 'reload';
-        window.location.reload();
-    }
-
     function isData() {
         if (song_image.length > 0) {
             return (
@@ -94,7 +89,7 @@ export default function Popup({ open, children, onClose }) {
                     <span style={INLINE}>({dataTrack.artists})</span>      
                     <br/>
                     <span>
-                        <button onClick={() => { onClose(); onFormSubmit(); }}> 
+                        <button onClick={(event) => { onClose(); onFormSubmit(event); }}> 
                         <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> Kashify </button>
                     </span>
                   </div>
@@ -121,7 +116,6 @@ export default function Popup({ open, children, onClose }) {
         <>
         {/* <div style={OVERLAY_STYLES}> */}
             <Alert style={!screenSize ? POPUP_STYLES : POPUP_STYLES_MOBILE}>
-                {children}
                 {loading ? ( 
                     <div className="banner">
                         <div className="wrapper">

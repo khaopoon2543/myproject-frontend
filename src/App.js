@@ -13,6 +13,7 @@ import SubLevels from "./path/SubLevels";
 import Data from "./path/Data";
 import SubData from "./path/SubData";
 import About from "./path/About";
+import ResultSpotify from "./component/ResultSpotify";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -62,7 +63,7 @@ function App(){
           <Route path="/artists/:subArtists" element={ <SubData/> } />
           <Route path="/series" element={ <Data src="series"/> } />
           <Route path="/series/:subSeries" element={ <SubData/> } />
-
+          <Route path="/spotify/:trackArtist/:trackName" element={ <ResultSpotify/> } />
 
           <Route path="/about" element={ <About/> } />
         </Routes>

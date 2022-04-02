@@ -10,6 +10,7 @@
   --pinkPastel: #FFD8F3;
   --pinkLight: #FEE9F8;
   --background: #f6f6f9;
+  --green: #1db954;
 
   --easyBG: #D1FBE9;
   --easySRT: #0EBFBF;
@@ -17,6 +18,12 @@
   --intSRT: #728CFF;
   --diffBG: #FEE9F8;
   --diffSRT: #E85394;
+}
+
+@media only screen and (max-width: 768px) {
+  * {
+    zoom: 98%;
+  }
 }
 
 .App {
@@ -52,14 +59,35 @@ span.nav-button{
   font-size: 16px;
 }
 
+.items-center {
+  display: flex; 
+  align-items: center;
+}
+.text-left {
+  text-align: left; 
+}
+
 /* ----------------------------- Spotify ----------------------------- */
 
-.spotify .card-body  {
-  text-align: center;  
+.spotify .card-body {
+  text-align: left; 
 }
 .spotify img {
   max-width: 100%;  
   height: auto;  
+}
+.spotify .card-text {
+  color: var(--grayLight);
+}
+.spotify .box-icon {
+  text-align: right;
+}.spotify .icon {
+  font-size: 35px; 
+  color: var(--black);
+  transition: all 0.2s;
+}.spotify .icon:hover {
+  font-size: 35px; 
+  color: var(--green);
 }
 .spotify .filters { /* BUTTON */
   margin: 0;

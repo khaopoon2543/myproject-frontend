@@ -55,22 +55,20 @@ function Home (){
                   <Col sm={6} md={4} xl={3} key={index}>
                     <Card className="spotify">
                         <Card.Body>
-                            <Card.Img src={track.image} alt='' className="mb-2"></Card.Img>
-                            <Card.Title>{track.name}</Card.Title>
-                            <Card.Text>{track.artist}</Card.Text>
-                            
-                            <div className="filters">
-                              <a href={track.url} target="_blank">
-                                <button>Spotify</button>
-                              </a>
-                              <a onClick={ (event) => {
-                                          navigate('/result='+ track.artist.replace(/\/\//g, '') + track.name.replace(/\/\//g, '') ,
-                                          { state: { key:track.name, artist:track.artist} })
-                                          event.preventDefault()
-                                      }}> <button>Kashify</button> 
-                              </a>
-                            </div>
-
+                          <Card.Img src={track.image} alt='' className="mb-2"></Card.Img>
+                          <Card.Title>{track.name}</Card.Title>
+                          <Card.Text>{track.artist}</Card.Text>  
+                          <div className="filters">
+                            <a href={track.url} target="_blank">
+                              <button>Spotify</button>
+                            </a>
+                            <a onClick={ (event) => {
+                              navigate('/result='+ track.artist.replace(/\/\//g, '') + track.name.replace(/\/\//g, '') ,
+                              { state: { key:track.name, artist:track.artist} })
+                              event.preventDefault()
+                              }}> <button>Kashify</button> 
+                            </a>
+                          </div>
                         </Card.Body>
                     </Card>
                   </Col>
