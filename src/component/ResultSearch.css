@@ -23,7 +23,7 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     color: var(--gray);
     margin-right: 10px;
 
-}button#song.title { /* BUTTONS (use navigate in ResultSearch.js) */
+}button#song.title, button#artist.artist { /* BUTTONS (use navigate in ResultSearch.js) */
     padding: 0;
     text-align: left;
 }
@@ -44,6 +44,10 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
 .subtitle {
     font-size: 14px;
     font-weight: 300;
+    color: var(--grayLight);
+}#lyric.subtitle {
+    font-size: 14px;
+    font-weight: normal;
     color: var(--grayLight);
 }
 #song:hover {

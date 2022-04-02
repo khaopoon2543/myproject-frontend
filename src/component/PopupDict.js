@@ -32,7 +32,7 @@ export default function PopupDict({ dictList, isOpen }) {
   function splitPos(dictPos) {
     let text = []
     dictPos.map((word,i) => {
-      text.push(<span key={i} id="tagPos">{word}</span>);
+      text.push(<span key={i}>{word}</span>);
     })
     return text
   }
@@ -42,10 +42,11 @@ export default function PopupDict({ dictList, isOpen }) {
       return (
             <Card key={i} id="dict">
               <Card.Body>
-                <Card.Title className="mb-3"> 
+                <Card.Title className="mb-2"> 
                   <span className="font-semi-bold black-text"> {dict.Kanji} </span> 
                   {dict.Kanji!==dict.Yomikata && <span>({dict.Yomikata})</span>}
-                  &nbsp;&nbsp;&nbsp;{splitPos(dict.Type)}
+                  
+                  <div className="tagPos">{splitPos(dict.Type)}</div>
                 </Card.Title>
             
                 <div lang="th" id="dictTh" className="font-semi-bold mb-1">
@@ -64,9 +65,9 @@ export default function PopupDict({ dictList, isOpen }) {
         <>
         <div className="sidebar">
           <div id="header" className="d-flex justify-content-left align-items-center">
-            <h3 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h3>
+            <h4 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h4>
             {isReadForm(dictList)!==null ?
-              <h4 className="font-light">({isReadForm(dictList)})</h4>
+              <h5 className="font-light">({isReadForm(dictList)})</h5>
             : null }
           </div>
           <div className="scroll">       
@@ -77,17 +78,19 @@ export default function PopupDict({ dictList, isOpen }) {
       : 
         <>
         <div className="sidebar" lang="th">
-          <div id="header" >
-            <h3>ความหมายคำศัพท์</h3>
+          <div id="header">
+            <h4>ความหมายคำศัพท์</h4>
           </div>
           <div className="scroll" id="no-scroll">  
             <Card id="dict">  
-              <Card.Body>    
-                <Card.Title className="font-semi-bold"> 
-                  <span>ลองเลือกคำที่</span>
-                  <button className="pink-text font-semi-bold black-text">ขีดเส้นใต้</button>
-                  <span>แล้วเรียนรู้ความหมายของคำศัพท์ได้เลย!</span>
-                </Card.Title>
+              <Card.Body className="font-semi-bold">    
+                <span>
+                  ลองเลือกคำศัพท์ที่
+                  <button className="pink-text font-semi-bold black-text">
+                    &nbsp;ขีดเส้นใต้&nbsp;
+                  </button>
+                  แล้วเรียนรู้ความหมายของคำศัพท์ได้เลย!
+                </span>
               </Card.Body> 
             </Card>
           </div>

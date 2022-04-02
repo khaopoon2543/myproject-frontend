@@ -13,7 +13,7 @@ function SubLevels() {
               if (item.id === subLevels) {
                 return (
                 <Row key={index}>
-                  <Col md={3}>
+                  <Col xl={3}>
                     <Card className="levelCard" id="sub-level">
                       <Card.Header id={item.id}> 
                         <Card.Title className="font-bold">{item.title}</Card.Title>
@@ -28,7 +28,7 @@ function SubLevels() {
                       </Card.Body>
                     </Card>
                   </Col> 
-                  <Col md={9}>
+                  <Col xl={9}>
                     <SearchBar level={item.id} />
                   </Col>
                 </Row>     

@@ -36,9 +36,9 @@ function Lyric() {
   }, [ trackId ]);
 
   function Title() {
-    return <Container className="titleLyric">
-              <h1>{title.name}</h1>
-              <h4 className="font-light">{title.artist}</h4>
+    return <Container className="titleLyric" fluid>
+              <h2 className="font-semi-bold">{title.name}</h2>
+              <h5 className="font-light">{title.artist}</h5>
               <div className="tagLevel" id="title-lyric">
                 <TagLevels levelScore={title.readability_score}/>
               </div>
@@ -77,12 +77,12 @@ function Lyric() {
         <Container style={{ marginBottom: 50 }} fluid="lg"> {/* marginLeft: screenSize ? 10 : 50 */}
           <Row>  
             {screenSize===false &&
-              <Col md={6} lg={4} style={{ marginTop: 50 }}>
+              <Col md={6} xl={4} style={{ marginTop: 50 }}>
                 <PopupDict dictList={collectedWord} isOpen={isOpen} />
               </Col>
-              }
+            }
 
-              <Col md={6} lg={8} style={{ marginTop: 50 }}>
+              <Col md={6} xl={8} style={{ marginTop: 50 }}>
                 <div id="lyric">
                   {screenSize===true &&
                     <Container className="sidebar-mobile" fluid>
@@ -103,8 +103,8 @@ function Lyric() {
                     }else if(['名詞','動詞','形容詞','形状詞','連体詞','副詞','接続詞','感動詞','接頭辞','接尾辞'].includes(word.poses[0]) 
                               && word.surface != parseInt(word.surface, 10) ){  //Value does exists!
                       return   <Tooltip key={i} 
-                                        word={mixPrefix(tokenized_list, i)}  
-                                        dic_form={isPrefix(tokenized_list, i)} 
+                                        word={word.surface}  
+                                        dic_form={word.dictionary_form} 
                                         read_form= {toHiragana(word.reading_form, { passRomaji: true })}//reading_form
                                         poses={word.poses}
                                         onOpen={collectedWord => setCollectedWord(collectedWord)}

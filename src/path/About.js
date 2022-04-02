@@ -8,7 +8,7 @@ function About() {
         <div className="App">
           <Container style={{ marginTop: 50, marginBottom: 50 }} > 
             <h1 className="font-bold">
-                ABOUT 
+                ABOUT&nbsp;
                 <strong style={{ color: "var(--pink)" }}>
                     KASHIFY
                 </strong>

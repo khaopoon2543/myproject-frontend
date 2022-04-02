@@ -43,7 +43,7 @@ function LoadingIMG() {
           </div>
           <h2>
             <Spinner animation="border" style={inSpinner}/>
-            &nbsp;少しお待ちください
+            &nbsp;少しお待ちください。
           </h2>
         </div>
     )
@@ -54,7 +54,7 @@ function Loading() {
         <div style={!screenSize ? spinner : spinnerMB}>
           <h2>
             <Spinner animation="border" style={inSpinner}/>
-            &nbsp;少しお待ちください
+            &nbsp;少しお待ちください。
           </h2>
         </div>
     )

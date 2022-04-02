@@ -52,6 +52,23 @@ span.nav-button{
   font-size: 16px;
 }
 
+/* ----------------------------- Spotify ----------------------------- */
+
+.spotify .card-body  {
+  text-align: center;  
+}
+.spotify img {
+  max-width: 100%;  
+  height: auto;  
+}
+.spotify .filters { /* BUTTON */
+  margin: 0;
+  font-size: 12px;
+  display: inline-block;
+}.spotify .filters button{ /* BUTTON */
+  border: 1px solid  var(--black)
+}
+
 /* ----------------------------- Search ----------------------------- */
 
 .bg-search {
@@ -199,15 +216,20 @@ div#lyric{
   text-align: left;
   font-weight: 300;
   line-height: 1.5;
-  font-size: 20px;
+  font-size: 18px;
   letter-spacing: 1px;
 }
 div#lyric span{
   display: inline-block;
   padding:0;margin:0;
+  margin-bottom: 25px; /* line height lyric */
 }
 button.pink-text {
     display: inline-block;
+    border-bottom: 1px solid var(--pink);
+    padding:0;margin:0;
+    font-weight: 300;
+    margin-bottom: 25px; /* line height lyric */
   }button, button:focus{
     outline: none;
     background: transparent;
@@ -216,12 +238,7 @@ button.pink-text {
     outline: none;
     background: transparent;
   }
-  button.pink-text {
-    border-bottom: 1px solid var(--pink);
-    padding:0;margin:0;
-    font-weight: 300;
-    margin-bottom: 25px; /* line height lyric */
-  }button.pink-text:hover {
+  button.pink-text:hover {
     color: white;
     text-decoration: none;
     background: var(--pink);
@@ -233,9 +250,12 @@ button.pink-text {
 @media only screen and (max-width: 768px) {
   div#lyric{
     font-weight: 300;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 2;
     margin-left: 10px;
+  }
+  div#lyric span{
+    margin-bottom: 10px; /* line height lyric */
   }
   button.pink-text {
     margin-bottom: 10px; /* line height lyric */
@@ -255,6 +275,10 @@ button.pink-text {
 #dict.card {
   color: var(--grayLight);
   border-radius: 0 !important;
+}
+#dict .card-body {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .sidebar .card {
   margin-top: 0px;
@@ -306,7 +330,10 @@ button.pink-text {
 }#dictEn {
   font-size: 16px;
 }
-span#tagPos{ 
+.tagPos { 
+  margin-top: 5px;
+} 
+.tagPos span{ 
   display: inline-block;
   font-weight: 600;
   font-size: 12px;
@@ -325,7 +352,7 @@ span#tagPos{
     width: auto;
   }.scroll {
     overflow-y: scroll;
-    height: 30vh ;
+    height: 25vh ;
   }
   #lyric .sidebar-mobile{
     position: sticky;
@@ -339,7 +366,7 @@ span#tagPos{
     border-radius: 0px;
     box-shadow: var(--pinkLight) 0 10px 2px -2px;
   }
-  span#tagPos{ 
+  .tagPos span{ 
     font-size: 10px;
     text-align: center;
     padding: 5px 20px !important;
@@ -348,7 +375,8 @@ span#tagPos{
   #dictTh {
     font-size: 16px;
   }#dictEn {
-    font-size: 14px;
+    line-height: 1.2;
+    font-size: 12px;
   }
 }
 

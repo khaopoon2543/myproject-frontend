@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Col, Card, Spinner } from 'react-bootstrap';
+import { Col, Card } from 'react-bootstrap';
 import Highlighter from "react-highlight-words";
 import "./ResultSearch.css";
 import TagLevels from "./TagLevels";
@@ -127,8 +127,8 @@ export default function ResultSearch(props) {
               <span id="sub-data">「</span>
               {!subSeries ? 
                 <button className='artist' id="artist"
-                  onClick={event => { navigate('/series/'+ track.series.id.replaceAll(" ","-"),
-                  { state: { seriesName: track.series_info.name } }) 
+                  onClick={event => { navigate('/series/'+ track.series.id.replaceAll(" ","-"), 
+                  { state: { seriesName: track.series_info.name, seriesType: track.series_info.type } }) 
                   event.preventDefault()}}
                 > {track.series_info.name} &nbsp; 
                 </button>
@@ -201,15 +201,15 @@ export default function ResultSearch(props) {
       )
     } else if (type==='lyric') { //----------------------- lyric ----------------------- //
       return(
+        <span className='subtitle' id='lyric'>
         <Highlighter
           highlightClassName='highlight'
           searchWords={[searchTerm]}
           autoEscape={true}
           textToHighlight={findWordAndNeighbours(searchTerm, track.lyric)}
-          > <span className='subtitle'>
-            {findWordAndNeighbours(searchTerm, track.lyric)}
-            </span>
+          > {findWordAndNeighbours(searchTerm, track.lyric)} 
         </Highlighter>
+        </span>
       )
     }
   }
@@ -251,7 +251,7 @@ export default function ResultSearch(props) {
                   : null
                   }
 
-                  {filter==="series" && isOnlyNameSeries(track)}   
+                  {isOnlyNameSeries(track)}   
                 </Card.Body>
               </Card>
             </Link>

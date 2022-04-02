@@ -26,26 +26,29 @@ function Data(props) { // ARTISTS & SERIES
     }
 
     return (
-        <div className="App">
-          <Container style={{ marginTop: 50, marginBottom: 50 }} > 
-            <h1 className="font-bold">
+      <div className="App">
+        <Container style={{ marginTop: 50, marginBottom: 50 }} > 
+          <Row>
+            <Col xl={3} style={!screenSize ? { padding: 50 } : { marginBottom: 10 }}>
+              <h1 className="font-bold" id="sub-level">
                 {src.toUpperCase()} {selectedAlpha && <strong style={{ color: "var(--pink)" }}>{selectedAlpha.toUpperCase()}</strong>}
-            </h1>
-            <Row style={{ marginTop: 30 }}>
-                <Col md={12}>
-                    <div className="filters" style={!screenSize ? BUTTON : BUTTON_MOBILE}>
-                        {loopAlphabet()} 
-                    </div>
-                </Col>
-                {selectedAlpha !== null && 
-                  <Container style={{ marginTop: 0 }}>
-                    <ResultData src={src} alphabet={selectedAlpha} />   
-                  </Container> 
-                }    
-            </Row> 
+              </h1>
+            </Col>
+
+            <Col xl={9}>
+              <div className="filters" style={!screenSize ? BUTTON : BUTTON_MOBILE}>
+                 {loopAlphabet()} 
+              </div>
             
-          </Container>
-        </div>
+            {selectedAlpha !== null && 
+              <Container style={{ marginTop: 0 }}>
+                <ResultData src={src} alphabet={selectedAlpha} />   
+              </Container> 
+            } 
+            </Col>   
+          </Row>  
+        </Container>
+      </div>
     );   
 }
 export default Data;

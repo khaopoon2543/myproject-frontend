@@ -1,4 +1,4 @@
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import SearchBar from "../component/SearchBar";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,16 +8,23 @@ library.add(fas)
 
 function Search() {
 
-    return (
-        <Container style={{ marginTop: 50, marginBottom: 50 }}>
+  return (
+    <Container style={{ marginTop: 50, marginBottom: 50 }}>
+      <Row>
+
+        <Col xl={3}>
           <h1 lang="th" className="font-bold">ค้นหาเพลง <FontAwesomeIcon icon="fa-solid fa-music" /></h1>
-          <h4 lang="th">ใส่ชื่อเพลงหรือชื่อศิลปินในช่องค้นหาได้เลย!</h4>
-          
-          <div style={{ marginTop: 30 }}>
+          <h5 lang="th">ใส่ชื่อเพลงหรือชื่อศิลปินในช่องค้นหาได้เลย!</h5>
+        </Col>
+
+        <Col xl={9}> 
+          <div>
             <SearchBar />
           </div>
+        </Col>
 
-        </Container>
+      </Row>
+    </Container>
  
     );
 }
