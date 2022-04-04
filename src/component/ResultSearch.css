@@ -75,12 +75,11 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     letter-spacing: .5px;
 }
 .tagLevel p{
-    font-weight: 500;
     font-size: 16px;
     min-width: 150px;
     border-radius: 20px;
     margin: 10px;
-    line-height: 80px;
+    line-height: 90px;
 }
  /* tagLevel old design
  .tagLevel p{ 
@@ -96,12 +95,10 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
 } */
 
 @media screen and (max-width: 768px) {
-    .tagLevel p{
-        font-weight: 500;
-        font-size: 16px;
+    .tagLevel p {
         width: auto;
         padding-top: 0;
-        margin-bottom: 0;
+        margin-bottom: -5px;
         line-height: 30px;
     }
 }
@@ -114,15 +111,14 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
 }
 /* ----------------------------- SubData.js ----------------------------- */
 #title-lyric p{ 
-    font-weight: 600;
-    letter-spacing: 1px;
-    width: 80px;
     margin: 0 auto;
-    font-size: 14px;
     border-radius: 25px;
     padding-top: 0px;
+    padding: 2px 25px;
     line-height: 30px;
-} p#sub-data { 
+    font-size: 14px;
+} 
+p#sub-data { 
     color: var(--grayLight);
     width: auto;
 }

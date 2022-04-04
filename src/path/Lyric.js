@@ -7,15 +7,15 @@ import PopupDict from '../component/PopupDict';
 import useIsMobile from '../component/useIsMobile';
 import TagLevels from "../component/TagLevels";
 import { LoadingIMG } from "../component/Loading";
-import { toHiragana } from 'wanakana';
-import { useNavigate } from "react-router-dom";
+import { toHiragana, isJapanese } from 'wanakana';
+import { SearchSpotify } from '../component/SpotifyLink'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
-function Lyric() {
+function Lyric({user}) {
 
   const [tokenized_list, setTokenizedList] = useState([])
   const [title, setTitle] = useState([])
@@ -40,31 +40,38 @@ function Lyric() {
     }
   }, [ trackId ]);
 
-  const navigate = useNavigate ();
+  function checkFeat(titleName) { //選んでくれてありがとう。 feat. 榎本虎太朗(花江夏樹)・瀬戸口雛(麻倉もも)
+    const re = new RegExp('^(.+).(feat..+)', 'i'), matches = titleName.match(re);
+    if (matches) {
+      var titleList = titleName.match(re)
+      return titleList
+    } else {
+      return titleName
+    }
+  }
+  const resultTitle = title.name && checkFeat(title.name)
 
   function Title() {
     return <Container className="titleLyric" fluid>
             <Container className="text-left">
-                <h1 className="font-semi-bold">{title.name}</h1>
-                <h5 className="font-light">{title.artist}</h5>
+            {resultTitle instanceof Array ? //if return titleList (is feat. in title)
+              <>
+              <h1 className="font-semi-bold">{resultTitle[1]}</h1>
+              <h6 className="font-light">{resultTitle[2]}</h6>
+              </>
+            : 
+              <h1 className="font-semi-bold">{title.name}</h1>
+            }
+            <h6 className="font-light">{title.artist}</h6>
             </Container>
-            <br/>
-            <Container className="items-center">
+
+            <Container className="items-center" style={{marginTop:20}}>
                 <div className="tagLevel" id="title-lyric">
                   <TagLevels levelScore={title.readability_score}/>
                 </div>
-                <div className="banner">
-                  <button onClick={ (event) => {
-                    navigate('/spotify/'+ trackArtist + '/' + trackId,
-                      { state: { trackName:title.name, 
-                                 trackArtist:title.artist,
-                                 trackArtistId:trackArtist.replace(/-/," ")
-                                } })
-                      event.preventDefault()
-                      }}
-                  > <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> Spotify
-                  </button> 
-                </div>    
+                {user &&
+                  <SearchSpotify title={resultTitle[1]} trackArtist={trackArtist} trackId={trackId}/>
+                }    
             </Container>
           </Container>
   };
@@ -98,7 +105,7 @@ function Lyric() {
       ) : (
         <>
         <Title />
-        <Container style={{ marginBottom: 50 }} fluid="lg"> {/* marginLeft: screenSize ? 10 : 50 */}
+        <Container style={{ marginBottom: 50 }} fluid="sm"> {/* marginLeft: screenSize ? 10 : 50 */}
           <Row>  
             {screenSize===false &&
               <Col md={6} xl={4} style={{ marginTop: 50 }}>
@@ -117,9 +124,11 @@ function Lyric() {
                     if (word.surface === '\n'){
                       return <br key={i}/>
                     }else if(word.surface === '\n\n'){
-                      return <p key={i}><br/></p>
-                    }else if(word.poses[0] === '名詞' && word.poses[2] === 'サ変可能' && word.dictionary_form === ''){
-                      return <span key={i}>{word.surface}</span>
+                      return <><br key={i}/><br/></>
+                    }else if(word.poses[0] === '空白'){
+                      return <span key={i}>&nbsp;</span>
+                    }else if(!isJapanese(word.surface)){
+                        return <span key={i}>{word.surface}</span>
                     }else if(/\s/.test(word.surface)){ //check str is space?
                       return <span key={i}>&nbsp;</span>
 

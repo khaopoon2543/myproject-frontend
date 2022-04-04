@@ -174,18 +174,20 @@ export default function ResultSearch(props) {
         </>
       )
     } else if (type==='title-subtitle-artist') { //----------------------- title-subtitle-artist ----------------------- //
+      const artist_id = !track.singer_id ? track.artist_id : track.singer_id
+      const artist = !track.singer_id ? track.artist : track.singer
       return(
         <>
         <button className='artist' id='artist'
-          onClick={event => { navigate("/artists/"+ track.artist_id.replaceAll(" ","-"),
-          { state: { artistName: !track.singer ? track.artist : track.singer } }) 
+          onClick={event => { navigate("/artists/"+ artist_id.replaceAll(" ","-"),
+          { state: { artistName: artist } }) 
           event.preventDefault()}}
         > <Highlighter
             highlightClassName='highlightArtist'
             searchWords={[searchTerm,searchArtist]}
             autoEscape={true}
-            textToHighlight={!track.singer ? track.artist : track.singer}
-          > <p>{!track.singer ? track.artist : track.singer}</p>
+            textToHighlight={artist}
+          > <p>{artist}</p>
           </Highlighter>
         </button> 
         <span className='subtitle'>
@@ -193,8 +195,8 @@ export default function ResultSearch(props) {
             highlightClassName='highlightArtist'
             searchWords={[searchTerm]}
             autoEscape={true}
-            textToHighlight={track.artist_id}
-            > {track.artist_id}
+            textToHighlight={artist_id}
+            > {artist_id}
           </Highlighter>)
         </span>
         </>
@@ -236,11 +238,11 @@ export default function ResultSearch(props) {
                   {highlight(searchTerm, track, 'title-subtitle-song')}
                   <br/>
 
-                  {(!subArtists || track.singer) ?
+                  {(!subArtists || track.singer_id) ?
                     highlight(searchTerm, track, 'title-subtitle-artist')
                   : //subArtists === true
                     <>
-                      <span id="sub-data">{!track.singer ? track.artist : track.singer}</span>
+                      <span id="sub-data">{track.artist}</span>
                     </>
                   }
 

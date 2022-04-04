@@ -36,10 +36,6 @@ const POPUP_STYLES_MOBILE = {
     zIndex: 1000,
     boxShadow: "0px 7px 29px 0px #acacac"
 }
-const IMG_SONG={
-    width: 70,
-    height: 70
-}
 const INLINE ={
     marginLeft: 10,
     color: 'white'
@@ -50,6 +46,7 @@ export default function Popup({ open, onClose }) {
     const [dataTrack, setDataTrack] = useState([])
     const [song_image, setSong_image] = useState([])
     const [loading, setLoading] = useState(false);
+    const timeOut = setTimeout(() => setLoading(false), 2000);
 
     //get data from spotify api
     useEffect(() => {
@@ -57,12 +54,11 @@ export default function Popup({ open, onClose }) {
             setLoading(true);
             axios.get("/playing", { mode: 'cors', crossDomain: true }) 
                 .then((response) => {
-                    //song data
-                    setDataTrack(response.data);
-                    //user profile image
-                    setSong_image(response.data.image);
+                    setDataTrack(response.data); //song data
+                    setSong_image(response.data.image); //user profile image
                     setLoading(false);
-
+                    // if cant find data
+                    clearTimeout(timeOut);
                 })
                 .catch(error => {
                     console.log(error.response)
@@ -83,22 +79,22 @@ export default function Popup({ open, onClose }) {
         if (song_image.length > 0) {
             return (
                 <div className="banner">
-                  <div className="wrapper">
-                    <img src={song_image} alt="song image" style={IMG_SONG}/>
+                    <img src={song_image} alt="song image"/>
                     <span style={INLINE}>{dataTrack.name}</span>
                     <span style={INLINE}>({dataTrack.artists})</span>      
                     <br/>
                     <span>
                         <button onClick={(event) => { onClose(); onFormSubmit(event); }}> 
-                        <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> Kashify </button>
+                        <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> &nbsp;Kashify </button>
                     </span>
-                  </div>
                 </div>
             )
         }else{
             return (
-                <div>
-                    <h2>PLEASE CLICK AGAIN</h2>             
+                <div className="banner">
+                  <div className="wrapper">
+                    <h2 className="font-light" style={INLINE}>Please <FontAwesomeIcon icon="fa-solid fa-circle-play" /> music on Spotify</h2>             
+                  </div>
                 </div>
             )
         }

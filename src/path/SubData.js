@@ -18,7 +18,7 @@ function SubData() {
             </p> 
           </div> 
           <Container style={{ marginTop: 30 }}>
-            <ResultSearch searchTerm={subArtists.replace(/-/g, ' ')} filter={'artist'} subArtists={true} />
+            <ResultSearch searchTerm={subArtists.replace(/-/g, ' ')} filter={'artist'} subArtists={artistName} />
           </Container> 
           </>
         : 
@@ -31,7 +31,7 @@ function SubData() {
             </p>
           </div>   
           <Container style={{ marginTop: 30 }}>
-            <ResultSearch searchTerm={subSeries.replace(/-/g, ' ')} filter={'series'} subSeries={true}/>
+            <ResultSearch searchTerm={subSeries.replace(/-/g, ' ')} filter={'series'} subSeries={seriesName}/>
           </Container> 
           </> 
         }

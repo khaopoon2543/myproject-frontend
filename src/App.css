@@ -238,7 +238,7 @@ span.nav-button{
 .titleLyric {
   background-color: var(--black);
   color: var(--white);
-  padding: 50px;
+  padding: 40px;
 }
 div#lyric{
   text-align: left;
@@ -417,9 +417,12 @@ button.pink-text {
   font-size: 20px;
  }
  .banner img {
+  display: flex;
   float: left; 
   margin: 5px;
   margin-right: 10px;
+  width: 70px;
+  height: 70px;
  }
  .banner span, .banner button {
   float: left; 
@@ -429,12 +432,12 @@ button.pink-text {
  }
  .banner button {
   background-color: #ffffff1f;
-  border-radius: 5px;
   margin-left: 10px;
   margin-right: 10px;
-  font-size: 16px;
-  padding-left: 20px;
-  padding-right: 20px;
+  font-size: 14px;
+  border-radius: 25px;
+  padding-top: 0px;
+  padding: 2px 25px;
  }
  .banner button:hover {
   color: var(--pinkLight);
@@ -449,10 +452,34 @@ button.pink-text {
    } 
    .banner button {
     font-size: 12px;
-    padding: 0.5em;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 8px 25px;
     letter-spacing: 2px;
-    margin-top: 10px;
    }
   }
+
+/* ----------------------------- button open Spotify ----------------------------- */
+
+#spotify-search.banner *{
+  display: flex;
+  align-items: center;
+}
+#spotify-search img {
+  margin: 3px;
+  width: 25px;
+  height: auto;
+  margin-right: 10px; 
+}
+#spotify-search.banner button {
+  font-weight: 300;
+  background: #ffffff1f;
+  color: var(--white);
+  padding: 2px 25px;
+  margin-left: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-top: 0px;
+}
+#spotify-search.banner button:hover {
+  background-color: #ffffff3d;
+ }

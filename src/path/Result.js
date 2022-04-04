@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import ResultSearch from "../component/ResultSearch"
+import ResultData from '../component/ResultData';
 
 function Result() {
 
@@ -50,6 +51,12 @@ function Result() {
             : null
           }
 
+          {(selectedFilter==='artist') &&
+            <ResultData src="artists" searchTerm={key} />   
+          }
+          {(selectedFilter==='series') &&
+            <ResultData src="series" searchTerm={key} />   
+          }
           <ResultSearch searchTerm={key} searchArtist={artist} filter={selectedFilter} level={!level ? null : level} />   
           
           </Container>

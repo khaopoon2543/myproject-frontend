@@ -55,7 +55,7 @@ function App(){
           <Route path="/" element={ <Search/> } />
           <Route path="/login" element={ <Login/> } />
           <Route path="/home" element={ <Home/> } />
-          <Route path="/lyric/:trackArtist/:trackId" element={ <Lyric/> } />
+          <Route path="/lyric/:trackArtist/:trackId" element={ <Lyric user={isUser}/> } />
           <Route path="/result=:searchTerm" element={ <Result/> } />
           <Route path="/levels" element={ <Levels/> } />
           <Route path="/levels/:subLevels" element={ <SubLevels/> } />
