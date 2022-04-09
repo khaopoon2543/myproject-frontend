@@ -11,12 +11,11 @@
 
 .nav-button {
   color: var(--white);
-  background-color: #1db954;
+  background-color: var(--black);
   padding: 5px 30px 5px 30px;
   border-radius: 50px;
   margin-left: -10px;
 }
-
 .nav-button:hover {
   color: var(--white);
   background-color: var(--black);
@@ -72,6 +71,17 @@
 }
 .nav-links span:hover:after{
   background-position: left;
+}
+
+button.navbar-toggler {
+  border: none !important;
+  color: var(--white) !important;
+  font-size: 30px;
+}
+button.navbar-toggler svg{
+  color: var(--grayLight) !important;
+} button.navbar-toggler svg:hover, button.navbar-toggler svg:active{
+  color: var(--pink) !important;
 }
 
   

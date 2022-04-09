@@ -6,6 +6,7 @@ import Highlighter from "react-highlight-words";
 import "./ResultSearch.css";
 import TagLevels from "./TagLevels";
 import { Loading } from "./Loading";
+import useIsMobile from '../component/useIsMobile';
 
 
 export default function ResultSearch(props) {
@@ -15,6 +16,7 @@ export default function ResultSearch(props) {
   const [visible, setVisible] = useState(20);
   function loadMore() { setVisible(visible + 10) }
   const navigate = useNavigate ();
+  const screenSize = useIsMobile()
   
   //get props from SearchForm.js or Result.js
   const searchTerm = props.searchTerm && props.searchTerm.replace(/\s\s+/g, ' ');
@@ -43,14 +45,15 @@ export default function ResultSearch(props) {
                   .then((response) => {
                     if (isMounted) {
                       setSongsList(response.data);
+                      //console.log(response.data)
                     }
                     setLoading(false);
                   })
                   .catch(error => {
                     console.log(error.response)
                   });   
-
-    }}
+      }
+    }
   }, [ filter || searchTerm || filter, searchTerm ]);
 
   useEffect(() => {
@@ -150,6 +153,7 @@ export default function ResultSearch(props) {
   function highlight(searchTerm, track, type) {
     if (type==='title-subtitle-song') { //----------------------- title-subtitle-song ----------------------- //
       return(
+        searchTerm ?
         <>
         <button className='title' id="song" 
           onClick={event => {navigate("/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")) 
@@ -172,11 +176,23 @@ export default function ResultSearch(props) {
         </Highlighter>
         )</span> 
         </>
+        :
+        <>
+        <button className='title' id="song" 
+          onClick={event => {navigate("/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")) 
+          event.preventDefault()}}
+        > <h3 className='title' id="song">{track.name}</h3> 
+        </button>
+        <span className='subtitle'>
+          ({track.song_id})
+        </span> 
+        </>
       )
     } else if (type==='title-subtitle-artist') { //----------------------- title-subtitle-artist ----------------------- //
-      const artist_id = !track.singer_id ? track.artist_id : track.singer_id
-      const artist = !track.singer_id ? track.artist : track.singer
+      const artist_id = track.artist_id
+      const artist = track.artist
       return(
+        searchTerm ?
         <>
         <button className='artist' id='artist'
           onClick={event => { navigate("/artists/"+ artist_id.replaceAll(" ","-"),
@@ -200,9 +216,22 @@ export default function ResultSearch(props) {
           </Highlighter>)
         </span>
         </>
+        :
+        <>
+        <button className='artist' id='artist'
+          onClick={event => { navigate("/artists/"+ artist_id.replaceAll(" ","-"),
+          { state: { artistName: artist } }) 
+          event.preventDefault()}}
+        > <p>{artist}</p>
+        </button> 
+        <span className='subtitle'>
+          ({artist_id})
+        </span>
+        </>
       )
     } else if (type==='lyric') { //----------------------- lyric ----------------------- //
       return(
+        searchTerm ?
         <span className='subtitle' id='lyric'>
         <Highlighter
           highlightClassName='highlight'
@@ -212,9 +241,16 @@ export default function ResultSearch(props) {
           > {findWordAndNeighbours(searchTerm, track.lyric)} 
         </Highlighter>
         </span>
+        :
+        <span className='subtitle' id='lyric'>
+          {findWordAndNeighbours(searchTerm, track.lyric)} 
+        </span>
       )
     }
   }
+
+  const alignItem = screenSize ? 'lyric flex-wrap flex-md-row d-flex justify-content-left align-items-left' //left
+                    : 'lyric flex-wrap flex-md-row d-flex justify-content-left align-items-center' //center
 
   return (
     <React.Fragment>
@@ -230,27 +266,22 @@ export default function ResultSearch(props) {
           .map((track, index) => {
             return (
             <Link key={index} to={"/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")}>
-              <Card className='lyric flex-wrap flex-md-row'>
+              <Card className={alignItem}>
                 <div className="tagLevel d-flex">
                   <TagLevels levelScore={track.readability_score}/>
                 </div>
                 <Card.Body>
                   {highlight(searchTerm, track, 'title-subtitle-song')}
-                  <br/>
 
-                  {(!subArtists || track.singer_id) ?
-                    highlight(searchTerm, track, 'title-subtitle-artist')
-                  : //subArtists === true
-                    <>
-                      <span id="sub-data">{track.artist}</span>
+                  {(!subArtists || track.singers.length>0) &&
+                    <><br/>
+                    {highlight(searchTerm, track, 'title-subtitle-artist')}
                     </>
                   }
-
-                  {filter==='lyric' ?
+                  {filter==='lyric' &&
                     <><br/>
                       {highlight(searchTerm, track, 'lyric')}
                     </>
-                  : null
                   }
 
                   {isOnlyNameSeries(track)}   

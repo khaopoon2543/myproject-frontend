@@ -47,14 +47,11 @@ function SearchBar({ level }) {
         return "focus"
       } return null
     }
-    function isMobileSizeBar() { 
-      if (!screenSize) { return { marginLeft: 80, marginRight: 80 } } 
-    }
 
     return (
-      <div style={{zoom: '90%'}}> 
+      <Container style={{zoom: '90%'}}> 
         <div className="bg-search">
-        <form onSubmit={onFormSubmit} className="searchbar" style={isMobileSizeBar()}>
+        <form onSubmit={onFormSubmit} className="searchbar">
           <input className="search_input"
               type="text" 
               placeholder="Let's Search!" 
@@ -74,18 +71,18 @@ function SearchBar({ level }) {
 
         <br/>
         {(selectedFilter!=='spotify') ? 
-          <Container style={{ marginTop: 10 }}>
+          <div style={{ marginTop: 10 }}>
             <div className="filters">
               <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
               <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
               <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>
               <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
             </div>  
-          </Container>
+          </div>
           : null
         }
         
-          <Container style={{ marginTop: 10 }}>
+          <div style={{ marginTop: 10 }}>
             {(!level && selectedFilter==='artist' && typing) &&
               <ResultData src="artists" searchTerm={typing!=='' && typing} />   
             }
@@ -95,9 +92,9 @@ function SearchBar({ level }) {
             {(selectedFilter==='show' || typing) &&
               <ResultSearch searchTerm={typing!=='' && typing} filter={selectedFilter} level={!level ? null : level} />
             }
-          </Container>  
+          </div>  
       
-      </div> 
+      </Container> 
     );
 }
 export default SearchBar;

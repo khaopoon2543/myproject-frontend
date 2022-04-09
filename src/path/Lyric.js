@@ -70,7 +70,11 @@ function Lyric({user}) {
                   <TagLevels levelScore={title.readability_score}/>
                 </div>
                 {user &&
-                  <SearchSpotify title={resultTitle[1]} trackArtist={trackArtist} trackId={trackId}/>
+                  <SearchSpotify 
+                    title={resultTitle instanceof Array ? {name:resultTitle[1], artist:title.artist} : title} 
+                    trackArtist={trackArtist} 
+                    trackId={trackId}
+                  />
                 }    
             </Container>
           </Container>

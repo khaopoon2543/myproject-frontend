@@ -21,7 +21,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-  * {
+  .App *{
     zoom: 98%;
   }
 }
@@ -73,20 +73,26 @@ span.nav-button{
   text-align: left; 
 }
 .spotify img {
-  max-width: 100%;  
+  max-width: 100px;  
   height: auto;  
+}
+.spotify .card-title {
+  font-size: 18px; 
+  font-weight: bold;
+  margin-top:10px; 
+  margin-bottom:0;
 }
 .spotify .card-text {
   color: var(--grayLight);
 }
 .spotify .box-icon {
+  margin-top: 10px;
   text-align: right;
 }.spotify .icon {
-  font-size: 35px; 
+  font-size: 40px; 
   color: var(--black);
   transition: all 0.2s;
 }.spotify .icon:hover {
-  font-size: 35px; 
   color: var(--green);
 }
 .spotify .filters { /* BUTTON */
@@ -121,7 +127,7 @@ span.nav-button{
   z-index: 1;
 
   display: inline-block;
-  width: 60%;
+  width: 80%;
   text-align:center;
 }
 .search_input{
@@ -443,7 +449,6 @@ button.pink-text {
   color: var(--pinkLight);
   background-color: #ffffff3d;
  }
-
  @media only screen and (max-width: 768px) {
   .banner {
     display: block;
@@ -459,19 +464,19 @@ button.pink-text {
 
 /* ----------------------------- button open Spotify ----------------------------- */
 
-#spotify-search.banner *{
+#spotify-btn *{
   display: flex;
   align-items: center;
 }
-#spotify-search img {
+#spotify-btn img {
   margin: 3px;
   width: 25px;
   height: auto;
   margin-right: 10px; 
+  margin-left: 0px; 
 }
-#spotify-search.banner button {
+#spotify-btn button {
   font-weight: 300;
-  background: #ffffff1f;
   color: var(--white);
   padding: 2px 25px;
   margin-left: 10px;
@@ -479,7 +484,38 @@ button.pink-text {
   cursor: pointer;
   transition: all 0.25s;
   margin-top: 0px;
-}
-#spotify-search.banner button:hover {
+} 
+
+button#spotify-search {
+  background: #ffffff1f;
+} button#spotify-search:hover {
   background-color: #ffffff3d;
- }
+}
+button#spotify-login {
+  font-weight: 500;
+  margin-left: 0px;
+  background: var(--black);
+} button#spotify-login:hover {
+  background-color: var(--green);
+}
+button#search-kashify {
+  display:flex;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  
+  justify-content: center;
+  align-items: center;
+  text-decoration:none;
+  transition: all 0.25s;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 0px;
+  padding: 5px 10px;
+
+  color: var(--pinkPastel);
+  background: var(--black);
+} button#search-kashify:hover {
+  background-color: var(--pink);
+}

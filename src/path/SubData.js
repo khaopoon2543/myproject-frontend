@@ -8,7 +8,7 @@ function SubData() {
     const { subArtists, subSeries } = useParams();
 
     return (
-        <Container style={{ marginTop: 50, marginBottom: 50 }}>  
+        <Container style={{ marginTop: 50, marginBottom: 50, zoom: '90%'}}>  
         {artistName ?
           <>
           <h1>{artistName}</h1>  

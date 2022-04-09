@@ -12,12 +12,12 @@ function Search() {
     <Container style={{ marginTop: 50, marginBottom: 50 }}>
       <Row>
 
-        <Col xl={3}>
+        <Col xl={4}>
           <h1 lang="th" className="font-bold">ค้นหาเพลง <FontAwesomeIcon icon="fa-solid fa-music" /></h1>
           <h5 lang="th">ใส่ชื่อเพลงหรือชื่อศิลปินในช่องค้นหาได้เลย!</h5>
         </Col>
 
-        <Col xl={9}> 
+        <Col xl={8}> 
           <div>
             <SearchBar />
           </div>

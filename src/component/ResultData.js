@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Col, Card, Spinner } from 'react-bootstrap';
 import "./ResultSearch.css";
+import useIsMobile from '../component/useIsMobile';
+
 
 export default function ResultData(props) {
     const alphabet = props.alphabet;
@@ -13,6 +15,7 @@ export default function ResultData(props) {
     const [visible, setVisible] = useState(30);
     function loadMore() { setVisible(visible + 30) }
     const navigate = useNavigate ();
+    const screenSize = useIsMobile()
 
     useEffect(() => {
       if (alphabet || searchTerm) {
@@ -29,7 +32,9 @@ export default function ResultData(props) {
           });
       }
     }, [alphabet || searchTerm]);
-    
+
+    const alignItem = screenSize ? 'data flex-wrap flex-md-row d-flex justify-content-left align-items-left' //left
+                    : 'data flex-wrap flex-md-row d-flex justify-content-left align-items-center' //center
 
     function isArtist() { 
       const show = 
@@ -37,7 +42,7 @@ export default function ResultData(props) {
           .slice(0, visible) //selected elements in an array
           .map((artist, index) => {
               return (
-                <Card className='data flex-wrap flex-md-row' key={index} 
+                <Card className={alignItem} key={index} 
                   onClick={event => { navigate( '/artists/'+ artist.artist_id.replaceAll(" ","-"), 
                           { state: { artistName: artist.name } }) 
                           event.preventDefault()
@@ -67,7 +72,7 @@ export default function ResultData(props) {
           .slice(0, visible) //selected elements in an array
           .map((series, index) => {
               return (
-                <Card className='data flex-wrap flex-md-row' key={index} 
+                <Card className={alignItem} key={index} 
                   onClick={event => { navigate( '/series/'+ series.series_id.replaceAll(" ","-"), 
                           { state: { seriesName: series.name, seriesType: series.type } }) 
                           event.preventDefault()
