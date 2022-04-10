@@ -1,5 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import SearchBar from "../component/SearchBar";
+import SearchBar from "../component/Search/SearchBar";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'

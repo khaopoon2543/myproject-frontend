@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import Tooltip from '../component/Tooltipp';
-import PopupDict from '../component/PopupDict';
+import Tooltip from '../component/Lyrics/Tooltip';
+import PopupDict from '../component/Lyrics/PopupDict';
 import useIsMobile from '../component/useIsMobile';
-import TagLevels from "../component/TagLevels";
+import TagLevels from "../component/Levels/TagLevels";
 import { LoadingIMG } from "../component/Loading";
 import { toHiragana, isJapanese } from 'wanakana';
-import { SearchSpotify } from '../component/SpotifyLink'
+import { SearchSpotify } from '../component/Spotify/SpotifyLink'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'

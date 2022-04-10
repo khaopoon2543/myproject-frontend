@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { Loading } from "./Loading";
-import useIsMobile from '../component/useIsMobile';
+import { Loading } from "../Loading";
+import useIsMobile from '../useIsMobile';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'

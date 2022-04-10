@@ -1,7 +1,7 @@
 import { Container, Col, Card, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { LevelsItems } from "../component/LevelsItems";
-import SearchBar from "../component/SearchBar";
+import { LevelsItems } from "../component/Levels/LevelsItems";
+import SearchBar from "../component/Search/SearchBar";
 
 function SubLevels() {
     const { subLevels } = useParams() 

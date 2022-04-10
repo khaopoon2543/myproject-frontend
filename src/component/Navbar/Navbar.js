@@ -2,7 +2,7 @@ import "./Navbar.css";
 import React, { useEffect, useState } from "react";
 import { MenuItems } from "./MenuItems";
 import { Container, Navbar, Nav, NavDropdown, Offcanvas } from 'react-bootstrap';
-import useIsMobile from '../component/useIsMobile';
+import useIsMobile from '../useIsMobile';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -15,7 +15,7 @@ function LoginButton() {
         <div className="banner" id="spotify-btn">
             <button id="spotify-login">
                 <div className="items-left">
-                    <img alt='spotify search' src={require("../images/Spotify_Icon_RGB_White.png")}></img>
+                    <img alt='spotify search' src={require("../../images/Spotify_Icon_RGB_White.png")}></img>
                     LOGIN SPOTIFY
                 </div>
             </button>
@@ -29,7 +29,7 @@ function LogoutButton() {
         <div className="banner" id="spotify-btn">
             <button id="spotify-login">
                 <div className="items-left">
-                    <img alt='spotify search' src={require("../images/Spotify_Icon_RGB_White.png")}></img>
+                    <img alt='spotify search' src={require("../../images/Spotify_Icon_RGB_White.png")}></img>
                     PLAYLISTS
                 </div>
             </button>

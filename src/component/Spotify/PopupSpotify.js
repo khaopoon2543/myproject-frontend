@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Alert, Spinner } from 'react-bootstrap';
-import useIsMobile from '../component/useIsMobile';
+import useIsMobile from '../useIsMobile';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -41,7 +41,7 @@ const INLINE ={
     color: 'white'
 }
 
-export default function Popup({ open, onClose }) {
+export default function PopupSpotify({ open, onClose }) {
     
     const [dataTrack, setDataTrack] = useState([])
     const [song_image, setSong_image] = useState([])

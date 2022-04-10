@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Col, Card, Spinner } from 'react-bootstrap';
 import "./ResultSearch.css";
-import useIsMobile from '../component/useIsMobile';
+import useIsMobile from '../useIsMobile';
 
 
 export default function ResultData(props) {

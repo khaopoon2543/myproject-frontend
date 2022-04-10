@@ -1,4 +1,4 @@
-import "./ResultSearch.css";
+import "../Search/ResultSearch.css";
 
 export default function TagLevels({ levelScore }) {
 

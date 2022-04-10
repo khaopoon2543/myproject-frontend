@@ -4,9 +4,9 @@ import axios from 'axios';
 import { Col, Card } from 'react-bootstrap';
 import Highlighter from "react-highlight-words";
 import "./ResultSearch.css";
-import TagLevels from "./TagLevels";
-import { Loading } from "./Loading";
-import useIsMobile from '../component/useIsMobile';
+import TagLevels from "../Levels/TagLevels";
+import { Loading } from "../Loading";
+import useIsMobile from '../useIsMobile';
 
 
 export default function ResultSearch(props) {

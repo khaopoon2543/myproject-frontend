@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Col, Card, Row } from 'react-bootstrap';
-import { LevelsItems } from "../component/LevelsItems";
+import { LevelsItems } from "../component/Levels/LevelsItems";
 import "./Levels.css"
 
 function Levels() {

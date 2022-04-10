@@ -7,18 +7,18 @@ import Home from "./path/Home";
 import Levels from "./path/Levels";
 import Lyric from "./path/Lyric";
 import Result from "./path/Result";
-import Header from "./component/Navbar";
-import SpotifyButton from "./component/SpotifyButton";
+import Header from "./component/Navbar/Navbar";
+import SpotifyButton from "./component/Spotify/SpotifyButton";
 import SubLevels from "./path/SubLevels";
 import Data from "./path/Data";
 import SubData from "./path/SubData";
 import About from "./path/About";
-import ResultSpotify from "./component/ResultSpotify";
+import ResultSpotify from "./component/Spotify/ResultSpotify";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Axios from "axios";
-Axios.defaults.baseURL = "http://localhost:5000"; 
+//import Axios from "axios";
+//Axios.defaults.baseURL = "http://localhost:5000"; 
 //https://kashify-backend.herokuapp.com //http://localhost:5000
 
 function App(){

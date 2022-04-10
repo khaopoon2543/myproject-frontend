@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import ResultSearch from "../component/ResultSearch"
-import ResultData from '../component/ResultData';
+import ResultSearch from "../component/Search/ResultSearch"
+import ResultData from '../component/Search/ResultData';
 
 function Result() {
 

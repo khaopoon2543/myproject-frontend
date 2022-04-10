@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from 'react-bootstrap';
 import ResultSearch from "./ResultSearch";
-import useIsMobile from '../component/useIsMobile';
+import useIsMobile from '../useIsMobile';
 import ResultData from './ResultData';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
 import { useLocation, useParams } from 'react-router-dom';
-import ResultSearch from "../component/ResultSearch";
+import ResultSearch from "../component/Search/ResultSearch";
 
 function SubData() {
     const { state } = useLocation();

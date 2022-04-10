@@ -28,7 +28,7 @@ function SearchSpotify({title, trackArtist, trackId}) {
                 id="spotify-search"
             >
                 <div className="items-left">
-                    <img alt='spotify search' src={require("../images/Spotify_Icon_RGB_White.png")}></img>
+                    <img alt='spotify search' src={require("../../images/Spotify_Icon_RGB_White.png")}></img>
                     SEARCH SPOTIFY 
                 </div>
             </button> 

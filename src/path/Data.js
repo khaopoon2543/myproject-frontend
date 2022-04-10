@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Col, Row } from 'react-bootstrap';
 import useIsMobile from '../component/useIsMobile';
-import ResultData from '../component/ResultData';
+import ResultData from '../component/Search/ResultData';
 
 const BUTTON = { marginLeft: 100, marginRight: 100 }
 const BUTTON_MOBILE = { marginLeft: 5, marginRight: 5 }

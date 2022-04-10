@@ -8,5 +8,5 @@ img#spotify {
     height: 50px;
     transform: translate(-50%,-50%);
     z-index: 2000;
-    background:url("../images/Spotify_Icon_RGB_Black.png");
+    background:url("../../images/Spotify_Icon_RGB_Black.png");
 }
