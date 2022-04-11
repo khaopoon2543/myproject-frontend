@@ -7,6 +7,7 @@ import "./ResultSearch.css";
 import TagLevels from "../Levels/TagLevels";
 import { Loading } from "../Loading";
 import useIsMobile from '../useIsMobile';
+import { backendSrc } from "../backendSrc";
 
 
 export default function ResultSearch(props) {
@@ -34,7 +35,7 @@ export default function ResultSearch(props) {
     function fetchData() {
       if ( filter || searchTerm || filter, searchTerm ) {
         setLoading(true);
-        axios.get('/result' , { mode: 'cors', crossDomain: true,
+        axios.get(`${backendSrc}/result`, { mode: 'cors', crossDomain: true,
                   params: { searchTerm : searchTerm,
                             searchArtist : searchArtist,             
                             filter : filter,             
@@ -64,7 +65,7 @@ export default function ResultSearch(props) {
     function fetchDataLevel() {
       if ( filter==='show' && level) {
         setLoading(true);
-        axios.get('/result' , { mode: 'cors', crossDomain: true,
+        axios.get(`${backendSrc}/result` , { mode: 'cors', crossDomain: true,
                     params: { filter : filter,             
                               level : level }
                 })

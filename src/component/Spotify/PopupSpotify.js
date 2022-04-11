@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Alert, Spinner } from 'react-bootstrap';
 import useIsMobile from '../useIsMobile';
+import { backendSrc } from "../backendSrc";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -52,7 +53,7 @@ export default function PopupSpotify({ open, onClose }) {
     useEffect(() => {
         if ( open ) {
             setLoading(true);
-            axios.get("/playing", { mode: 'cors', crossDomain: true }) 
+            axios.get(`${backendSrc}/playing`, { mode: 'cors', crossDomain: true }) 
                 .then((response) => {
                     setDataTrack(response.data); //song data
                     setSong_image(response.data.image); //user profile image

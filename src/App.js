@@ -16,6 +16,7 @@ import About from "./path/About";
 import ResultSpotify from "./component/Spotify/ResultSpotify";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { backendSrc } from "./component/backendSrc";
 
 //import Axios from "axios";
 //Axios.defaults.baseURL = "http://localhost:5000"; 
@@ -27,7 +28,7 @@ function App(){
     const [isUser, setIsUser] = useState(false); //Header SpotifyButton
 
     useEffect(() => {
-      axios.get("/home", { mode: 'cors', crossDomain: true })
+      axios.get(`${backendSrc}/home`, { mode: 'cors', crossDomain: true })
         .then(() => {
           setIsUser(true); 
         })

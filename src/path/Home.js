@@ -6,6 +6,7 @@ import { LoadingIMG } from "../component/Loading";
 import { isJapanese } from 'wanakana';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import useIsMobile from '../component/useIsMobile';
+import { backendSrc } from "../component/backendSrc";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -22,7 +23,7 @@ function Home (){
 
     useEffect(() => {
       setLoading(true);
-      axios.get("/home", { mode: 'cors', crossDomain: true })
+      axios.get(`${backendSrc}/home` , { mode: 'cors', crossDomain: true })
         .then((response) => {
           setUser(response.data.me);
           setUserImage(response.data.image);
@@ -32,7 +33,7 @@ function Home (){
           console.log(error.response)
         });
 
-      axios.get("/playlist", { mode: 'cors', crossDomain: true })
+      axios.get(`${backendSrc}/playlist`, { mode: 'cors', crossDomain: true })
         .then((response) => {
           console.log(response.data.all_tracks)
           setPlaylists(response.data.all_tracks);
@@ -122,7 +123,7 @@ function Home (){
                               <Col xs={12} md={3}>
                                 <a onClick={ (event) => {
                                     navigate('/result='+ checkSpecialChars(track.artist) + checkSpecialChars(track.name) ,
-                                    { state: { key:track.name, artist:track.artist} })
+                                    { state: { key:checkSpecialChars(track.name), artist:checkSpecialChars(track.artist)} })
                                     event.preventDefault()
                                     }}> 
                                     <div className="banner" id="spotify-btn">

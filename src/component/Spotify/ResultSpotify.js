@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Loading } from "../Loading";
 import useIsMobile from '../useIsMobile';
+import { backendSrc } from "../backendSrc";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -34,7 +35,7 @@ export default function ResultSpotify() {
       function fetchData() {
         if ( trackArtist && trackName && trackArtistId ) {
         setLoading(true);
-        axios.get('/searchTrack/'+ trackArtistId + '/' + trackArtist + '/' + trackName , { mode: 'cors', crossDomain: true })
+        axios.get(`${backendSrc}/searchTrack/` + trackArtistId + '/' + trackArtist + '/' + trackName , { mode: 'cors', crossDomain: true })
             .then((response) => {
                 if (isMounted) {
                     setResultSpotify(response.data);

@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { backendSrc } from "../component/backendSrc";
 
 function Login() {
   return (
-    axios.get("/login") 
+    axios.get(`${backendSrc}/login`) 
       .then((response) => {
         console.log(response.data)
         window.location = response.data

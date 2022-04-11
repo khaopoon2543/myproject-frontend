@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from 'axios';
+import { backendSrc } from "../backendSrc";
 
 export default function Tooltip(props) {
     const word = props.word
@@ -22,7 +23,7 @@ export default function Tooltip(props) {
 
     useEffect(() => {
         if ( word ) {
-            axios.get('/dict' , { mode: 'cors', crossDomain: true,
+            axios.get(`${backendSrc}/dict` , { mode: 'cors', crossDomain: true,
                 params: {   word : word,
                             dic_form : dic_form,             
                             read_form : read_form,             

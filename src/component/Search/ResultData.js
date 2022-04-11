@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Col, Card, Spinner } from 'react-bootstrap';
 import "./ResultSearch.css";
 import useIsMobile from '../useIsMobile';
-
+import { backendSrc } from "../backendSrc";
 
 export default function ResultData(props) {
     const alphabet = props.alphabet;
@@ -20,7 +20,7 @@ export default function ResultData(props) {
     useEffect(() => {
       if (alphabet || searchTerm) {
         setLoading(true);
-        axios.get(`/${src}` , { mode: 'cors', crossDomain: true,
+        axios.get(`${backendSrc}/${src}` , { mode: 'cors', crossDomain: true,
                     params: { alphabet : alphabet, searchTerm : searchTerm }
           })
           .then((response) => {
