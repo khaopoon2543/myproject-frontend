@@ -14,25 +14,28 @@
     text-align: center;
 }.levelCard:hover {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 50px !important;
-}.levelText {
-    text-align: left;
-    color: var(--grayLight);
 }
 
 #sub-level {
+    text-align: left;
     box-shadow: none !important;
     cursor: text;
     position: -webkit-sticky;
     position: sticky;
-    top: 80px;
+    top: 100px;
     z-index: 1;
-}#sub-level .card-title.h5{
-    font-size: 50px;
-}#sub-level .card-subtitle.h6{
-    font-size: 30px;
+    margin: 0px!important;    
+}#sub-level.card-body {
+    text-align: left;
+    color: var(--gray);
+    background-color: var(--white);
+    margin-top: 10px !important;
+    border-radius: 10px;
+}#sub-level.card-body span { /* break line */
+    display: block;
 }#sub-level .card-header {
-    padding-top: auto;
-    border-radius: 20px !important;
+    margin: 0px;
+    margin-bottom: 30px;
 }
 
 #very-difficult, #difficult{
@@ -56,3 +59,19 @@
         margin-right: 20px;
     }
   }
+
+.icon {
+    color: var(--grayLight);
+}
+#sub-level .icon {
+    font-size: 30px;
+    display: flex;
+    float: right;
+}
+#very-difficult .icon, #difficult .icon, #very-difficult .score, #difficult .score{
+    color: var(--diffSRT);
+}#slightly-difficult .icon, #so-so .icon, #slightly-difficult .score, #so-so .score{
+    color: var(--intSRT);
+}#easy .icon, #very-easy .icon, #easy .score, #very-easy .score{
+    color: var(--easySRT);
+}

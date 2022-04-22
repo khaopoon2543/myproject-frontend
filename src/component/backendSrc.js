@@ -1,4 +1,4 @@
 
-const backendSrc = "https://kashify-backend.herokuapp.com"
+const backendSrc = "http://localhost:5000/backend" //http://localhost:5000
 
 export { backendSrc }

@@ -1,4 +1,4 @@
-import { Card } from 'react-bootstrap';
+import { Card, Col, Row } from 'react-bootstrap';
 import { isKatakana, isHiragana } from 'wanakana';
 
 export default function PopupDict({ dictList, isOpen }) {
@@ -24,7 +24,7 @@ export default function PopupDict({ dictList, isOpen }) {
       let foundWords = dictEng.split(re)
       let text = [];
       for (let i=1; i<foundWords.length; i++) {
-        text.push(<span key={i}>({i}) {foundWords[i].replace(/\,$/,'')} <br/></span>);
+        text.push(<span key={i}>({i}) {foundWords[i].replace(/\,$/,'')}</span>);
       }
       return text
     } return dictEng
@@ -40,21 +40,32 @@ export default function PopupDict({ dictList, isOpen }) {
   const mapDict = dictList.dict && dictList.dict.length > 0 ? 
     dictList.dict.slice(0, 5).map((dict, i) => {
       return (
-            <Card key={i} id="dict">
+            <Card key={i} id={(i!==(dictList.dict.length-1)) ? "dict" : "last-dict"}>
               <Card.Body>
-                <Card.Title className="mb-2"> 
-                  <span className="font-semi-bold black-text"> {dict.Kanji} </span> 
-                  {dict.Kanji!==dict.Yomikata && <span>({dict.Yomikata})</span>}
-                  
-                  <div className="tagPos">{splitPos(dict.Type)}</div>
-                </Card.Title>
-            
-                <div lang="th" id="dictTh" className="font-semi-bold mb-1">
-                  {dict.Thai}
-                </div>
-                <div lang="th" id="dictEn">
-                  {splitDictEng(dict.English)}
-                </div>
+                <Row>
+                <Col xs={6} md={5}>
+                  <Card.Title> 
+                    <div className="head-each-word">
+                      <span id="kanji">{dict.Kanji}</span>
+                      <br/>
+                      {dict.Kanji!==dict.Yomikata && 
+                        <span id="read-form">{dict.Yomikata}</span>
+                      }
+                    </div>
+                    <div className="tagPos">
+                      {splitPos(dict.Type)}
+                    </div>
+                  </Card.Title>
+                </Col>
+                <Col xs={6} md={7}>
+                  <div lang="th" id="dictTh" className="font-semi-bold">
+                    {dict.Thai}
+                  </div>
+                  <div lang="th" id="dictEn">
+                    {splitDictEng(dict.English)}
+                  </div>
+                </Col>
+                </Row>
               </Card.Body>
             </Card>
       )
@@ -64,11 +75,11 @@ export default function PopupDict({ dictList, isOpen }) {
       isOpen ?
         <>
         <div className="sidebar">
-          <div id="header" className="d-flex justify-content-left align-items-center">
-            <h4 style={{ marginLeft: 10, marginRight: 10 }}>{dictList.token.word}</h4>
-            {isReadForm(dictList)!==null ?
-              <h5 className="font-light">({isReadForm(dictList)})</h5>
-            : null }
+          <div id="header">
+            <h4 id="head-word">{dictList.token.word}</h4>
+            {isReadForm(dictList)!==null &&
+              <h4 className="gray-text">({isReadForm(dictList)})</h4>
+            }
           </div>
           <div className="scroll">       
             {mapDict}
@@ -79,7 +90,7 @@ export default function PopupDict({ dictList, isOpen }) {
         <>
         <div className="sidebar" lang="th">
           <div id="header">
-            <h4>ความหมายคำศัพท์</h4>
+            <h4 id="head-word">ความหมายคำศัพท์</h4>
           </div>
           <div className="scroll" id="no-scroll">  
             <Card id="dict">  

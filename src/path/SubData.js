@@ -1,4 +1,4 @@
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useLocation, useParams } from 'react-router-dom';
 import ResultSearch from "../component/Search/ResultSearch";
 
@@ -8,33 +8,47 @@ function SubData() {
     const { subArtists, subSeries } = useParams();
 
     return (
-        <Container style={{ marginTop: 50, marginBottom: 50, zoom: '90%'}}>  
+        <Container className="pages"> 
+        <Row>
         {artistName ?
           <>
-          <h1>{artistName}</h1>  
-          <div className="tagLevel" id="title-lyric">
-            <p className='subtitle' id="sub-data">
-              {subArtists.replace(/-/g, ' ')}
-            </p> 
-          </div> 
-          <Container style={{ marginTop: 30 }}>
-            <ResultSearch searchTerm={subArtists.replace(/-/g, ' ')} filter={'artist'} subArtists={artistName} />
-          </Container> 
+          <Col xl={4} >
+            <div className="header-left">
+              <h2>{artistName}</h2>
+              <p className='subtitle' id="sub-data">
+                <strong>{subArtists.replace(/-/g, ' ')}</strong>
+              </p> 
+              <br/>
+            </div>
+          </Col>
+          <Col xl={8} > 
+            <div style={{ marginTop: 0 }}>
+              <ResultSearch searchTerm={subArtists.replace(/-/g, ' ')} filter={'artist'} subArtists={artistName} />
+            </div> 
+          </Col>
           </>
         : 
           <>
-          <h4>「{seriesType}」</h4>
-          <h1> {seriesName} </h1>  
-          <div className="tagLevel" id="title-lyric">
-            <p className='subtitle' id="sub-data">
-              {subSeries.replace(/-/g, ' ')}
-            </p>
-          </div>   
-          <Container style={{ marginTop: 30 }}>
-            <ResultSearch searchTerm={subSeries.replace(/-/g, ' ')} filter={'series'} subSeries={seriesName}/>
-          </Container> 
+          <Col xl={4} >
+            <div className="header-left">
+              <div className="tagLevel d-flex">
+                <h4 id="tag-data">「{seriesType}」</h4>
+              </div>
+              <h2> {seriesName} </h2>  
+              <p className='subtitle' id="sub-data">
+                <strong>{subSeries.replace(/-/g, ' ')}</strong>
+              </p>
+              <br/>
+            </div>
+          </Col>
+          <Col xl={8} > 
+            <div style={{ marginTop: 0 }}>
+              <ResultSearch searchTerm={subSeries.replace(/-/g, ' ')} filter={'series'} subSeries={seriesName}/>
+            </div> 
+          </Col>
           </> 
         }
+        </Row> 
         </Container>
     );
 }

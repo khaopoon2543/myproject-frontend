@@ -1,21 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container } from 'react-bootstrap';
 import ResultSearch from "./ResultSearch";
-import useIsMobile from '../useIsMobile';
 import ResultData from './ResultData';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-library.add(fas)
+import { FiSearch } from 'react-icons/fi';
+import { HiOutlineX } from 'react-icons/hi';
+import { PLSMoreThreeChars } from '../Loading';
 
 function SearchBar({ level }) {
     const [searchTerm, setSearchTerm] = useState('')
-    const [selectedFilter, setSelectedFilter] = useState(level==='' ? 'song': 'show')
-    //const inputSearch = useRef('')
+    const [selectedFilter, setSelectedFilter] = useState(level==='' ? 'all': 'show')
     const [typing, setTyping] = useState('')
-    const screenSize = useIsMobile()
 
     const navigate = useNavigate ();
     const onFormSubmit = event => {
@@ -25,12 +20,11 @@ function SearchBar({ level }) {
     const onChangeData = event  => { 
       setSearchTerm(event.target.value);
       if (selectedFilter==='show') {
-        setSelectedFilter('song')
+        setSelectedFilter('all')
       }
     }
     
     useEffect(() => {
-      //inputSearch.current.value = searchTerm //.replaceAll(" ", "")
       const newTimer = setTimeout(() => { setTyping(searchTerm) }, 1000)
       return () => {clearTimeout(newTimer)}
     }, [searchTerm])
@@ -41,15 +35,21 @@ function SearchBar({ level }) {
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
     function showSeries() { setSelectedFilter('series') }
+    function showAll() { setSelectedFilter('all') }
 
     function isFocus(filter) {
       if (selectedFilter === filter){
         return "focus"
       } return null
     }
+    function isCharMoreThree(typing) {
+      if (typing && typing.length < 3){
+        return null
+      } return typing
+    }
 
     return (
-      <Container style={{zoom: '90%'}}> 
+      <div> 
         <div className="bg-search">
         <form onSubmit={onFormSubmit} className="searchbar">
           <input className="search_input"
@@ -57,44 +57,65 @@ function SearchBar({ level }) {
               placeholder="Let's Search!" 
               onChange={onChangeData}
               value={searchTerm}
-              //ref={inputSearch}
               required
             />
           <button type="submit" className="input_icon" id={!searchTerm ? "search_icon" : "active_icon"}>
-            <i className="fas fa-search"></i></button>
+            <FiSearch/></button>
           {searchTerm &&
             <button type="button" className="input_icon" id="clear_icon" onClick={() => setSearchTerm('')}>
-            <FontAwesomeIcon icon="fa-solid fa-xmark" /></button>
+            <HiOutlineX/></button>
           }
         </form>
         </div>
 
         <br/>
         {(selectedFilter!=='spotify') ? 
-          <div style={{ marginTop: 10 }}>
-            <div className="filters">
-              <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
-              <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
-              <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>
-              <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
-            </div>  
-          </div>
+          <div className="filters">
+            <button onClick={() => showAll()} id={isFocus('all')}>All</button>
+            <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
+            <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
+            <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>
+            <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
+          </div>  
           : null
         }
         
           <div style={{ marginTop: 10 }}>
-            {(!level && selectedFilter==='artist' && typing) &&
-              <ResultData src="artists" searchTerm={typing!=='' && typing} />   
+
+          {isCharMoreThree(typing)!==null ?
+            <>
+            {(!level && selectedFilter==='artist' && typing) && 
+              <ResultData src="artists" searchTerm={typing} />   
             }
             {(!level && selectedFilter==='series' && typing) &&
-              <ResultData src="series" searchTerm={typing!=='' && typing} />   
+              <ResultData src="series" searchTerm={typing} />   
             }
-            {(selectedFilter==='show' || typing) &&
-              <ResultSearch searchTerm={typing!=='' && typing} filter={selectedFilter} level={!level ? null : level} />
+            {(selectedFilter!=='all' && (selectedFilter==='show' || typing)) &&
+              <ResultSearch searchTerm={typing} filter={selectedFilter} level={!level ? null : level} />
             }
+
+            {(selectedFilter==='all' && typing) &&
+            <>
+              <ResultSearch searchTerm={typing} filter={'song'} level={!level ? null : level} searchAll={true}/>
+              <>
+              {!level && 
+                <>
+                <ResultData src="artists" searchTerm={typing} searchAll={true}/>  
+                <ResultData src="series" searchTerm={typing} searchAll={true}/> 
+                </>
+              }
+              </>
+              <ResultSearch searchTerm={typing} filter={'lyric'} level={!level ? null : level} searchAll={true}/>  
+            </>
+            }
+            </>
+            :
+            <PLSMoreThreeChars />
+          }
+
           </div>  
       
-      </Container> 
+      </div> 
     );
 }
 export default SearchBar;

@@ -4,7 +4,9 @@ import PopupSpotify from "./PopupSpotify";
 import "./SpotifyButton.css";
 import useIsMobile from '../useIsMobile';
 
-export default function SpotifyButton({ user, open, onOpen, onClose }) {
+import { FaSpotify } from 'react-icons/fa';
+
+export default function SpotifyButton({ user, open, onOpen, onClose, spotifyApi }) {
     
     function OpenClose() {
         if(!open){
@@ -18,16 +20,13 @@ export default function SpotifyButton({ user, open, onOpen, onClose }) {
     return (
 
         <Container>
-            <img id='spotify' alt='spotify button'
-                src={require( (screenSize&&open) ?  "../../images/Spotify_Icon_RGB_White.png" : "../../images/Spotify_Icon_RGB_Black.png" )}
-                onMouseOver={e => e.currentTarget.src = require( "../../images/Spotify_Icon_RGB_Green.png" )}
-                onMouseOut={e => e.currentTarget.src = require( (screenSize&&open) ? "../../images/Spotify_Icon_RGB_White.png" : "../../images/Spotify_Icon_RGB_Black.png" )}
-                onClick={OpenClose}>
-            </img>
-         
-            <PopupSpotify open={open} onClose={onClose}>
-                {/* Hello! (is children in PopupSpotify.js)*/}
-            </PopupSpotify>
+            <FaSpotify className='spotify-btn-icon'
+                id={(screenSize&&open) ? 'open-mobile' : 'default'}  
+                style={(screenSize&&(!open)) && { boxShadow: 'var(--pinkPastel) 0px 5px 80px' }}    
+                onClick={OpenClose}      
+            />
+
+            <PopupSpotify open={open} onClose={onClose} spotifyApi={spotifyApi} />
         </Container>
 
     )

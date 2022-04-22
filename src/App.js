@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import Login from './path/Login';
 import Search from './path/Search';
-import Home from "./path/Home";
+import Playlist from "./path/Playlist";
 import Levels from "./path/Levels";
 import Lyric from "./path/Lyric";
 import Result from "./path/Result";
@@ -17,45 +16,72 @@ import ResultSpotify from "./component/Spotify/ResultSpotify";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { backendSrc } from "./component/backendSrc";
+import SpotifyWebApi from 'spotify-web-api-node'
+
 
 //import Axios from "axios";
 //Axios.defaults.baseURL = "http://localhost:5000"; 
 //https://kashify-backend.herokuapp.com //http://localhost:5000
 
+const code = new URLSearchParams(window.location.search).get("code");
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: "d97993bb6c89489bb43493cdfa949504",
+});
+
 function App(){
-    
     const [isOpen, setIsOpen] = useState(false); //SpotifyButton
     const [isUser, setIsUser] = useState(false); //Header SpotifyButton
 
     useEffect(() => {
-      axios.get(`${backendSrc}/home`, { mode: 'cors', crossDomain: true })
-        .then(() => {
-          setIsUser(true); 
-        })
-        .catch(error => {
-          console.log(error.response)
-        });
-        
-      if(window.location.hash) {
-        setIsOpen(true);
-      }
+      if (!code) return
+        axios.post(`${backendSrc}/login`, { code, })
+          .then(response => {
+            localStorage.setItem("accessToken", response.data.accessToken)
+            localStorage.setItem("refreshToken", response.data.refreshToken)
+            localStorage.setItem("expiresIn", response.data.expiresIn)
+            localStorage.setItem("timeStamp", Date.now())
+            setIsUser(true); 
+            window.history.pushState({}, null, "/")
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }, [])
+
+    useEffect(() => { //check token expires
+      if (!localStorage.getItem("timeStamp")) return
+      let timeStamp = window.localStorage.getItem("timeStamp")
+      let expiresIn = window.localStorage.getItem("expiresIn")
+      let thisTime = (Date.now() - timeStamp) / 1000
+      if (thisTime < expiresIn) return
+          setIsUser(false);
+          localStorage.clear();
+    }, [])
+
+    useEffect(() => { //check user
+      if (!localStorage.getItem("accessToken")) return
+      let accessToken = window.localStorage.getItem("accessToken")
+        setIsUser(true);
+        spotifyApi.setAccessToken(accessToken)
+        console.log("Access token")     
     }, []);
 
     return (
       <div className="App">
-        <Header user={isUser} />
+        <Header user={isUser} setIsUser={isUser => setIsUser(isUser)} />
 
         <SpotifyButton 
           user={isUser}
           open={isOpen}
           onOpen={() => setIsOpen(true)}
           onClose={() => setIsOpen(false)}
+          spotifyApi={spotifyApi}
         />
         
         <Routes>
           <Route path="/" element={ <Search/> } />
-          <Route path="/login" element={ <Login/> } />
-          <Route path="/home" element={ <Home/> } />
+          <Route path="/playlist" element={ <Playlist spotifyApi={spotifyApi}/> } />
           <Route path="/lyric/:trackArtist/:trackId" element={ <Lyric user={isUser}/> } />
           <Route path="/result=:searchTerm" element={ <Result/> } />
           <Route path="/levels" element={ <Levels/> } />
@@ -64,7 +90,7 @@ function App(){
           <Route path="/artists/:subArtists" element={ <SubData/> } />
           <Route path="/series" element={ <Data src="series"/> } />
           <Route path="/series/:subSeries" element={ <SubData/> } />
-          <Route path="/spotify/:trackArtist/:trackName" element={ <ResultSpotify/> } />
+          <Route path="/spotify/:trackArtist/:trackName" element={ <ResultSpotify spotifyApi={spotifyApi}/> } />
 
           <Route path="/about" element={ <About/> } />
         </Routes>

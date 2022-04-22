@@ -27,7 +27,7 @@ function Result() {
 
         <div className="App" style={{zoom: '90%'}}>
 
-          <Container style={{ marginTop: 50, marginBottom: 50 }}>
+          <Container className="pages">
             <span>Results</span>
             <h1>{key}</h1>
             {artist && <p>{artist}</p>}

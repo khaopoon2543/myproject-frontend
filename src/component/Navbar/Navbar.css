@@ -51,10 +51,10 @@
 
 .nav-links span, .nav-links-active span {
   color: var(--black);
-  font-weight: 500;
   position: relative;
   overflow: hidden;
   margin-right: 10px;
+  font-size: 16px;
 }
 .nav-links span:after, .nav-links-active span {
   z-index: -1;

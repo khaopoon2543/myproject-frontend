@@ -1,12 +1,24 @@
-img#spotify {
+.spotify-btn-icon {
     cursor: pointer;
     position: fixed;
-    right:    0;
+    right:    -10px;
     bottom:   0;
-    margin: 3px;
-    width: 50px;
-    height: 50px;
-    transform: translate(-50%,-50%);
+    margin: 10px 10px 0px 10px;
+    border-radius: 40px 0 0 0;
+    font-size: 90px;
+    padding: 20px 20px 25px 20px;
+    color: var(--black);
+    /* transform: translate(-50%,-50%); */
     z-index: 2000;
-    background:url("../../images/Spotify_Icon_RGB_Black.png");
+    transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
 }
+.spotify-btn-icon#default {
+    background-color: #fff;
+}
+.spotify-btn-icon:hover {
+    color: var(--green)
+}
+.spotify-btn-icon#open-mobile {
+    color: var(--white);
+}
+

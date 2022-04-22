@@ -9,11 +9,9 @@ import TagLevels from "../component/Levels/TagLevels";
 import { LoadingIMG } from "../component/Loading";
 import { toHiragana, isJapanese } from 'wanakana';
 import { SearchSpotify } from '../component/Spotify/SpotifyLink'
+import "../component/Lyrics/Lyrics.css"
+import { BiFontSize } from 'react-icons/bi';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-library.add(fas)
 
 function Lyric({user}) {
 
@@ -22,7 +20,8 @@ function Lyric({user}) {
   const [loading, setLoading] = useState(true);
   const { trackId, trackArtist } = useParams() 
   const [collectedWord, setCollectedWord] = useState([]); 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [fontSize, setFontSize] = useState('');
   const screenSize = useIsMobile()
 
   useEffect(() => {
@@ -66,24 +65,23 @@ function Lyric({user}) {
             </Container>
 
             <Container className="items-center" style={{marginTop:20}}>
+                <span lang="th">ระดับความยากง่าย&nbsp;&nbsp;</span>
+                <span lang="th">{title.readability_score}&nbsp;&nbsp;</span>
                 <div className="tagLevel" id="title-lyric">
                   <TagLevels levelScore={title.readability_score}/>
-                </div>
-                {user &&
-                  <SearchSpotify 
-                    title={resultTitle instanceof Array ? {name:resultTitle[1], artist:title.artist} : title} 
-                    trackArtist={trackArtist} 
-                    trackId={trackId}
-                  />
-                }    
+                </div>    
+            </Container>
+            <Container>
+              {user &&
+                <SearchSpotify 
+                  title={resultTitle instanceof Array ? {name:resultTitle[1], artist:title.artist} : title} 
+                  trackArtist={trackArtist} 
+                  trackId={trackId}
+                />
+              } 
             </Container>
           </Container>
   };
-  function checkKatakana(surface, reading_form) {
-    if (surface !== reading_form) {
-      return toHiragana(reading_form, { passRomaji: true })
-    } return reading_form
-  }
 
   function mixPrefix(tokenized_list, i) {
     if (tokenized_list[i].poses[0]==='接頭辞') {
@@ -101,6 +99,31 @@ function Lyric({user}) {
       return tokenized_list[i].dictionary_form
     }
   }
+
+  function isFocus(filter) {
+    if (fontSize === filter){
+      return "focus"
+    } return null
+  }
+  function buttonChangeSize() {
+    return (
+      <div className="filters">
+        <span id='icon'><BiFontSize/></span>
+        <button onClick={() => setFontSize('font-small')} id={isFocus('font-small')} 
+          className="btn-font-small">
+            Aa
+        </button>
+        <button onClick={() => setFontSize('font-mid')} id={isFocus('font-mid')} 
+          className="btn-font-mid">
+            Aa
+        </button>
+        <button onClick={() => setFontSize('font-big')} id={isFocus('font-big')}
+          className="btn-font-big">
+            Aa
+        </button>
+      </div>
+    )
+  }
   
   return (
     <div className="App">
@@ -112,23 +135,25 @@ function Lyric({user}) {
         <Container style={{ marginBottom: 50 }} fluid="sm"> {/* marginLeft: screenSize ? 10 : 50 */}
           <Row>  
             {screenSize===false &&
-              <Col md={6} xl={4} style={{ marginTop: 50 }}>
+              <Col md={6} xl={5} style={{ marginTop: 50 }}>
                 <PopupDict dictList={collectedWord} isOpen={isOpen} />
               </Col>
             }
 
-              <Col md={6} xl={8} style={{ marginTop: 50 }}>
-                <div id="lyric">
-                  {screenSize===true &&
-                    <Container className="sidebar-mobile" fluid>
-                      <PopupDict dictList={collectedWord} isOpen={isOpen} />
-                    </Container>
-                  }
+              <Col md={6} xl={7} style={{ marginTop: 50 }}>
+                {screenSize===true &&
+                  <div className="sidebar-mobile">
+                    <PopupDict dictList={collectedWord} isOpen={isOpen} />
+                  </div>
+                }
+                {buttonChangeSize()}
+                <br/>
+                <div id="lyric" className={fontSize}>
                   {tokenized_list.map((word, i) => {
                     if (word.surface === '\n'){
-                      return <br key={i}/>
+                      return <div key={i}></div>
                     }else if(word.surface === '\n\n'){
-                      return <><br key={i}/><br/></>
+                      return <div key={i}><br/></div>
                     }else if(word.poses[0] === '空白'){
                       return <span key={i}>&nbsp;</span>
                     }else if(!isJapanese(word.surface)){

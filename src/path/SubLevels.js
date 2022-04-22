@@ -1,41 +1,71 @@
+import React, { useState } from "react";
 import { Container, Col, Card, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { LevelsItems } from "../component/Levels/LevelsItems";
 import SearchBar from "../component/Search/SearchBar";
+import useIsMobile from '../component/useIsMobile';
+import { AiOutlineInfoCircle, AiFillInfoCircle } from 'react-icons/ai';
+
+function subLevelsDescription(item) {
+  return (
+    <Card.Body id="sub-level">
+      <span><strong className="score">Readability-Score : </strong>
+        {item.readabilityScore}
+      </span>
+      <span lang="en">
+        <strong className="score">EN : </strong>
+        {item.textEn}
+      </span>
+      <span lang="th">
+        <strong className="score">TH : </strong>
+        {item.textTh}
+      </span>
+    </Card.Body>
+  )
+}
 
 function SubLevels() {
-    const { subLevels } = useParams() 
+  const { subLevels } = useParams()
+  const screenSize = useIsMobile()
+  const [isOpen, setIsOpen] = useState(false); 
 
     return (
-          <Container style={{ marginTop: 20, marginBottom: 50 }}>
-            
-            {LevelsItems.map((item, index) => {
-              if (item.id === subLevels) {
-                return (
-                <Row key={index}>
-                  <Col xl={3}>
-                    <Card className="levelCard" id="sub-level">
+        <Container className="pages">
+          <Row>
+            <Col xl={4}>
+              {LevelsItems.map((item, index) => {
+                if (item.id === subLevels) {
+                  return (
+                    <Card key={index} className="levelCard" id="sub-level">
                       <Card.Header id={item.id}> 
-                        <Card.Title className="font-bold">{item.title}</Card.Title>
-                        <Card.Subtitle>{item.subtitle}</Card.Subtitle>
+                        <h2 className="font-bold">
+                          {item.title}
+                        </h2>
+                        <span style={{fontSize: 20}}>
+                          {item.subtitle}
+                        </span>
+                        {screenSize &&
+                            <button className="icon" onClick={() => setIsOpen(!isOpen)}> 
+                              {!isOpen ? <AiOutlineInfoCircle /> : <AiFillInfoCircle />}
+                            </button>
+                        }
+                      {!screenSize ?
+                        subLevelsDescription(item) :
+                        <>
+                          {isOpen && subLevelsDescription(item)}
+                        </>
+                      } 
                       </Card.Header> 
-
-                      <Card.Body className="levelText" id="sub-level">
-                        <Card.Text>
-                          <span lang="en">{item.textEn}</span><br/>
-                          <span lang="th">{item.textTh}</span>
-                        </Card.Text>
-                      </Card.Body>
                     </Card>
-                  </Col> 
-                  <Col xl={9}>
-                    <SearchBar level={item.id} />
-                  </Col>
-                </Row>     
-              )}
-            })}     
-              
-          </Container>
+                  )
+                }
+              })}
+            </Col> 
+            <Col xl={8}>
+              <SearchBar level={subLevels} />
+            </Col>     
+          </Row>         
+        </Container>
     );
 }
 export default SubLevels;

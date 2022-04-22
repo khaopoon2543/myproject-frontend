@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Col, Card, Spinner } from 'react-bootstrap';
+import { Col, Card } from 'react-bootstrap';
 import "./ResultSearch.css";
 import useIsMobile from '../useIsMobile';
+import { Loading } from "../Loading";
+
 import { backendSrc } from "../backendSrc";
+import { RiUserStarLine } from 'react-icons/ri';
+
+const TAGARTIST = {
+  fontSize:25,
+  lineHeight:3,
+}
 
 export default function ResultData(props) {
     const alphabet = props.alphabet;
     const searchTerm = props.searchTerm;
+    const searchAll = props.searchAll; //filter 'all' from SearchBar.js
+
     const src = props.src;
     const [allDataList, setDataList] = useState([])
     const [loading, setLoading] = useState(false);
-    const [visible, setVisible] = useState(30);
+    const [visible, setVisible] = useState(!searchAll ? 30 : 8);
     function loadMore() { setVisible(visible + 30) }
     const navigate = useNavigate ();
     const screenSize = useIsMobile()
@@ -20,8 +30,7 @@ export default function ResultData(props) {
     useEffect(() => {
       if (alphabet || searchTerm) {
         setLoading(true);
-        axios.get(`${backendSrc}/${src}` , { mode: 'cors', crossDomain: true,
-                    params: { alphabet : alphabet, searchTerm : searchTerm }
+        axios.get(`${backendSrc}/${src}` , { params: { alphabet : alphabet, searchTerm : searchTerm }
           })
           .then((response) => {
             setDataList(response.data);
@@ -47,14 +56,14 @@ export default function ResultData(props) {
                           { state: { artistName: artist.name } }) 
                           event.preventDefault()
                   }}
-                > <div className="tagLevel d-flex">
-                    <p id="tag-data" style={{fontSize:20}}>{artist.alphabet}</p>
-                  </div>
-                  <Card.Body>
-                    <button className='artist' id='data'> 
-                      <span className='artist' id="result-data">
-                        {artist.name}
-                      </span>
+                > {!screenSize &&
+                    <div className="tagLevel d-flex">
+                      <p id="tag-data" style={TAGARTIST}><RiUserStarLine/></p>
+                    </div>
+                  }
+                  <Card.Body className='d-block artist-series-data'>
+                    <button id='data'> 
+                      {artist.name}
                     </button>
                     <p className='subtitle'>
                       {artist.artist_id}
@@ -81,11 +90,9 @@ export default function ResultData(props) {
                   <div className="tagLevel d-flex">
                     <p id="tag-data">「{series.type}」</p>
                   </div>
-                  <Card.Body>
-                    <button className='artist' id='data'> 
-                      <span className='artist' id="result-data">
-                          {series.name}
-                      </span>
+                  <Card.Body className='artist-series-data'>
+                    <button id='data'> 
+                      {series.name}
                     </button>
                     <p className='subtitle'>
                       {series.series_id}
@@ -105,7 +112,7 @@ export default function ResultData(props) {
 
     function showLoading() {
       if (alphabet) { //is Data.js (Artist or Series)
-        return (<Spinner animation="border" />)
+        return <Loading />
       } else { //is SearchBar.js
         return null
       }
@@ -120,16 +127,31 @@ export default function ResultData(props) {
           ) : 
           ( <>
             <Col md={12}>
-              {allDataList.length > 0 ? (showList()) 
-              : (<>{ alphabet === null && null }</>)
+              {(!alphabet && allDataList.length > 0) &&
+                <div className="bg-search-all">
+                  <h3 className="search-all">{src.toUpperCase()}</h3>
+                </div>
               }
+              {allDataList.length > 0 && (
+                showList()
+              )}
 
-              {allDataList.length > 10 ? //loading
-                (<> {visible < allDataList.length &&
-                      <div className="loadMore" style={{ marginTop: 20 }}>
-                        <button onClick={() => loadMore()}> Load More </button>
-                      </div>
-                }</>)
+              {(alphabet && allDataList.length>10) ? //loading
+                (<> 
+                  {visible<allDataList.length &&
+                    (<>
+                      {!searchAll ?
+                        <div className="load-more">
+                          <button onClick={() => loadMore()}> Load More </button>
+                        </div>
+                        : 
+                        <div style={{textAlign: 'right'}}>
+                          <button onClick={() => loadMore()}> Load More </button>
+                        </div>
+                      } 
+                      </>)
+                  }
+                </>)
                 : null
               }
             </Col>

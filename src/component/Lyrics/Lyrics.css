@@ -1,0 +1,211 @@
+/* ----------------------------- Lyric ----------------------------- */
+
+.titleLyric {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 40px;
+}
+div#lyric{
+  text-align: left;
+  font-weight: 300;
+  line-height: 1.5;
+  font-size: 18px;
+  letter-spacing: 1px;
+}div#lyric span{
+  display: inline-block;
+  padding:0;margin:0;
+  margin-bottom: 25px; /* line height lyric */
+}
+
+/* user selected font size */
+.font-small {
+  font-size: 14px !important;
+}.font-mid {
+  font-size: 16px !important;
+}.font-big {
+  font-size: 18px !important;
+}.btn-font-small {
+  font-size: 12px !important;
+}.btn-font-mid {
+  font-size: 14px !important;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}.btn-font-big {
+  font-size: 16px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+.filters span#icon svg{
+  font-size: 24px;
+  margin: 0px;
+  margin-right: 15px;
+  color: var(--gray);
+}
+
+button.pink-text {
+    display: inline-block;
+    border-bottom: 1px solid var(--pink);
+    padding:0;margin:0;
+    font-weight: 300;
+    margin-bottom: 25px; /* line height lyric */
+  }button, button:focus{
+    outline: none;
+    background: transparent;
+    border: 1px solid transparent;
+  }button:active{
+    outline: none;
+    background: transparent;
+  }
+  button.pink-text:hover {
+    color: white;
+    text-decoration: none;
+    background: var(--pink);
+    cursor: pointer;
+  }button.pink-text:active, button.pink-text:focus{
+    color: white;
+    background: var(--pink);
+}
+@media only screen and (max-width: 768px) {
+  div#lyric{
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 2;
+    margin-left: 10px;
+  }div#lyric span{
+    margin-bottom: 10px; /* line height lyric */
+  }
+  button.pink-text {
+    margin-bottom: 10px; /* line height lyric */
+  }
+}
+
+/* -------------- sidebar-dict -------------- */
+
+#dict.card {
+  color: var(--grayLight);
+  border-radius: 0 !important;
+}#last-dict.card {
+  color: var(--grayLight);
+  border-radius: 0 0 10px 10px !important;
+}#dict .card-body, #last-dict .card-body{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.sidebar .card {
+  margin-top: 0px;
+  border: 2px solid var(--pinkPastel) !important;
+  border-top: 0 !important;
+  margin-bottom: 0;
+}.sidebar {
+  position: sticky;
+  text-align: left;
+  top: 220px;
+}.sidebar #header{
+  background-color: var(--black);
+  color: var(--white);
+  padding: 10px 5px;
+  margin-right: 8px;
+  border-radius: 10px 10px 0 0;
+}.sidebar #header h4{
+  display: inline;
+}.sidebar #header h4#head-word{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+#no-scroll {
+  margin-right: 0px;
+} #no-scroll span{
+    margin: 0px !important;
+  }#no-scroll button{
+    margin-bottom: 5px;
+  }
+.scroll {
+  overflow-y: scroll;
+  height: 50vh;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}/* Track */
+::-webkit-scrollbar-track {
+  background: var(--white); 
+}/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--pinkPastel); 
+}/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pinkPastel); 
+}
+
+.scroll .card {
+  box-shadow: none !important;
+}
+#dictTh {
+  font-size: 18px;
+  color: var(--pink);
+}#dictEn span{
+  font-size: 14px;
+  display: block;
+}
+.tagPos span{ 
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 20px;
+  margin-right: 5px;
+  border-radius: 25px;
+  color: var(--diffSRT);
+  background: var(--diffBG);
+} 
+
+.head-each-word {
+  display: block;
+  margin-bottom: 5px;
+}.head-each-word #kanji{
+  color: var(--gray);
+}.head-each-word #read-form{
+  font-size: 16px;
+  color: var(--grayLight);
+}
+
+@media only screen and (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+  .sidebar-mobile{
+    position: sticky;
+    top: 51px;
+    background-color: var(--white);
+    margin-top: -30px;
+    margin-bottom: 50px;
+    padding: 20px 0;
+    box-shadow: var(--pinkLight) 0 10px 10px -10px;
+  }
+  .sidebar {
+    position: sticky;
+    padding: 0 10px;
+  }.sidebar #header{
+    margin-right: 0px;
+  }
+  .scroll {
+    overflow-y: scroll;
+    height: 25vh ;
+  } 
+  .tagPos span{ 
+    font-size: 10px;
+  }
+  #dictTh {
+    font-size: 16px;
+  }#dictEn {
+    line-height: 1.2;
+    font-size: 11px;
+  }
+  .head-each-word #kanji{
+    font-size: 18px;
+  }.head-each-word #read-form{
+    font-size: 14px;
+    color: var(--grayLight);
+  }
+}

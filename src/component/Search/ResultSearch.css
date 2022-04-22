@@ -1,5 +1,5 @@
 .card {
-    border-radius: 20px !important;
+    border-radius: 10px !important;
     margin-bottom: 10px; 
 /*} .card:hover { */
     border: none !important;
@@ -16,48 +16,49 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     margin-left: 5px;
     margin-right: 5px;
 }
+.lyric .card-body {
+    text-align: left;
+    margin: 0;
+    padding: 10px 20px;
+}
+.card-body button{
+    padding: 0;
+    text-align: left;
+}
 .title {
-    font-size: 22px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     text-decoration: none;
     color: var(--gray);
-    margin-right: 10px;
-
-}button#song.title, button#artist.artist { /* BUTTONS (use navigate in ResultSearch.js) */
-    padding: 0;
-    text-align: left;
 }
-.artist { 
-    font-size: 16px;
+
+.artist-series {
+    margin-top: 3px;
+    font-size: 14px;
     font-weight: 300;
+}
+.artist-series button{
+    font-size: 14px;
     text-decoration: none;
     color: var(--gray);
-    padding: 0;
-    margin-right: 10px;
-
-}button#data.artist span{ /* BUTTONS (use navigate in ResultData.js) */
-    font-weight: 400;
-    font-size: 20px;
-    display: flex;
-    text-align: left;
 }
+#song:hover, #artist:hover {
+    color: var(--black);
+    text-decoration: underline solid var(--black) 1px;
+}
+
 .subtitle {
     font-size: 14px;
     font-weight: 300;
     color: var(--grayLight);
+    margin: 0;
 }#lyric.subtitle {
     font-size: 14px;
     font-weight: normal;
     color: var(--grayLight);
+    margin: 0;
 }
-#song:hover {
-    color: var(--black);
-    text-decoration: underline solid var(--black) 1px;
-}#artist:hover {
-    color: var(--black);
-    /* border-bottom: 1px solid var(--black); */
-    text-decoration: underline solid var(--black) 1px;
-}
+
 
 .highlight, .highlightArtist {
     font-weight: 400;
@@ -69,59 +70,63 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
 
 .tagLevel * {
     height: auto;
-    margin-right: 10px;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 500;
     letter-spacing: .5px;
 }
 .tagLevel p{
-    font-size: 16px;
-    min-width: 150px;
+    font-size: 12px;
+    min-width: 120px;
     border-radius: 20px;
     margin: 10px;
     line-height: 90px;
 }
- /* tagLevel old design
- .tagLevel p{ 
-    font-weight: 800;
-    font-size: 12px;
-    padding: 3px 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 50px;
-    min-width: 50px;
-    line-height: normal;
-    transition: all 0.1s;
-} */
 
 @media screen and (max-width: 768px) {
     .tagLevel p {
         width: auto;
-        padding-top: 0;
-        margin-bottom: -5px;
+        margin: 10px;
+        margin-bottom: 0;
         line-height: 30px;
+    }
+    .card {
+        zoom: 80%;
     }
 }
 
 /* ----------------------------- ResultData.js ----------------------------- */
-#result-data:hover {
+
+.artist-series-data {
+    margin: 0px;
+    padding-top: 0px;
+    font-size: 16px;
+}
+.artist-series-data button{
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--gray);
+}
+.artist-series-data button:hover {
     color: var(--pink)!important;
-    border-bottom: none !important;
     text-decoration: underline solid var(--pink) 1px;
 }
-/* ----------------------------- SubData.js ----------------------------- */
-#title-lyric p{ 
+
+/* ----------------------------- ResultSearch & ResultData & SubData & Lyric .js ----------------------------- */
+
+.tagLevel#title-lyric p{ /* tagLevel in title Lyric.js*/
+    line-height: 25px;
+    min-width: none !important;
+    padding: 0px 20px !important;
     margin: 0 auto;
-    border-radius: 25px;
-    padding-top: 0px;
-    padding: 2px 25px;
-    line-height: 30px;
-    font-size: 14px;
+    font-size: 12px;
 } 
+
 p#sub-data { 
+    text-align: left;
     color: var(--grayLight);
     width: auto;
 }
+
 span#sub-data {
     font-weight: 400;
     color: var(--grayLight);
@@ -129,4 +134,42 @@ span#sub-data {
     color: none;
     border-bottom: none;
     cursor: text;
+}    
+
+.search-all {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 900;
+    text-align: left;
+    margin-bottom: 0;
+    padding: 10px;
+    padding-top: 15px;
+    padding-left: 20px;
+    color: var(--gray);
+    background-color: var(--pinkLight);
+    border-radius: 50px;
+}
+
+.bg-search-all {
+    position: sticky;
+    top: 121px;
+    z-index: 3;
+    background-color: #ffffff7c;
+    border-radius: 0 0 50px 50px;
+    padding-top: 10px;
+    transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
+}
+
+.search-all-load-more {
+    text-align: left;
+    padding: 10px 0px 10px 10px;
+}.search-all-load-more button, .search-all-load-more button:focus {
+    border-radius: 50px;
+    padding: 3px 30px;
+    border: 1px solid  var(--grayLight);
+    color: var(--grayLight);
+    transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
+}.search-all-load-more button:hover {
+    border: 1px solid  var(--grayLight);
+    background: var(--grayLight);
+    color: var(--white);
 }
