@@ -1,5 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, Link } from 'react-router-dom';
 import ResultSearch from "../component/Search/ResultSearch";
 
 function SubData() {
@@ -8,48 +8,62 @@ function SubData() {
     const { subArtists, subSeries } = useParams();
 
     return (
-        <Container className="pages"> 
-        <Row>
+      <Container className="pages"> 
+        
         {artistName ?
           <>
+          <Row>
           <Col xl={4} >
             <div className="header-left">
-              <h2>{artistName}</h2>
-              <p className='subtitle' id="sub-data">
-                <strong>{subArtists.replace(/-/g, ' ')}</strong>
-              </p> 
-              <br/>
+              <div className="tag-series">
+                <Link to="/artists">
+                  <span lang="th" id="button-back"> ศิลปิน </span>
+                </Link>
+              </div>
+              <div className="title-series">
+                <h3> {artistName} </h3>  
+              </div>
+              <div className="sub-title-series">
+                <span>{subArtists.replace(/-/g, ' ')}</span>
+              </div>
             </div>
           </Col>
           <Col xl={8} > 
-            <div style={{ marginTop: 0 }}>
+            <div>
               <ResultSearch searchTerm={subArtists.replace(/-/g, ' ')} filter={'artist'} subArtists={artistName} />
             </div> 
           </Col>
+          </Row>
           </>
         : 
           <>
+          <Row>
           <Col xl={4} >
             <div className="header-left">
-              <div className="tagLevel d-flex">
-                <h4 id="tag-data">「{seriesType}」</h4>
+              <div className="tag-series">
+                <Link to="/series">
+                  <span lang="th" id="button-back"> ซีรีส์ </span>
+                </Link>
+                &nbsp;&nbsp; 
+                <span id="type"> {seriesType} </span>
               </div>
-              <h2> {seriesName} </h2>  
-              <p className='subtitle' id="sub-data">
-                <strong>{subSeries.replace(/-/g, ' ')}</strong>
-              </p>
-              <br/>
+              <div className="title-series">
+                <h3> {seriesName} </h3>  
+              </div>
+              <div className="sub-title-series">
+                <span>{subSeries.replace(/-/g, ' ')}</span>
+              </div>
             </div>
           </Col>
           <Col xl={8} > 
-            <div style={{ marginTop: 0 }}>
+            <div className="result-search">
               <ResultSearch searchTerm={subSeries.replace(/-/g, ' ')} filter={'series'} subSeries={seriesName}/>
             </div> 
           </Col>
+          </Row> 
           </> 
         }
-        </Row> 
-        </Container>
+      </Container>
     );
 }
 export default SubData;

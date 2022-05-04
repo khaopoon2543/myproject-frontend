@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Col, Row } from 'react-bootstrap';
-import useIsMobile from '../component/useIsMobile';
 import ResultData from '../component/Search/ResultData';
 import { EmojiData } from "../component/Loading";
 
@@ -26,19 +25,17 @@ function Data(props) { // ARTISTS & SERIES
     return (
         <Container className="pages"> 
           <Row>
-            <Col xl={4} >
-              <Container className="header-left">
-                <h1 className="font-bold">
-                  {src.toUpperCase()} {selectedAlpha && <strong style={{ color: "var(--pink)" }}>{selectedAlpha.toUpperCase()}</strong>}
-                  <br/>
-                  <span lang="th" className="font-semi-light">
-                    {src==='artists' ? 'ศิลปิน' : 'ซีรีส์'}
-                  </span>
+            <Col xl={4}>
+              <div className="header-left">
+                <h1 className="font-bold" lang="th">
+                    {src==='artists' ? <>ศิลปิน</> : <>ซีรีส์</>} &nbsp;
+                    {selectedAlpha && <strong style={{ color: "var(--pink)" }}>{selectedAlpha.toUpperCase()}</strong>}
+
                 </h1>
                 <div className="alphabet">
                   {loopAlphabet()} 
                 </div>
-              </Container>
+              </div>
             </Col>
 
             <Col xl={8}>

@@ -1,36 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Col, Card } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import "./ResultSearch.css";
-import useIsMobile from '../useIsMobile';
 import { Loading } from "../Loading";
-
 import { backendSrc } from "../backendSrc";
-import { RiUserStarLine } from 'react-icons/ri';
-
-const TAGARTIST = {
-  fontSize:25,
-  lineHeight:3,
-}
+import { isArtist, isSeries } from "./ResultDataFunction"
 
 export default function ResultData(props) {
     const alphabet = props.alphabet;
     const searchTerm = props.searchTerm;
     const searchAll = props.searchAll; //filter 'all' from SearchBar.js
+    const spotify = props.spotify; //'spotify' from ResultAllModal.js //if search result in kashify from current listen Spotify
 
     const src = props.src;
     const [allDataList, setDataList] = useState([])
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(!searchAll ? 30 : 8);
     function loadMore() { setVisible(visible + 30) }
-    const navigate = useNavigate ();
-    const screenSize = useIsMobile()
+    const navigate = useNavigate();
+    //console.log({searchTerm, alphabet, searchAll})
 
     useEffect(() => {
-      if (alphabet || searchTerm) {
         setLoading(true);
-        axios.get(`${backendSrc}/${src}` , { params: { alphabet : alphabet, searchTerm : searchTerm }
+        axios.get(`${backendSrc}/${src}` , { params: { alphabet : alphabet, searchTerm : searchTerm, spotify : spotify }
           })
           .then((response) => {
             setDataList(response.data);
@@ -39,75 +32,12 @@ export default function ResultData(props) {
           .catch(error => {
             console.log(error.response)
           });
-      }
-    }, [alphabet || searchTerm]);
-
-    const alignItem = screenSize ? 'data flex-wrap flex-md-row d-flex justify-content-left align-items-left' //left
-                    : 'data flex-wrap flex-md-row d-flex justify-content-left align-items-center' //center
-
-    function isArtist() { 
-      const show = 
-        (allDataList
-          .slice(0, visible) //selected elements in an array
-          .map((artist, index) => {
-              return (
-                <Card className={alignItem} key={index} 
-                  onClick={event => { navigate( '/artists/'+ artist.artist_id.replaceAll(" ","-"), 
-                          { state: { artistName: artist.name } }) 
-                          event.preventDefault()
-                  }}
-                > {!screenSize &&
-                    <div className="tagLevel d-flex">
-                      <p id="tag-data" style={TAGARTIST}><RiUserStarLine/></p>
-                    </div>
-                  }
-                  <Card.Body className='d-block artist-series-data'>
-                    <button id='data'> 
-                      {artist.name}
-                    </button>
-                    <p className='subtitle'>
-                      {artist.artist_id}
-                    </p>  
-                  </Card.Body>
-                </Card>
-          )})
-        )
-      return show
-    }
-
-    function isSeries() { 
-      const show = 
-        (allDataList
-          .slice(0, visible) //selected elements in an array
-          .map((series, index) => {
-              return (
-                <Card className={alignItem} key={index} 
-                  onClick={event => { navigate( '/series/'+ series.series_id.replaceAll(" ","-"), 
-                          { state: { seriesName: series.name, seriesType: series.type } }) 
-                          event.preventDefault()
-                  }}
-                >
-                  <div className="tagLevel d-flex">
-                    <p id="tag-data">「{series.type}」</p>
-                  </div>
-                  <Card.Body className='artist-series-data'>
-                    <button id='data'> 
-                      {series.name}
-                    </button>
-                    <p className='subtitle'>
-                      {series.series_id}
-                    </p>  
-                  </Card.Body>
-                </Card>
-          )})
-        )
-      return show
-    }
+    }, [alphabet, searchTerm]);
 
     function showList() {
       if (src==='artists') {
-        return isArtist()
-      } return isSeries()
+        return isArtist(allDataList, visible, navigate)
+      } return isSeries(allDataList, visible, navigate)
     }
 
     function showLoading() {
@@ -127,9 +57,9 @@ export default function ResultData(props) {
           ) : 
           ( <>
             <Col md={12}>
-              {(!alphabet && allDataList.length > 0) &&
+              {(!alphabet && allDataList.length > 0 && !props.spotify) &&
                 <div className="bg-search-all">
-                  <h3 className="search-all">{src.toUpperCase()}</h3>
+                  <h3 className="search-all" id="is-result">{src.toUpperCase()}</h3>
                 </div>
               }
               {allDataList.length > 0 && (
@@ -139,17 +69,9 @@ export default function ResultData(props) {
               {(alphabet && allDataList.length>10) ? //loading
                 (<> 
                   {visible<allDataList.length &&
-                    (<>
-                      {!searchAll ?
-                        <div className="load-more">
-                          <button onClick={() => loadMore()}> Load More </button>
-                        </div>
-                        : 
-                        <div style={{textAlign: 'right'}}>
-                          <button onClick={() => loadMore()}> Load More </button>
-                        </div>
-                      } 
-                      </>)
+                    <div className="load-more">
+                      <button onClick={() => loadMore()}> Load More </button>
+                    </div>
                   }
                 </>)
                 : null

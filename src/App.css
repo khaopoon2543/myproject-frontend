@@ -3,7 +3,7 @@
   --blackLight: #353b48;
   --gray: #666666;
   --grayLight: #acacac;
-  --pink: #E85394;
+  --pink: #e853af;
   --blueSky: #A3CAF8;
   --blue: #5271FF;
   --white: white;
@@ -25,9 +25,22 @@
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-family: 'Noto Sans JP', sans-serif;
 }
+
+:lang(th) {
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}:lang(jp2) {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
 .pages {
   margin-top: 30px;
   margin-bottom: 50px;
+}
+@media only screen and (max-width: 768px) {
+  .pages {
+    margin-top: 10px;
+  }
 }
 .font-light {
   font-weight: 100 !important;
@@ -41,11 +54,6 @@
   color: var(--gray);
 }.gray-text {
   color: var(--grayLight);
-}
-:lang(th) {
-  font-family: 'Noto Sans Thai', sans-serif;
-}:lang(jp2) {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
 }
 
 img {
@@ -77,7 +85,126 @@ span.nav-button{
   position: sticky;
   top: 100px;
   z-index: 1;
-  margin: 0 10px;
+  margin-bottom: 30px;
+  margin-right: 20px;
+} .header-left h1{
+  font-size: 48px;
+}
+.playlist-name {
+  font-weight: 700;
+  color: var(--pink);
+}.playlist-name:hover {
+  text-decoration: underline solid var(--pink) 2px;
+}
+
+.description {
+  margin: 20px 0px;
+}
+
+@media only screen and (max-width: 992px) {
+  .header-left {
+    margin-right: 0px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .header-left {
+    padding: 0 10px;
+  } .header-left h1{
+    font-size: 36px;
+  }
+}
+
+#circle-icon {
+  border-radius: 50%;
+  font-size: 30px;
+  color: var(--white);
+  background-color: var(--pink);
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+/* ----------------------------- Home ----------------------------- */
+
+#home {
+  display: block;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 120px;
+  padding: 0px 100px;
+  text-align: left;
+  position: relative;
+}
+#home h1{
+  font-size: 50px;
+}
+#home-title {
+  padding: 20px 0;
+  padding-right: 50px;
+}
+#home #description-title {
+  margin-top: 50px;
+} #description-title #title {
+  color: var(--pink);
+}
+#home-btn {
+  display: flex;
+  align-items: center;
+  margin: 30px 0px;
+}
+#home-note-icon {
+  font-size: 300px;
+}#home-note-icon * {
+  border-radius: 50%;
+  position: absolute;
+  z-index: -1;
+}#home-note-icon #light {
+  color: var(--pinkPastel);
+  height: 200px;
+  width: 200px;
+  top: 10%;
+  left: 57%;
+  transform: translate(-50%, -50%);
+}#home-note-icon #bold {
+  color: var(--white);
+  background-color: var(--pinkPastel);
+  display: flex;float: right;
+  height: 400px;
+  width: 400px;
+  top: 60%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width: 1200px) {
+  #home {
+    padding: 0px 50px;
+  }
+  #home-note-icon #bold {
+    top: 100%;
+    left: 75%;
+  }#home-note-icon #light {
+    top: 25%;
+    left: 80%;
+  }
+}
+@media only screen and (max-width: 786px) {
+  #home-title {
+    padding-right: 0px;
+  }
+  #home {
+    margin-top: 50px;
+    padding: 0px 50px;
+  }
+  #home-btn {
+    display: block;
+  }#home button{
+    margin-bottom: 10px;
+    zoom: 120% !important;
+  }
+  #home-note-icon #bold , #home-note-icon #light {
+    display: none;
+  }
 }
 
 /* ----------------------------- About ----------------------------- */
@@ -86,23 +213,33 @@ span.nav-button{
   margin: 20px;
   margin-top: 30px;
   margin-bottom: 0;
-  color: var(--blue);
+  color: var(--black);
+  text-decoration: underline solid var(--black) 1px;
+  font-weight: 700;
+
 }.title-sources:hover {
-  text-decoration: underline solid var(--blue) 1px;
+  color: var(--pink);
+  text-decoration: underline solid var(--pink) 1px;
 }
 .text-sources {
-  color: var(--grayLight);
+  color: var(--gray);
 }
 
-/* ----------------------------- Spotify ----------------------------- */
+/* ----------------------------- ResultSpotify ----------------------------- */
 
 .spotify .card-body {
   text-align: left;
-  margin-left: 0px;
+  margin: 0;
+  padding: 10px 20px 10px 10px;
+}
+.spotify .items {
+  display: flex;
+  align-items: center;
+  justify-content: left;
 }
 .spotify img {
-  max-width: 100px;  
-  height: auto;  
+  max-width: 100px;
+  height: auto;
 }
 .spotify .card-title {
   font-size: 18px; 
@@ -132,15 +269,20 @@ span.nav-button{
   border: 1px solid  var(--black)
 }
 @media only screen and (max-width: 768px) {
+  .spotify .card-body {
+    padding: 0;
+    padding-right: 20px;
+    margin-bottom: 10px;
+  }
   .spotify img {
-    max-width: 50px;  
+    max-width: 80px;  
     height: auto;  
   }
   .spotify .card-title {
-    font-size: 14px; 
+    font-size: 16px; 
   }
   .spotify .card-text {
-    font-size: 12px; 
+    font-size: 14px; 
   }
 }
 
@@ -151,20 +293,18 @@ span.nav-button{
   position: sticky;
   top: 71px;
   z-index: 10;
-  border-radius: 0 0 50px 50px;
   box-shadow: var(--white) 0px 5px 50px;
 }
 .searchbar {
   height: 60px;
   background-color: var(--black);
+  border: var(--black) 1px solid;
   border-radius: 30px;
   padding: 10px;
-
   position: -webkit-sticky;
   position: sticky;
   top: 80px;
   z-index: 10;
-
   display: inline-block;
   width: 100%;
   text-align:center;
@@ -188,27 +328,22 @@ span.nav-button{
 }
 .input_icon{
   position: absolute;
-  height: 40px;
-  width: 40px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  text-decoration:none;
+  font-size: 20px;
+  padding: 9px;
+  border-radius: 50px;
   transition: all 0.25s;
 } #search_icon {
     left:10px; top:10px;
-    float: left;
     background: #ffffff1f;
     color: var(--white);
   }#active_icon {
     left:10px; top:10px;
-    float: left;
     background: var(--pinkPastel);
     color: var(--black);
   }#active_icon:hover {
-    background: var(--white);
-    color: var(--pink);
+    background: var(--pink);
+    color: var(--white);
   }#clear_icon {
     position: absolute;
     right:10px; top:10px;
@@ -221,9 +356,10 @@ span.nav-button{
 
 .filters {
   text-align: left;
+  margin: 10px;
+  margin-top: 0px;
 }.filters * {
   display: inline-block;
-  margin-bottom: 10px;
 }
 .filters button, .load-more button {
   cursor: pointer;
@@ -248,18 +384,17 @@ span.nav-button{
   transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
 }
 .load-more {
-  text-align: center;
-  padding: 10px 0px 10px 10px;
-}.load-more button {
-  border-radius: 50px;
-  padding: 5px 30px;
+  text-align: right;
+  margin-right: 10px;
 }.load-more button, .load-more button:focus {
-  background: var(--black);
-  color: var(--white);
+  color: var(--black);
+  font-weight: 700;
+  padding: 10px 0px 0px 0px;
+  border-bottom: 1px solid var(--black);
   transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
 }.load-more button:hover, .load-more button:focus:hover {
-  background: var(--black);
-  color: var(--pinkLight);
+  color: var(--pink);
+  border-bottom: 1px solid var(--pink);
 }
 
 @media only screen and (max-width: 768px) {
@@ -280,12 +415,6 @@ span.nav-button{
     color: var(--white);
     transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
   }
-  .load-more {
-    text-align: left;
-  }.load-more button, .load-more button:focus, .load-more button:hover, .load-more button:focus:hover {
-    background: var(--black);
-    color: var(--pinkLight);
-  }
 }
 
 /* ----------------------------- Artists ----------------------------- */
@@ -301,7 +430,6 @@ span.nav-button{
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.25s;
-
   min-width: 50px;
   margin: 10px;
   margin-left: 0px;
@@ -317,6 +445,11 @@ span.nav-button{
   background: var(--black);
   color: var(--white);
 }
+@media only screen and (max-width: 768px) {
+  .alphabet button#circle {
+    zoom: 80%;
+  }
+}
 
 /* ----------------------------- Popup Spotify ----------------------------- */
 
@@ -324,29 +457,24 @@ span.nav-button{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 0px;
-  margin-bottom: 0px;
  }
  .banner img {
-  display: flex;
-  float: left; 
   margin: 5px;
   margin-right: 15px;
-  width: 60px;
+  width: 100px;
   height: auto;
+ } .banner #spotify-icon-title {
+   font-size: 30px;
+   margin: 5px 15px;
  }
  .banner span, .banner button {
   float: left; 
   margin-top: 0px;
   vertical-align: top;
   font-size: 16px;
- }
- .banner span#artist {
+ }.banner span#artist {
   font-size: 16px;
   color: var(--grayLight);
- }
- .banner span {
-  color: var(--white);
  }
  .banner button {
   color: var(--pinkPastel);
@@ -369,7 +497,10 @@ span.nav-button{
     font-size: 12px;
     letter-spacing: 2px;
     padding: 2px 20px;
-
+   }
+   .banner img {
+    width: 80px;
+    height: auto;
    }
   }
 
@@ -379,50 +510,219 @@ span.nav-button{
   display: flex;
   align-items: center;
 }
-.spotify-icon {
-  font-size: 20px;
-  margin-right: 5px; 
-}
-#spotify-btn button {
-  font-weight: 300;
+#spotify-btn button, #kashify-btn button, #home button {
+  display: flex; align-items: center;
+  font-weight: 600;
+  letter-spacing: 1px;
   color: var(--white);
-  padding: 7px 25px;
-  cursor: pointer;
+  padding: 2px 15px 2px 2px;
   transition: all 0.25s;
-  margin: 0px;
   border-radius: 25px;
-} 
-
-button#spotify-search {
-  background: #ffffff1f;
-} button#spotify-search:hover {
-  background-color: #ffffff3d;
 }
+.spotify-icon {
+  font-size: 26px;
+  margin-right: 10px; 
+}  
 button#spotify-login {
+  padding: 3px 20px 3px 3px;
   background: var(--black);
 } button#spotify-login:hover {
   background-color: var(--green);
 }
-button#search-kashify {
-  display:flex;
-  height: 40px;
-  width: 40px;
+button#spotify-open {
+  font-size: 14px;
+  background: var(--black);
+} button#spotify-open .spotify-icon {
+  font-size: 22px !important;
+} button#spotify-open:hover {
+  background-color: var(--green);
+}
+
+.open-spotify *{
+  display: inline-block;
+}
+
+button#spotify-search {
+  padding: 3px 20px 3px 3px;
+  background: rgba(255, 255, 255, 0.11);
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 400;
+} button#spotify-search:hover {
+  background-color: var(--green);
+}
+
+/* ----- ResultAllModal.js ----- */
+#kashify-btn button {
+  color: var(--white);
+  background: var(--black) !important;
+} #kashify-btn button:hover {
+  background: var(--pink) !important;
+}
+#kashify-btn button:hover>.kashify-icon  {
+  color: var(--pink) !important;
+}
+.kashify-icon {
+  display: flex;
   font-size: 20px;
-  border-radius: 25px;
-  justify-content: center;
-  align-items: center;
-  text-decoration:none;
-  transition: all 0.25s;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 0px;
-  padding: 5px 10px;
+  padding: 3px;
+  border-radius: 50px;
+  color: var(--black);
+  background: var(--white) !important;
+  margin-right: 5px;
+}
+
+/* ----- Home.js ----- */
+#home button {
+  padding: 3px 50px 3px 3px !important;
+  width: auto;
+  margin-right: 10px;
+  font-weight: 600;
+}
+#home button#search-btn {
+  color: var(--white);
+  background-color: var(--pink);
+} #home button#search-btn:hover {
+  box-shadow: var(--pinkPastel) 0px 0px 50px;
+  margin-top: -10px;
+  
+} #home button#search-btn:hover>.kashify-icon  {
+  color: var(--pink) !important;
+} #home .kashify-icon {
+  font-size: 36px;
+  padding: 3px;
+  margin-right: 30px;
   color: var(--pink);
+  background: var(--white) !important;
+}
+
+#home button#spotify-login {
+  color: var(--white);
+  background: var(--black);
+} #home button#spotify-login:hover {
+  color: var(--white);
+  background: var(--green);
+  box-shadow: var(--easyBG) 0px 0px 50px;
+  margin-top: -10px;
+
+} #home .spotify-icon {
+  color: var(--white);
+  font-size: 36px;
+  margin-right: 30px; 
+}
+
+/* ----------------------------- Spotify Playlists ----------------------------- */
+
+button#search-kashify {
+  display: flex;
+  font-size: 20px;
+  padding: 9px;
+  border-radius: 50px;
+  transition: all 0.25s;
+  color: var(--pink) !important;
   border: 1px solid var(--pink);
   background: var(--white);
-
 } button#search-kashify:hover {
-  color: var(--white);
+  color: var(--white) !important;
   border: 1px solid var(--pink);
   background: var(--pink);
+} 
+
+/* ----------------------------- Modal Spotify ----------------------------- */
+
+.modal-content {
+  border: none !important;
+}
+.modal-header {
+  padding-bottom: 20px !important;
+  border: none !important;
+}
+.modal-body {
+  padding-top: 0px !important;
+}
+.modal-body#result {
+  overflow-y: scroll !important;
+  height: 50vh !important;
+  margin-bottom: 10px;
+}.modal-body#result #result-title {
+  margin-left: 5px;
+  font-weight: 600;
+  color: var(--grayLight);
+}
+#error-head {
+  margin-left: 10px;
+  width: auto;
+  background-color: var(--pinkLight);
+  padding: 5px 20px;
+  border-radius: 5px;
+}
+#error-body {
+  font-size: 16px;
+  margin-bottom: 10px;
+} #error-body button{
+  margin-top: 5px;
+}
+
+/* ----------------------------- Spotify Callback Successes ----------------------------- */
+
+/* ----- Modal Callback Successes ----- */
+#popup-success .modal-header {
+  display: block;
+  text-align: center !important;
+}
+#icon-success {
+  font-size: 50px;
+  margin: 20px 0;
+  color: var(--pink);
+}
+#popup-success .modal-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+#success-btn button {
+  padding: 5px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--pink);
+  transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
+
+} #success-btn button:hover {
+  box-shadow: var(--pinkPastel) 0px 0px 50px;
+}
+
+/* ------------------------- */
+.function-list {
+  margin-bottom: 30px;
+}
+.spotify-description .card{
+  padding: 20px 20px;
+  color: var(--black);
+}.spotify-description#current .card{
+  cursor: text;
+} .spotify-description#playlist .card:hover{
+  color: var(--pink);
+  text-decoration: underline 1px solid;
+}
+.spotify-description #icon-spotify {
+  font-size: 24px;
+  margin-right: 10px;
+  margin-bottom: 3px;
+}
+
+#icon-headphone {
+  font-size: 24px;
+  margin: 0 5px;
+  margin-bottom: 3px;
+  color: var(--pink);
+}
+#icon-title {
+  font-size: 50px;
+  padding: 9px;
+  border-radius: 50px;
+  transition: all 0.25s;
+  color: var(--black);
+  background-color: var(--pinkPastel);
 }

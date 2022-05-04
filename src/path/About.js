@@ -1,10 +1,16 @@
 import { Container, Col, Row, Card} from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import { FaSpotify } from 'react-icons/fa';
-import { RiHome5Line } from 'react-icons/ri';
+import { MdSource } from 'react-icons/md';
 
 const PINK = {
   color: "var(--pink)"
 }
+const PINK_LINK = {
+  color: "var(--pink)",
+}
+const KASHIFY = <strong> Kashify </strong>
+const KASHIFY_PINK = <strong style={PINK}> Kashify </strong>
 
 const SOURCES_ITEMS = [
   {
@@ -12,18 +18,18 @@ const SOURCES_ITEMS = [
     url: 'https://www.lyrical-nonsense.com',
     description: `Lyrical Nonsense เป็นเว็บไซต์ค้นหาเนื้อเพลงหลากหลายภาษา โดยมีเนื้อเพลงภาษาญี่ปุ่นเป็นส่วนใหญ่ 
                   และมีการอัปเดตเนื้อเพลงใหม่ ๆ อยู่ตลอด
-                  โดยข้อมูลเพลงและเนื้อเพลงบน KASHIFY นั้นนำมาจากเว็บไซต์นี้ทั้งหมด`
+                  โดยข้อมูลเพลงและเนื้อเพลงบน Kashify นั้นนำมาจากเว็บไซต์นี้ทั้งหมด`
   },
   {
     title: 'JT DIC',
     url: 'http://www.jtdic.com',
     description: `JT DIC เป็นพจนานุกรมภาษาญี่ปุ่น-ไทย พัฒนาโดยคุณไพฑูรย์ แซ่ตั้ง
-                  โดย JT DIC เป็นพจนานุกรมที่ใช้แสดงความหมายของคำศัพท์ภาษาญี่ปุ่นที่ปรากฎบนเนื้อเพลงใน KASHIFY`
+                  โดย JT DIC เป็นพจนานุกรมที่ใช้แสดงความหมายของคำศัพท์ภาษาญี่ปุ่นที่ปรากฎบนเนื้อเพลงใน Kashify`
   },
   {
-    title: 'jReadability',
+    title: 'JReadability',
     url: 'https://jreadability.net/sys/en',
-    description: `jReadability (Japanese Text Readability Measurement System) 
+    description: `JReadability (Japanese Text Readability Measurement System) 
                   เป็นระบบประเมินความสามารถในการอ่านบทความภาษาญี่ปุ่นสำหรับผู้เรียนภาษาญี่ปุ่น 
                   เมื่อใส่บทความภาษาญี่ปุ่นเข้าไปในระบบ ระบบจะแสดงค่าและระดับความยากง่ายในการอ่าน (Readability Score)`
   },
@@ -40,56 +46,45 @@ const SOURCES_ITEMS = [
     url: 'https://github.com/WorksApplications/SudachiPy',
     description: `SudachiPy คือ Japanese morphological analyzer (Python version) 
                   โดยสามารถนำไปใช้ในการประมวลผลภาษาธรรมชาติ (Natural language processing) 
-                  สำหรับภาษาญี่ปุ่นได้อย่างง่าย โดยใน KASHIFY ใช้ SudachiPy ในการ Tokenization และ Part of speech tagging ใสส่วนของเนื้อเพลงภาษาญี่ปุ่น`
+                  สำหรับภาษาญี่ปุ่นได้อย่างง่าย โดยใน Kashify ใช้ SudachiPy ในการ Tokenization และ Part of speech tagging เนื้อเพลงภาษาญี่ปุ่น`
   }
 ]
 
 function About() {
 
     return (
-        <Container className="pages"> 
+        <Container className="pages" lang="th"> 
           <Row>
             <Col xl={4} >
-              <Container className="header-left">
+              <div className="header-left">
                 <h1 className="font-bold">
-                  ABOUT&nbsp;
-                  <strong style={PINK}>
-                      KASHIFY
-                  </strong>
+                  เกี่ยวกับ {KASHIFY_PINK}
                 </h1>
-                <br/>
-                <div className="description" lang="th">
-                  <h5>
-                    <strong>เรียนรู้คำศัพท์ </strong> 
-                    ไปพร้อมกับ
-                    <strong> เสียงเพลง</strong>
-                  </h5>
-                  <br/>
+
+                <div className="description">
                   <p>
-                    <strong style={PINK}>KASHIFY </strong> 
+                    {KASHIFY} 
                     เป็นเว็บไซต์สำหรับเรียนรู้คำศัพท์ภาษาญี่ปุ่นผ่านเนื้อเพลงภาษาญี่ปุ่น
-                    โดยมีการแบ่งระดับความยากง่ายของเนื้อเพลง (โดยใช้ Readability Score) เพื่อให้ผู้เรียนสามารถเลือกเพลงที่อยากเรียนรู้ได้เหมาะสมกับตัวเองได้
+                    โดยมีการแบ่งระดับความยากง่ายของเนื้อเพลง เพื่อให้ผู้เรียนสามารถเลือกเพลงที่อยากเรียนรู้ได้เหมาะสมกับตัวเองได้
                   </p>
                   <p>
                     นอกจากนี้แล้ว ผู้ใช้สามารถเชื่อมต่อกับ <FaSpotify /> Spotify 
                     เพื่อเพิ่มความสะดวกในการใช้งาน 
-                    <strong style={PINK}> KASHIFY </strong> 
-                    โดยผู้ใช้สามารถค้นหาเนื้อเพลงของเพลงที่กำลังเล่นผ่าน Spotify ได้ทันที หรือค้นหาเพลงผ่าน Spotify ก็ทำได้เช่นเดียวกัน
+                    {KASHIFY}
+                    ได้ด้วย โดยผู้ใช้สามารถค้นหาเนื้อเพลงของเพลงที่กำลังเล่นผ่าน Spotify ได้ทันที หรือค้นหาเพลงผ่าน Spotify ก็ทำได้เช่นเดียวกัน
+                    กดไปดูรายละเอียดเพิ่มเติมได้
+                    <Link to={"/spotify"} style={PINK_LINK}><strong> ที่นี่เลย!</strong></Link>
                   </p>
                 </div>
-                <br/>
-              </Container>
+              </div>
             </Col>
 
-            <Col xl={8} >
-              <Container className="text-left">
-                <h1 className="font-bold">
-                  Sources&nbsp;              
-                  <span lang="th" className="font-semi-light">แหล่งข้อมูล</span>
-                </h1>
-                <br/>
-
-                {SOURCES_ITEMS.map((item, index) => {
+            <Col xl={8} className="text-left">
+              <h1 className="font-bold">
+                <MdSource id="icon-title"/> 
+                <span lang="th" className="font-bold"> แหล่งข้อมูล</span>
+              </h1>
+              {SOURCES_ITEMS.map((item, index) => {
                   return (
                     <Card key={index}>
                       <Card.Link href={item.url} target='blank'>
@@ -104,9 +99,7 @@ function About() {
                       </Card.Body>
                     </Card>
                   )
-                })}  
-
-              </Container>
+              })}  
             </Col>
 
           </Row>

@@ -1,26 +1,26 @@
 export const MenuItems = [
     {
-        title: 'SEARCH',
-        url: '/',
+        title: 'ค้นหา',
+        url: '/search',
         cName: 'nav-links'
     },
     {
-        title: 'ARTISTS',
+        title: 'ศิลปิน',
         url: '/artists',
         cName: 'nav-links'
     },
     {
-        title: 'SERIES',
+        title: 'ซีรีส์',
         url: '/series',
         cName: 'nav-links'
     },
     {
-        title: 'LEVELS',
+        title: 'ระดับความยาก',
         url: '/levels',
         cName: 'nav-links'
     },
     {
-        title: 'ABOUT',
+        title: 'เกี่ยวกับ Kashify',
         url: '/about',
         cName: 'nav-links'
     }

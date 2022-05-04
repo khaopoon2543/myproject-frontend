@@ -61,7 +61,7 @@ export default function PopupDict({ dictList, isOpen }) {
                   <div lang="th" id="dictTh" className="font-semi-bold">
                     {dict.Thai}
                   </div>
-                  <div lang="th" id="dictEn">
+                  <div id="dictEn">
                     {splitDictEng(dict.English)}
                   </div>
                 </Col>
@@ -93,7 +93,7 @@ export default function PopupDict({ dictList, isOpen }) {
             <h4 id="head-word">ความหมายคำศัพท์</h4>
           </div>
           <div className="scroll" id="no-scroll">  
-            <Card id="dict">  
+            <Card id="last-dict">  
               <Card.Body className="font-semi-bold">    
                 <span>
                   ลองเลือกคำศัพท์ที่

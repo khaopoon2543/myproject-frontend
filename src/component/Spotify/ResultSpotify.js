@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
 import { Loading, NoResult } from "../Loading";
 import useIsMobile from '../useIsMobile';
 
+import { FaSpotify } from 'react-icons/fa';
 import { BsPlayCircleFill } from 'react-icons/bs';
 
-export default function ResultSpotify({spotifyApi}) {
-    const { state } = useLocation();
-    const { trackName, trackArtistId, trackArtist, trackNameReal } = state;
+export default function ResultSpotify(props) {
+    const { spotifyApi, show, handleClose, 
+            trackName, trackArtistId, trackArtist, trackNameReal } = props;
     const [resultSpotify, setResultSpotify] = useState([])
     const [loading, setLoading] = useState(false);
     const screenSize = useIsMobile()
@@ -27,12 +27,6 @@ export default function ResultSpotify({spotifyApi}) {
     }
     
     useEffect(() => {
-      let isMounted = true; 
-      fetchData();
-      return () => { isMounted = false };
-
-      function fetchData() { 
-        if (!trackArtist && !trackName && !trackArtistId) return
         if (!window.localStorage.getItem("accessToken") && !spotifyApi) return
           spotifyApi.setAccessToken(window.localStorage.getItem("accessToken"))
           console.log("Access token @result-spotify")
@@ -40,17 +34,17 @@ export default function ResultSpotify({spotifyApi}) {
           async function getSearchTrack() {
             try {
               setLoading(true)
-              const result = await spotifyApi.searchTracks('track:'+ trackName + ' artist:' + trackArtistId) //query artist EN
+              const result = await spotifyApi.searchTracks('track:'+ trackName + ' artist:' + trackArtistId ,{ limit: 5 }) //query artist EN
               const trackList = result.body.tracks.items
               if (trackList.length > 0) {
                 collectedTrack(trackList)
               } else {
-                const result = await spotifyApi.searchTracks('track:'+ trackName + ' artist:' + trackArtist) //query artist JP
+                const result = await spotifyApi.searchTracks('track:'+ trackName + ' artist:' + trackArtist ,{ limit: 5 }) //query artist JP
                 const trackList = result.body.tracks.items
                 if (trackList.length > 0) {
                   collectedTrack(trackList)
                 } else {
-                  const result = await spotifyApi.searchTracks(trackName) //query only track name
+                  const result = await spotifyApi.searchTracks(trackName ,{ limit: 5 }) //query only track name
                   const trackList = result.body.tracks.items
                   collectedTrack(trackList)
                 }
@@ -60,49 +54,56 @@ export default function ResultSpotify({spotifyApi}) {
               console.log(err)
             }
           }
-          if (isMounted) {
-            getSearchTrack()
-          }
-      }
+          getSearchTrack()
     }, [trackArtist, trackName, trackArtistId]);
 
     return (
-        <Container style={{ marginTop: 50, marginBottom: 50 }}>  
-          <Container style={{ textAlign: 'left' }}>
-            <span>Spotify Search Results</span>
-            <h1>{trackNameReal}</h1>  
-            <div className="tagLevel" id="title-lyric">
-              <p className='subtitle' id="sub-data">
-                {trackArtist}
-              </p> 
+      <Modal  
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={show} onHide={handleClose} 
+        animation={false}
+      > 
+        <Modal.Header closeButton>
+          <Modal.Title className="d-flex align-items-center">
+            <div className="banner">
+                <span id="spotify-icon-title"><FaSpotify />&nbsp;</span>
+                <div className="d-block">
+                  <strong>{trackNameReal}</strong><br/>
+                  <span className="gray-text"> {trackArtist}</span>
+                </div>
             </div>
-            <br/>
-          </Container>
+          </Modal.Title>
+        </Modal.Header> 
+
+        <Modal.Body id="result">
         {loading ? ( 
           <Loading />
         ) : ( 
         <>
+        <div id="result-title">
+          <span lang="th">ผลการค้นหาจาก Spotify</span>
+        </div>
         {resultSpotify.length > 0 ? 
           (
             <Row >
-              {resultSpotify.map((track, i) => {
+              {resultSpotify.slice(0, 5).map((track, i) => {
                 return (
                   <Col lg={12} key={i}>
                     <Card className='spotify'>
                       <Card.Body>
                         <Row className="items-center">
-                            <Col xs={9} md={10}>
-                              <div className="d-flex justify-content-left align-items-center">
-                                <Card.Img src={track.img} alt=''></Card.Img>
-                                <Container className="d-block">
-                                  <Card.Title>{track.name}</Card.Title>
-                                  <Card.Text>{track.artist}</Card.Text> 
-                                </Container>
-                              </div>
+                            <Col xs={9} md={10} className="items">
+                              <Card.Img src={track.img} alt=''></Card.Img>
+                              <Container className="d-block">
+                                <Card.Title>{track.name}</Card.Title>
+                                <Card.Text>{track.artist}</Card.Text> 
+                              </Container>
                             </Col>    
                             <Col xs={3} md={2} className="box-icon" 
                               style={(screenSize) ? { zoom: '80%' } : { zoom: '100%' }}>
-                              <a href={track.url} target="_blank">
+                              <a href={track.url} target="_blank" rel="noopener noreferrer"> 
                                 <BsPlayCircleFill className="icon"/>
                               </a>
                             </Col>               
@@ -117,7 +118,8 @@ export default function ResultSpotify({spotifyApi}) {
         : (<NoResult/>)
         }
         </>)
-        }       
-        </Container>
+        }  
+        </Modal.Body>
+        </Modal>
     )
 };

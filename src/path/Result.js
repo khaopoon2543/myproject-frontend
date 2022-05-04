@@ -1,69 +1,87 @@
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
-import ResultSearch from "../component/Search/ResultSearch"
-import ResultData from '../component/Search/ResultData';
+import { Container, Row, Col } from 'react-bootstrap';
+import SearchBar from "../component/Search/SearchBar";
+import useIsMobile from '../component/useIsMobile';
+import { RiMusicFill } from 'react-icons/ri';
+import { FaSpotify } from 'react-icons/fa';
+import { AiOutlineInfoCircle, AiFillInfoCircle } from 'react-icons/ai';
+import { FiSearch } from 'react-icons/fi';
+
+const PINK = {
+  color: "var(--pink)"
+}
+const searchDescription = 
+  <div className="description" lang="th">
+    <h5><strong>ค้นหา เลือกเพลง แล้วไปเรียนรู้คำศัพท์กัน!</strong></h5>
+    <p>
+      ถ้าใครมีบัญชี <FaSpotify /> Spotify ก็สามารถ Login ผ่าน Spotify เพื่อเพิ่มความสะดวกในการค้นหาและใช้งาน 
+      <strong style={PINK}> KASHIFY </strong> 
+      ได้สะดวกยิ่งขึ้นด้วย! ลองไปเล่นกันได้เล้ยย แล้วอย่าลืมเปิดเพลงฟังไปพร้อม ๆ กับเรียนรู้คำศัพท์ผ่านเนื้อเพลงด้วยนะ!
+    </p>
+    <span>
+      ลองใช้งาน <strong style={PINK}> KASHIFY </strong> กันแล้ว รบกวนทุกคนช่วยทำ
+      <strong> แบบสอบถามความพึงพอใจในการใช้งาน <span style={PINK}> KASHIFY </span> </strong>กันด้วยน้า
+      <a href='http://localhost:3000/' target='blank'> กดตรงนี้ได้เลย! </a>
+    </span>
+    <span>
+        หากมีข้อผิดพลาดใด ๆ ต้องขออภัยล่วงหน้าด้วยนะคะ
+        ขอบคุณทุกคนมากเลยค่า 🙏💗
+    </span>
+    <br/><br/>
+  </div>
 
 function Result() {
+  const screenSize = useIsMobile()
+  const [isOpen, setIsOpen] = useState(false); 
 
-    const { state } = useLocation();
-    //From Search.js --> ONLY(key) OR(key,level) //From Playing.js(Spotify) --> (key, artist)
-    const { key, artist, level } = state;
+  const { state } = useLocation();
+  //From Search.js --> ONLY(key) OR(key,level) //From Playing.js(Spotify) --> (key, artist)
+  const { key, artist, level } = state;
 
-    //filter
-    const [selectedFilter, setSelectedFilter] = useState(!artist ? 'song' : 'spotify')
-    function showSong() { setSelectedFilter('song') }
-    function showArtist() { setSelectedFilter('artist') }
-    function showSeries() { setSelectedFilter('series') }
-    function showLyric() { setSelectedFilter('lyric') }
-    console.log(selectedFilter)
-    function isFocus(filter) {
-      if (selectedFilter === filter){
-        return "focus"
-      } return null
-    }
+  return (
+    <Container className="pages">
+      <Row>
+        <Col xl={4}>
+          <Container className="header-left">
+            <h1 className="font-bold">
+              Result
+              <br/>
+              <span lang="th" className="font-semi-light">
+                <FiSearch /> ผลการค้นหา
+              </span>
+              <h1>{key}</h1>
+              {artist && <p>{artist}</p>}
 
-    return (
+              {level && 
+                <div className="tagLevel" id="title-lyric">
+                  <p id={level}> {level} </p>
+                </div>
+              }  
 
-        <div className="App" style={{zoom: '90%'}}>
-
-          <Container className="pages">
-            <span>Results</span>
-            <h1>{key}</h1>
-            {artist && <p>{artist}</p>}
-
-            {level && 
-              <div className="tagLevel" id="title-lyric">
-                <p id={level}> {level} </p>
-              </div>
-            }
-
-          <br/>
-          {(selectedFilter !== 'spotify') ? 
-            <Container style={{ marginTop: 10 }}>
-              <div className="filters">
-                <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
-                <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
-                <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>
-                <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
-              </div>   
-            </Container>
-            : null
-          }
-
-          {(selectedFilter==='artist') &&
-            <ResultData src="artists" searchTerm={key} />   
-          }
-          {(selectedFilter==='series') &&
-            <ResultData src="series" searchTerm={key} />   
-          }
-          <ResultSearch searchTerm={key} searchArtist={artist} filter={selectedFilter} level={!level ? null : level} />   
-          
+              {screenSize &&
+                <button className="icon" onClick={() => setIsOpen(!isOpen)}> 
+                  {!isOpen ? <AiOutlineInfoCircle /> : <AiFillInfoCircle />}
+                </button>
+              } 
+                    
+            </h1>
+            <br/>
+            {!screenSize ?
+              searchDescription :
+              <>
+                {isOpen && searchDescription}
+              </>
+            } 
           </Container>
+        </Col>
 
-        </div>
+        <Col xl={8}> 
+          <SearchBar />
+        </Col>
+      </Row>
+    </Container>
+ 
     );
-
 }
-
 export default Result;

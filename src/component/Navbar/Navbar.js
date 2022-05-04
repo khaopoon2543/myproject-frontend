@@ -3,47 +3,23 @@ import React, { useEffect, useState } from "react";
 import { MenuItems } from "./MenuItems";
 import { Container, Navbar, Nav, Offcanvas } from 'react-bootstrap';
 import useIsMobile from '../useIsMobile';
+import { LoginButton, SpotifyDropdown, SpotifyButton} from "./NavbarButton";
 
-import { FaSpotify } from 'react-icons/fa';
-import { MdQueueMusic } from 'react-icons/md';
-import { HiMenuAlt3 } from 'react-icons/hi';
+import { HiMenu } from 'react-icons/hi';
 
-const CLIENT_ID = "d97993bb6c89489bb43493cdfa949504"
-const REDIRECT_URI = "http://localhost:3000"
-const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
-const RESPONSE_TYPE = "code"
-function LoginButton() {
-    return (
-        <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=user-read-private%20user-read-currently-playing&show_dialog=true`}>
-          <div className="banner" id="spotify-btn">
-            <button id="spotify-login">
-                <FaSpotify className="spotify-icon"/>
-                LOGIN
-            </button>
-          </div>
-        </a>
-    );
-}
-
-function PlaylistButton() {
-    return (
-        <Nav.Link href="/playlist" className="nav-links">
-            <span><MdQueueMusic style={{fontSize:20, marginBottom:2}}/> TOP 50 JAPAN</span>
-        </Nav.Link>
-    );
-}
-
-function Header({ user, setIsUser }){
+function Header({ user, setIsUser, open, onOpen, onClose }){
     const screenSize = useIsMobile()
     const [itTime, setItTime] = useState(false);
     const [waitUser, setWaitUser] = useState(false);
     const timeOut = setTimeout(() => setItTime(true), 500);
 
+    //SpotifyButton()
+    const spotifyButton = SpotifyButton(user, open, onOpen, onClose)
+
     useEffect(() => { //wait time for check user
-        if ( user ) {
-            setWaitUser(true);
-            clearTimeout(timeOut);
-        }
+        if ( !user ) return
+        setWaitUser(true);
+        clearTimeout(timeOut);
     }, [ user ]);
 
     const logout = () => {
@@ -51,22 +27,11 @@ function Header({ user, setIsUser }){
         localStorage.clear();
         window.location = "/";
     }
-    function LogoutButton() {
-        return (
-            <a onClick={logout}>
-              <div className="banner" id="spotify-btn">
-                <button id="spotify-login">
-                    <FaSpotify className="spotify-icon"/>
-                    LOGOUT
-                </button>
-              </div>
-            </a>
-        );
-    }
 
     return(
-        !screenSize ?
-        <Navbar sticky="top" className="NavbarItems">
+    <>
+      {(!screenSize) ?
+        <Navbar sticky="top" className="NavbarItems" lang='th'>
            <Container fluid="lg">
             <Navbar.Brand href="/"><span className="navbar-logo">kashify</span></Navbar.Brand>
             <Nav>
@@ -78,45 +43,48 @@ function Header({ user, setIsUser }){
                     )
                 })}  
             </Nav>
-            <Nav className="ms-auto">
-                {itTime && <>{!waitUser ? <LoginButton /> : <><PlaylistButton /><LogoutButton /></>}</>}
+            <Nav className="ms-auto d-flex align-items-center">
+                {itTime && <>{!waitUser ? <LoginButton /> : <>{spotifyButton} {SpotifyDropdown(logout)}</>}</>}
             </Nav>
           </Container>
         </Navbar>
         :
-        <Navbar expand={false} sticky="top" className="NavbarItems">
+        <Navbar expand={false} sticky="top" className="NavbarItems" lang='th'>
             <Container fluid>
             <Navbar.Brand href="/"><span className="navbar-logo">kashify</span></Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav"> <HiMenuAlt3 /> </Navbar.Toggle>
+            <Navbar className="ms-auto d-flex align-items-center">{spotifyButton}</Navbar>
+            <Navbar.Toggle aria-controls="basic-navbar-nav"> <HiMenu /> </Navbar.Toggle>
             <Navbar.Offcanvas style={{width:'80%', border:'none'}}
                 id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel"
                 placement="end"
             >
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title id="offcanvasNavbarLabel" style={{marginLeft:30}}>
+                    <Offcanvas.Title id="offcanvasNavbarLabel">
                         <span className="navbar-logo">kashify</span>
                     </Offcanvas.Title>
                 </Offcanvas.Header>
 
-                <Nav style={{marginLeft:50}}>
+                <Nav id="offcanvas-item">
                     <Nav>
                         {MenuItems.map((item, index) => {
                             return (
-                                <Nav.Link key={index} href={item.url} className={item.cName}>
+                                <Nav.Link key={index} href={item.url} className="nav-links">
                                     <span>{item.title}</span>
                                 </Nav.Link>
                             )
                         })}  
                     </Nav>
-                    <Nav style={{marginTop: '20px'}}>
-                        {!user ? <LoginButton /> : <><PlaylistButton /><LogoutButton/></>}
+                    <Nav id="offcanvas-item-spotify">
+                        {!user ? <LoginButton /> : <>{SpotifyDropdown(logout)}</>}
                     </Nav>
                 </Nav>
 
             </Navbar.Offcanvas>
             </Container> 
         </Navbar>
+      }
+    </>
     )
 }
 

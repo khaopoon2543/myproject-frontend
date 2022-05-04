@@ -1,0 +1,41 @@
+/* ----------- old design ----------- */
+
+.spotify-btn-icon-old { 
+    cursor: pointer;
+    position: fixed;
+    right:    -10px;
+    bottom:   0;
+    margin: 10px 10px 0px 10px;
+    border-radius: 25px 0 0 0;
+    font-size: 70px;
+    padding: 15px;
+    color: var(--black);
+    /* transform: translate(-50%,-50%); */
+    z-index: 2000;
+}
+.spotify-btn-icon-old#default {
+    background-color: #fff;
+    transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
+}
+.spotify-btn-icon-old:hover {
+    color: var(--green)
+}
+.spotify-btn-icon-old#open {
+    color: var(--white);
+}
+
+/* ----------- new design (25/04/22) ----------- */
+
+.spotify-btn-icon { 
+    cursor: pointer;
+    font-size: 32px;
+    transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
+    color: var(--black);
+}
+.spotify-btn-icon:hover, .spotify-btn-icon:focus {
+    color: var(--green)
+}
+.spotify-btn-icon-old#default {
+    color: var(--black) !important;
+}
+

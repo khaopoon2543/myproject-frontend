@@ -1,4 +1,4 @@
 
-const backendSrc = "http://localhost:5000/backend" //http://localhost:5000
+const backendSrc = process.env.REACT_APP_BACKEND_URL + "/api"
 
 export { backendSrc }

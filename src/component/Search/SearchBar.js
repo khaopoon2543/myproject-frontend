@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ResultSearch from "./ResultSearch";
-import ResultData from './ResultData';
+import ResultAll from './ResultAll';
 
 import { FiSearch } from 'react-icons/fi';
 import { HiOutlineX } from 'react-icons/hi';
-import { PLSMoreThreeChars } from '../Loading';
 
 function SearchBar({ level }) {
     const [searchTerm, setSearchTerm] = useState('')
-    const [selectedFilter, setSelectedFilter] = useState(level==='' ? 'all': 'show')
+    const [selectedFilter, setSelectedFilter] = useState(!level ? '': 'show')
     const [typing, setTyping] = useState('')
 
-    const navigate = useNavigate ();
     const onFormSubmit = event => {
-      navigate('/result='+ searchTerm , { state: { key:searchTerm, level:level } })
+      if (selectedFilter==='') {
+        setSelectedFilter('all')
+      }
+      setTyping(searchTerm)
       event.preventDefault()
     }
     const onChangeData = event  => { 
+      if (typing) { setTyping('') }
       setSearchTerm(event.target.value);
-      if (selectedFilter==='show') {
+
+      if (selectedFilter==='show') { //SubLevels.js if user search --> filter'all'
         setSelectedFilter('all')
       }
     }
     
-    useEffect(() => {
-      const newTimer = setTimeout(() => { setTyping(searchTerm) }, 1000)
-      return () => {clearTimeout(newTimer)}
-    }, [searchTerm])
+    //useEffect(() => {
+      //const newTimer = setTimeout(() => { setTyping(searchTerm) }, 2000)
+      //return () => {clearTimeout(newTimer)}
+    //}, [searchTerm])
 
     //filter
     //function showALL() { setSelectedFilter('all') }
@@ -42,11 +43,6 @@ function SearchBar({ level }) {
         return "focus"
       } return null
     }
-    function isCharMoreThree(typing) {
-      if (typing && typing.length < 3){
-        return null
-      } return typing
-    }
 
     return (
       <div> 
@@ -60,16 +56,19 @@ function SearchBar({ level }) {
               required
             />
           <button type="submit" className="input_icon" id={!searchTerm ? "search_icon" : "active_icon"}>
-            <FiSearch/></button>
+            <FiSearch/>
+          </button>
           {searchTerm &&
+            <>
             <button type="button" className="input_icon" id="clear_icon" onClick={() => setSearchTerm('')}>
-            <HiOutlineX/></button>
+              <HiOutlineX/>
+            </button>
+            </>
           }
         </form>
         </div>
 
         <br/>
-        {(selectedFilter!=='spotify') ? 
           <div className="filters">
             <button onClick={() => showAll()} id={isFocus('all')}>All</button>
             <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
@@ -77,44 +76,11 @@ function SearchBar({ level }) {
             <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>
             <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
           </div>  
-          : null
+
+        {(searchTerm||selectedFilter==='show') &&
+          <ResultAll typing={typing} selectedFilter={selectedFilter} level={level}/>
         }
-        
-          <div style={{ marginTop: 10 }}>
 
-          {isCharMoreThree(typing)!==null ?
-            <>
-            {(!level && selectedFilter==='artist' && typing) && 
-              <ResultData src="artists" searchTerm={typing} />   
-            }
-            {(!level && selectedFilter==='series' && typing) &&
-              <ResultData src="series" searchTerm={typing} />   
-            }
-            {(selectedFilter!=='all' && (selectedFilter==='show' || typing)) &&
-              <ResultSearch searchTerm={typing} filter={selectedFilter} level={!level ? null : level} />
-            }
-
-            {(selectedFilter==='all' && typing) &&
-            <>
-              <ResultSearch searchTerm={typing} filter={'song'} level={!level ? null : level} searchAll={true}/>
-              <>
-              {!level && 
-                <>
-                <ResultData src="artists" searchTerm={typing} searchAll={true}/>  
-                <ResultData src="series" searchTerm={typing} searchAll={true}/> 
-                </>
-              }
-              </>
-              <ResultSearch searchTerm={typing} filter={'lyric'} level={!level ? null : level} searchAll={true}/>  
-            </>
-            }
-            </>
-            :
-            <PLSMoreThreeChars />
-          }
-
-          </div>  
-      
       </div> 
     );
 }
