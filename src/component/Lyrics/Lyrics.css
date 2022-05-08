@@ -4,15 +4,68 @@
   background-color: var(--black);
   color: var(--white);
   padding: 40px;
-}.titleLyric #readability{
+}.titleLyric .info{
+  display: flex;
+  align-items: center;
   color: var(--grayLight);
   font-size: 16px;
-}.btn-on-lyric { /* btn change font size */
+}.titleLyric .info span#head{
+  display: block;
+  padding: 1px 10px;
+  margin: 5px 10px 5px 0;
+  border-radius: 25px;
+  color: var(--grayLight);
+  border: 1px solid var(--gray);
+  font-weight: 600;
+}
+.info#readability {
+  display: flex;
+  align-items: center;
+}
+span#pink {
+  color: var(--white);
+  margin-left: 10px;
+  font-weight: 400;
+}
+.tagLevel#title-lyric p{ /* tagLevel in title Lyric.js*/
+  line-height: 28px;
+  min-width: none !important;
+  padding: 0px 15px !important;
+  margin: 0 auto;
+  font-size: 12px !important;
+} 
+
+#singer, .info #artist {
+  padding: 3px 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: all 0.2s;
+} 
+#singer {
+  font-weight: 300;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+} #singer:hover {
+  background-color: #ffffff49;
+}
+.info #artist {
+  font-weight: 500;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+} .info #artist:hover {
+  background-color:  #ffffff49;
+  text-decoration: none !important;
+}
+
+
+.btn-on-lyric { /* btn change font size */
   display: flex; justify-content: left; align-items: center;
   padding: 15px 10px 5px 10px;
   border-radius: 10px;
   border: 2px solid var(--pinkPastel);
 }
+
 div#lyric{
   text-align: left;
   font-weight: 300;
@@ -50,33 +103,66 @@ div#lyric{
   color: var(--gray);
 }
 
+button, button:focus{
+  outline: none;
+  background: transparent;
+  border: 1px solid transparent;
+}button:active{
+  outline: none;
+  background: transparent;
+}
 button.pink-text {
-    display: inline-block;
-    border-bottom: 1px solid var(--pink);
-    padding:0;margin:0;
-    font-weight: 300;
-    margin-bottom: 25px; /* line height lyric */
-  }button, button:focus{
-    outline: none;
-    background: transparent;
-    border: 1px solid transparent;
-  }button:active{
-    outline: none;
-    background: transparent;
-  }
-  button.pink-text:hover {
-    color: white;
+  display: inline-block;
+  text-decoration: none !important;
+  color: #000000 !important;
+  border-bottom: 1px solid var(--pink);
+  padding:0;margin:0;
+  font-weight: 300;
+  margin-bottom: 25px; /* line height lyric */
+  } button.pink-text:hover {
+    color: var(--white) !important;
     text-decoration: none;
     background: var(--pink);
     cursor: pointer;
   }button.pink-text:active, button.pink-text:focus{
-    color: white;
+    color: var(--white) !important;
     background: var(--pink);
 }
-@media only screen and (max-width: 768px) {
-  .titleLyric #readability{
-    font-size: 14px;
+
+@media only screen and (max-width: 320px) {
+  .info#readability {
+    display: inline-block;
+  } 
+  .titleLyric .info#readability .tagLevel p{
+    zoom: 90%;
+    margin-top: 2px;
+    margin-left: 0px !important;
   }
+}
+
+@media only screen and (max-width: 768px) {
+
+  .titleLyric {
+    padding: 40px 0px !important;
+  } .titleLyric h5 {
+    font-size: 16px;
+  }
+  .titleLyric .info {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px !important;
+  } .titleLyric .info span#head {
+    display: inline-block;
+    margin: 0 10px 5px 0;
+  } .titleLyric .info button {
+    margin-bottom: 5px;
+    display: inline-block;
+  }
+  .titleLyric .info#readability .tagLevel{
+    zoom: 90%;
+    margin-bottom: 5px;
+  }
+
   .btn-on-lyric { /* btn change font size */
     margin: 0 10px;
   }
@@ -189,7 +275,7 @@ button.pink-text {
 
 @media only screen and (max-width: 992px) {
   ::-webkit-scrollbar {
-    width: 0px;
+    width: 0px !important;
   }
   .sidebar-mobile{
     position: sticky;
@@ -204,7 +290,7 @@ button.pink-text {
     position: sticky;
     padding: 0 10px;
   }.sidebar #header{
-    margin-right: 0px;
+    margin-right: 0px !important;
   }
   .scroll {
     overflow-y: scroll;
@@ -215,7 +301,7 @@ button.pink-text {
   }
   #dictEn {
     line-height: 1.2;
-    font-size: 12px;
+    font-size: 14px;
   }
   .head-each-word #kanji{
     font-size: 18px;

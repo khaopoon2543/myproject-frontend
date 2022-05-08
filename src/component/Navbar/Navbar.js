@@ -2,13 +2,13 @@ import "./Navbar.css";
 import React, { useEffect, useState } from "react";
 import { MenuItems } from "./MenuItems";
 import { Container, Navbar, Nav, Offcanvas } from 'react-bootstrap';
-import useIsMobile from '../useIsMobile';
-import { LoginButton, SpotifyDropdown, SpotifyButton} from "./NavbarButton";
+import useIsMobileLG from '../useIsMobileLG';
+import { LoginButton, SpotifyDropdown, SpotifyButton } from "./NavbarButton";
 
 import { HiMenu } from 'react-icons/hi';
 
 function Header({ user, setIsUser, open, onOpen, onClose }){
-    const screenSize = useIsMobile()
+    const screenSize = useIsMobileLG()
     const [itTime, setItTime] = useState(false);
     const [waitUser, setWaitUser] = useState(false);
     const timeOut = setTimeout(() => setItTime(true), 500);
@@ -54,7 +54,7 @@ function Header({ user, setIsUser, open, onOpen, onClose }){
             <Navbar.Brand href="/"><span className="navbar-logo">kashify</span></Navbar.Brand>
             <Navbar className="ms-auto d-flex align-items-center">{spotifyButton}</Navbar>
             <Navbar.Toggle aria-controls="basic-navbar-nav"> <HiMenu /> </Navbar.Toggle>
-            <Navbar.Offcanvas style={{width:'80%', border:'none'}}
+            <Navbar.Offcanvas style={{width:'70%', border:'none'}}
                 id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel"
                 placement="end"

@@ -17,26 +17,37 @@
   --intBG: #e6eeff;
   --intSRT: #728CFF;
   --diffBG: #FEE9F8;
-  --diffSRT: #E85394;
+  --diffSRT: #E85394;  
+  --naBG: #dbdbdb;
+  --naSRT: #666666;
 }
 
 .App {
   text-align: center;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
 }
 
 :lang(th) {
   font-family: 'Noto Sans Thai', sans-serif;
   font-family: 'IBM Plex Sans Thai', sans-serif;
-}:lang(jp2) {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+}:lang(jp) {
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 .pages {
   margin-top: 30px;
   margin-bottom: 50px;
 }
+.result-right {
+  margin-top: 80px;
+}
+@media only screen and (max-width: 1200px) {
+  .result-right {
+    margin-top: 0px;
+  }
+} 
 @media only screen and (max-width: 768px) {
   .pages {
     margin-top: 10px;
@@ -47,7 +58,7 @@
 }.font-semi-light {
   font-weight: 300 !important;
 }.font-semi-bold {
-  font-weight: 500 !important;
+  font-weight: 600 !important;
 }.font-bold {
   font-weight: 900 !important;
 }.black-text {
@@ -85,20 +96,39 @@ span.nav-button{
   position: sticky;
   top: 100px;
   z-index: 1;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   margin-right: 20px;
-} .header-left h1{
+} .header-left h1 {
   font-size: 48px;
-}
-.playlist-name {
-  font-weight: 700;
+} .header-left .icon {
   color: var(--pink);
-}.playlist-name:hover {
-  text-decoration: underline solid var(--pink) 2px;
-}
-
+} 
 .description {
-  margin: 20px 0px;
+  padding: 20px 0px;
+} .description p {
+  margin-top: -9px;
+  padding: 20px;
+  border: var(--pink) 1px solid;
+  border-radius: 0 10px 10px 10px;
+} .description p.radius {
+  border-radius: 10px;
+} 
+.spotify .description .card {
+  padding: 20px 10px;
+  margin-top: 0px;
+} .spotify .description .underline {
+  margin-bottom: 0px;
+} 
+
+.underline {
+  width: auto;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 900;
+  border-radius: 20px 20px 0 0;
+  padding: 10px 20px 2px 20px;
+  color: #fff;
+  background-color: var(--pink);
 }
 
 @media only screen and (max-width: 992px) {
@@ -107,7 +137,7 @@ span.nav-button{
   }
 }
 @media only screen and (max-width: 768px) {
-  .header-left {
+  .header-left, .content{
     padding: 0 10px;
   } .header-left h1{
     font-size: 36px;
@@ -123,6 +153,13 @@ span.nav-button{
   margin-bottom: 5px;
 }
 
+.pink-link {
+  color: var(--pink);
+} .pink-link:hover {
+  color: var(--pink);
+  text-decoration: underline solid 1px var(--pink);
+}
+
 /* ----------------------------- Home ----------------------------- */
 
 #home {
@@ -130,12 +167,12 @@ span.nav-button{
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 120px;
+  margin-top: 50px;
   padding: 0px 100px;
   text-align: left;
   position: relative;
 }
-#home h1{
+#home h2{
   font-size: 50px;
 }
 #home-title {
@@ -143,7 +180,7 @@ span.nav-button{
   padding-right: 50px;
 }
 #home #description-title {
-  margin-top: 50px;
+  margin-top: 20px;
 } #description-title #title {
   color: var(--pink);
 }
@@ -162,7 +199,7 @@ span.nav-button{
   color: var(--pinkPastel);
   height: 200px;
   width: 200px;
-  top: 10%;
+  top: 25%;
   left: 57%;
   transform: translate(-50%, -50%);
 }#home-note-icon #bold {
@@ -171,7 +208,7 @@ span.nav-button{
   display: flex;float: right;
   height: 400px;
   width: 400px;
-  top: 60%;
+  top: 50%;
   left: 75%;
   transform: translate(-50%, -50%);
 }
@@ -181,11 +218,29 @@ span.nav-button{
     padding: 0px 50px;
   }
   #home-note-icon #bold {
-    top: 100%;
+    top: 60%;
     left: 75%;
   }#home-note-icon #light {
     top: 25%;
     left: 80%;
+  }
+  #description-title {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 992px) {
+  #home {
+    padding: 0px 50px;
+  }
+  #home-note-icon #bold {
+    top: 12%;
+    height: 300px;
+    width: 300px;
+  }#home-note-icon #light {
+    display: none;
+  }
+  #description-title {
+    width: 100%;
   }
 }
 @media only screen and (max-width: 786px) {
@@ -193,7 +248,6 @@ span.nav-button{
     padding-right: 0px;
   }
   #home {
-    margin-top: 50px;
     padding: 0px 50px;
   }
   #home-btn {
@@ -204,7 +258,7 @@ span.nav-button{
   }
   #home-note-icon #bold , #home-note-icon #light {
     display: none;
-  }
+  } 
 }
 
 /* ----------------------------- About ----------------------------- */
@@ -213,24 +267,23 @@ span.nav-button{
   margin: 20px;
   margin-top: 30px;
   margin-bottom: 0;
-  color: var(--black);
-  text-decoration: underline solid var(--black) 1px;
   font-weight: 700;
-
-}.title-sources:hover {
-  color: var(--pink);
-  text-decoration: underline solid var(--pink) 1px;
-}
-.text-sources {
-  color: var(--gray);
+} 
+.underline#about {
+  padding-right: 30px;
+  background-color: var(--black);
 }
 
-/* ----------------------------- ResultSpotify ----------------------------- */
+/* ----------------------------- ResultSpotify && Playlist ----------------------------- */
 
+.spotify.card {
+  padding: 0 10px 0 0;
+}
 .spotify .card-body {
   text-align: left;
   margin: 0;
-  padding: 10px 20px 10px 10px;
+  padding: 10px;
+  display: block;
 }
 .spotify .items {
   display: flex;
@@ -240,6 +293,9 @@ span.nav-button{
 .spotify img {
   max-width: 100px;
   height: auto;
+} .modal img {
+  max-width: 80px;  
+  height: auto;  
 }
 .spotify .card-title {
   font-size: 18px; 
@@ -269,15 +325,10 @@ span.nav-button{
   border: 1px solid  var(--black)
 }
 @media only screen and (max-width: 768px) {
-  .spotify .card-body {
-    padding: 0;
-    padding-right: 20px;
-    margin-bottom: 10px;
-  }
   .spotify img {
     max-width: 80px;  
     height: auto;  
-  }
+  } 
   .spotify .card-title {
     font-size: 16px; 
   }
@@ -288,17 +339,36 @@ span.nav-button{
 
 /* ----------------------------- Search ----------------------------- */
 
+.search {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px  !important;
+} .search #button-back {
+  padding: 1px 20px !important;
+  font-size: 16px;
+} .search h5 {
+  margin: 0px !important;
+  margin-right: 10px !important;
+}
+@media only screen and (max-width: 370px) {
+  .search {
+    display: block;
+  } .search #button-back {
+    margin: 10px 0px !important;
+  }
+}
+
 .bg-search {
   background-color: var(--white);
   position: sticky;
   top: 71px;
   z-index: 10;
-  box-shadow: var(--white) 0px 5px 50px;
+  box-shadow: var(--white) 0px 5px 20px;
+  margin-bottom: 20px
 }
 .searchbar {
-  height: 60px;
+  height: auto;
   background-color: var(--black);
-  border: var(--black) 1px solid;
   border-radius: 30px;
   padding: 10px;
   position: -webkit-sticky;
@@ -316,9 +386,9 @@ span.nav-button{
   background: none;
   width: 0;
   caret-color:transparent;
-  line-height: 40px;
+  line-height: 30px;
   transition: width 0.4s linear;
-  padding: 0 10px 0 30px;
+  padding: 0 10px;
   width: 90%;
   caret-color:var(--pinkPastel);
 }
@@ -329,16 +399,16 @@ span.nav-button{
 .input_icon{
   position: absolute;
   display: flex;
-  font-size: 20px;
-  padding: 9px;
+  font-size: 24px;
+  padding: 5px;
   border-radius: 50px;
   transition: all 0.25s;
 } #search_icon {
-    left:10px; top:10px;
+    left:7px; top:7px;
     background: #ffffff1f;
     color: var(--white);
   }#active_icon {
-    left:10px; top:10px;
+    left:7px; top:7px;
     background: var(--pinkPastel);
     color: var(--black);
   }#active_icon:hover {
@@ -346,12 +416,17 @@ span.nav-button{
     color: var(--white);
   }#clear_icon {
     position: absolute;
-    right:10px; top:10px;
+    right:7px; top:7px;
     color: var(--white);
   }#clear_icon:hover {
     background: #ffffff1f;
   }
-  
+
+@media only screen and (max-width: 768px) {
+  .search_input{
+    padding: 0 30px;
+  }
+}
 /* ----------------------------- Result ----------------------------- */
 
 .filters {
@@ -366,7 +441,7 @@ span.nav-button{
   transition: all 0.25s;
 }
 .filters button {
-  padding: 3px 30px;
+  padding: 5px 30px 1px 30px;
   margin-right: 5px;
   border-radius: 50px;
   border: 1px solid  var(--gray);
@@ -417,11 +492,15 @@ span.nav-button{
   }
 }
 
+.filters#size button { /* Lyric.js */
+  padding: 3px 30px;
+}
+
 /* ----------------------------- Artists ----------------------------- */
 
 .alphabet {
   text-align: left;
-  margin-bottom: 2rem;
+  margin: 10px 0 20px 0;
 }.alphabet * {
   display: inline-block;
   margin-bottom: 10px;
@@ -463,10 +542,7 @@ span.nav-button{
   margin-right: 15px;
   width: 100px;
   height: auto;
- } .banner #spotify-icon-title {
-   font-size: 30px;
-   margin: 5px 15px;
- }
+ } 
  .banner span, .banner button {
   float: left; 
   margin-top: 0px;
@@ -544,12 +620,12 @@ button#spotify-open {
 
 button#spotify-search {
   padding: 3px 20px 3px 3px;
-  background: rgba(255, 255, 255, 0.11);
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 14px;
-  font-weight: 400;
+  background: rgba(255, 255, 255, 0.15);
 } button#spotify-search:hover {
-  background-color: var(--green);
+  color: var(--black);
+  background-color: var(--white);
 }
 
 /* ----- ResultAllModal.js ----- */
@@ -578,14 +654,13 @@ button#spotify-search {
   width: auto;
   margin-right: 10px;
   font-weight: 600;
+  margin-top: 10px;
 }
 #home button#search-btn {
   color: var(--white);
   background-color: var(--pink);
 } #home button#search-btn:hover {
-  box-shadow: var(--pinkPastel) 0px 0px 50px;
-  margin-top: -10px;
-  
+  box-shadow: var(--pinkPastel) 0px 0px 30px;  
 } #home button#search-btn:hover>.kashify-icon  {
   color: var(--pink) !important;
 } #home .kashify-icon {
@@ -602,16 +677,14 @@ button#spotify-search {
 } #home button#spotify-login:hover {
   color: var(--white);
   background: var(--green);
-  box-shadow: var(--easyBG) 0px 0px 50px;
-  margin-top: -10px;
-
+  box-shadow: var(--easyBG) 0px 0px 10px;
 } #home .spotify-icon {
   color: var(--white);
   font-size: 36px;
   margin-right: 30px; 
 }
 
-/* ----------------------------- Spotify Playlists ----------------------------- */
+/* ----------------------------- Spotify Playlists & ResultSpotify  ----------------------------- */
 
 button#search-kashify {
   display: flex;
@@ -619,6 +692,9 @@ button#search-kashify {
   padding: 9px;
   border-radius: 50px;
   transition: all 0.25s;
+} 
+
+button#search-kashify {
   color: var(--pink) !important;
   border: 1px solid var(--pink);
   background: var(--white);
@@ -626,7 +702,13 @@ button#search-kashify {
   color: var(--white) !important;
   border: 1px solid var(--pink);
   background: var(--pink);
+  box-shadow: var(--pinkLight) 0px 0px 50px;
 } 
+
+#title-popup {
+  font-size: 40px;
+  margin: 10px 20px 10px 10px;
+}
 
 /* ----------------------------- Modal Spotify ----------------------------- */
 
@@ -644,23 +726,47 @@ button#search-kashify {
   overflow-y: scroll !important;
   height: 50vh !important;
   margin-bottom: 10px;
-}.modal-body#result #result-title {
-  margin-left: 5px;
+}
+.tag-result {
+  display: flex;
+  align-items: center;
+} .tag-result span {
+  display: block;
+  padding: 2px 12px;
+  border-radius: 25px;
   font-weight: 600;
+} .tag-result #title {
+  margin: 0px 5px;
+  color: var(--white);
+  background-color: var(--grayLight)
+} .tag-result #by {
+  background-color: var(--white);
+  border: 1px solid var(--grayLight);
   color: var(--grayLight);
 }
+
 #error-head {
   margin-left: 10px;
   width: auto;
-  background-color: var(--pinkLight);
-  padding: 5px 20px;
-  border-radius: 5px;
+  font-weight: 600;
+  padding: 5px;
+  color: var(--pink);
+  border-bottom: 2px solid  var(--pink);
 }
 #error-body {
   font-size: 16px;
   margin-bottom: 10px;
 } #error-body button{
   margin-top: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .modal-body#result {
+    padding: 0;
+  }
+  .tag-result {
+    padding: 0 10px; 
+  }
 }
 
 /* ----------------------------- Spotify Callback Successes ----------------------------- */
@@ -693,34 +799,47 @@ button#search-kashify {
   box-shadow: var(--pinkPastel) 0px 0px 50px;
 }
 
-/* ------------------------- */
-.function-list {
-  margin-bottom: 30px;
+/* ----------- Spotify.js & Other(little) -------------- */
+
+@media only screen and (max-width: 768px) {
+  .spotify .underline {
+    margin-left: 10px;
+  } 
 }
-.spotify-description .card{
-  padding: 20px 20px;
-  color: var(--black);
-}.spotify-description#current .card{
+.spotify .description {
+  padding: 10px 0 !important;
+}
+.spotify .underline {
+  padding-right: 30px;
+  background-color: var(--black);
+} .spotify .description p {
+  border: none;
+  margin-bottom: 0;
+} .spotify .card {
   cursor: text;
-} .spotify-description#playlist .card:hover{
-  color: var(--pink);
-  text-decoration: underline 1px solid;
-}
-.spotify-description #icon-spotify {
-  font-size: 24px;
+} 
+.description #icon-spotify {
   margin-right: 10px;
   margin-bottom: 3px;
+  color: var(--pink);
+  font-size: 24px;
 }
-
+#playlist span{
+  display: block;
+  padding: 5px 10px;
+  font-weight: 900 !important;
+  color: var(--pink);
+}
 #icon-headphone {
   font-size: 24px;
   margin: 0 5px;
   margin-bottom: 3px;
-  color: var(--pink);
 }
 #icon-title {
-  font-size: 50px;
-  padding: 9px;
+  font-size: 30px;
+  padding: 5px;
+  margin-bottom: 7px;
+  margin-right: 7px;
   border-radius: 50px;
   transition: all 0.25s;
   color: var(--black);

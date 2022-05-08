@@ -18,7 +18,20 @@ function LoginButton() {
           <div id="spotify-btn">
             <button id="spotify-login" lang='th'>
                 <FaSpotify className="spotify-icon"/>
-                เข้าสู่ระบบ
+                Log In
+            </button>
+          </div>
+        </a>
+    );
+}
+
+function LogoutButton(logout) {
+    return (
+        <a onClick={logout}>
+          <div id="spotify-btn">
+            <button id="spotify-login" lang='th'>
+                <MdLogout className="spotify-icon"/>
+                Log Out
             </button>
           </div>
         </a>
@@ -43,14 +56,9 @@ function SpotifyDropdown(logout) {
             )}
 
             <NavDropdown.Divider />
-            <NavDropdown.Item  href="/spotify" id="question">
-                <span>
-                    <AiOutlineQuestion className="icon-dropdown"/> Spotify & Kashify
-                </span>
-            </NavDropdown.Item>
             <NavDropdown.Item onClick={logout} id="logout">
                 <span><MdLogout className="icon-dropdown"/> 
-                    &nbsp;ออกจากระบบ
+                    &nbsp;Log Out
                 </span>
             </NavDropdown.Item>
         </NavDropdown>
@@ -62,8 +70,7 @@ function SpotifyButton(user, open, onOpen, onClose) {
     function OpenClose() {
         if(!open){ return onOpen(); }
         return onClose();
-    }
-    
+    } 
     if (!user) return null 
         return (
             <Container>
@@ -77,6 +84,7 @@ function SpotifyButton(user, open, onOpen, onClose) {
 
 export {
     LoginButton,
+    LogoutButton,
     SpotifyDropdown,
     SpotifyButton,
 }

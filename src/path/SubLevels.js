@@ -9,14 +9,15 @@ import { AiOutlineInfoCircle, AiFillInfoCircle } from 'react-icons/ai';
 function subLevelsDescription(item) {
   return (
     <Card.Body id="sub-level">
-      <span><strong className="score">Readability-Score : </strong>
+      <span>
+        <strong className="score">Readability-Score : </strong>
         {item.readabilityScore}
       </span>
-      <span lang="en">
+      <span>
         <strong className="score">EN : </strong>
         {item.textEn}
       </span>
-      <span lang="th">
+      <span>
         <strong className="score">TH : </strong>
         {item.textTh}
       </span>
@@ -38,10 +39,10 @@ function SubLevels() {
                   return (
                     <Card key={index} className="levelCard" id="sub-level">
                       <Card.Header id={item.id}> 
-                        <h2 className="font-bold">
+                        <h2 className="font-bold" lang="jp">
                           {item.title}
                         </h2>
-                        <span style={{fontSize: 20}}>
+                        <span style={{fontSize: 20}} lang="jp">
                           {item.subtitle}
                         </span>
                         {screenSize &&

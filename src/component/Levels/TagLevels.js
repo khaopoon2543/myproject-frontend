@@ -3,7 +3,9 @@ import "../Search/ResultSearch.css";
 export default function TagLevels({ levelScore }) {
 
     function checkLevel() {
-        if (0.5 <= levelScore && levelScore <= 1.49) {
+        if (6.5 <= levelScore || levelScore <= 0.4) {
+            return 'No level'
+        } else if (0.5 <= levelScore && levelScore <= 1.49) {
             return 'Very difficult'
         } else if (1.5 <= levelScore && levelScore <= 2.49) {
             return 'Difficult'

@@ -27,12 +27,17 @@ function Data(props) { // ARTISTS & SERIES
           <Row>
             <Col xl={4}>
               <div className="header-left">
-                <h1 className="font-bold" lang="th">
+                <h1 className="font-bold">
                     {src==='artists' ? <>ศิลปิน</> : <>ซีรีส์</>} &nbsp;
-                    {selectedAlpha && <strong style={{ color: "var(--pink)" }}>{selectedAlpha.toUpperCase()}</strong>}
-
+                    {selectedAlpha && 
+                      <strong style={{ color: "var(--pink)" }}>
+                        {selectedAlpha.toUpperCase()}
+                      </strong>
+                    }
                 </h1>
-                <div className="alphabet">
+                <h5 className="gray-text font-semi-bold">ค้นหาเพลงโดย {src==='artists' ? <>ชื่อศิลปิน</> : <>ชื่อซีรีส์</>} </h5> 
+
+                <div className="alphabet" lang="jp">
                   {loopAlphabet()} 
                 </div>
               </div>
@@ -40,7 +45,7 @@ function Data(props) { // ARTISTS & SERIES
 
             <Col xl={8}>
             {selectedAlpha !== null ?
-              <div style={{ marginTop: 10 }}>
+              <div className="result-right">
                 <ResultData src={src} alphabet={selectedAlpha} />   
               </div> 
             : <EmojiData />

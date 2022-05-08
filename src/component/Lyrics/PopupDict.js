@@ -94,13 +94,17 @@ export default function PopupDict({ dictList, isOpen }) {
           </div>
           <div className="scroll" id="no-scroll">  
             <Card id="last-dict">  
-              <Card.Body className="font-semi-bold">    
+              <Card.Body className="black-text">    
                 <span>
-                  ลองเลือกคำศัพท์ที่
+                  เลือกคำศัพท์ที่
                   <button className="pink-text font-semi-bold black-text">
                     &nbsp;ขีดเส้นใต้&nbsp;
                   </button>
-                  แล้วเรียนรู้ความหมายของคำศัพท์ได้เลย!
+                  แล้วเรียนรู้ความหมายของคำศัพท์กันได้เลย!
+                </span>
+                <hr/>
+                <span>
+                  ถ้าคำศัพท์ยังกดดูความหมายไม่ได้ อาจจะต้องรอโหลดข้อมูลสักครู่นะคับ
                 </span>
               </Card.Body> 
             </Card>

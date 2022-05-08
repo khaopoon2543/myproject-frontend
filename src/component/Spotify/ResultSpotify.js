@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
-import { Loading, NoResult } from "../Loading";
+import { Loading, NoResult, SpotifyErrorPopup } from "../Loading";
 import useIsMobile from '../useIsMobile';
 
 import { FaSpotify } from 'react-icons/fa';
+import { FiSearch } from 'react-icons/fi';
 import { BsPlayCircleFill } from 'react-icons/bs';
 
 export default function ResultSpotify(props) {
@@ -11,6 +12,7 @@ export default function ResultSpotify(props) {
             trackName, trackArtistId, trackArtist, trackNameReal } = props;
     const [resultSpotify, setResultSpotify] = useState([])
     const [loading, setLoading] = useState(false);
+    const [isTokenExpired, setIsTokenExpired] = useState(false);
     const screenSize = useIsMobile()
 
     function collectedTrack(trackList) {
@@ -24,16 +26,28 @@ export default function ResultSpotify(props) {
           trackArray.push(trackInfo)
       }
       setResultSpotify(trackArray)
+      return trackList
     }
     
     useEffect(() => {
+        if (!window.localStorage.getItem("accessToken")) return setIsTokenExpired(true)
         if (!window.localStorage.getItem("accessToken") && !spotifyApi) return
-          spotifyApi.setAccessToken(window.localStorage.getItem("accessToken"))
-          console.log("Access token @result-spotify")
+          
+        let isMounted = true;
+        setIsTokenExpired(false)
+
+        setLoading(true)
+        spotifyApi.setAccessToken(window.localStorage.getItem("accessToken"))
+        console.log("Access token @result-spotify")
+        getSearchTrack().then(() => {
+          if (isMounted) {
+            setLoading(false);
+          }
+        });
+        return () => { isMounted = false; };
 
           async function getSearchTrack() {
             try {
-              setLoading(true)
               const result = await spotifyApi.searchTracks('track:'+ trackName + ' artist:' + trackArtistId ,{ limit: 5 }) //query artist EN
               const trackList = result.body.tracks.items
               if (trackList.length > 0) {
@@ -49,15 +63,15 @@ export default function ResultSpotify(props) {
                   collectedTrack(trackList)
                 }
               }
-              setLoading(false)
             } catch (err) {
               console.log(err)
             }
           }
-          getSearchTrack()
     }, [trackArtist, trackName, trackArtistId]);
 
+    if (isTokenExpired) return <SpotifyErrorPopup show={show} handleClose={handleClose} isTokenExpired={true}/>
     return (
+      <div className="App">
       <Modal  
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
@@ -65,13 +79,13 @@ export default function ResultSpotify(props) {
         show={show} onHide={handleClose} 
         animation={false}
       > 
-        <Modal.Header closeButton>
+        <Modal.Header closeButton lang="jp">
           <Modal.Title className="d-flex align-items-center">
             <div className="banner">
-                <span id="spotify-icon-title"><FaSpotify />&nbsp;</span>
+                <FaSpotify id="title-popup"/>
                 <div className="d-block">
                   <strong>{trackNameReal}</strong><br/>
-                  <span className="gray-text"> {trackArtist}</span>
+                  <span className="black-text"> {trackArtist}</span>
                 </div>
             </div>
           </Modal.Title>
@@ -82,12 +96,13 @@ export default function ResultSpotify(props) {
           <Loading />
         ) : ( 
         <>
-        <div id="result-title">
-          <span lang="th">ผลการค้นหาจาก Spotify</span>
+        <div className="tag-result mb-2">
+          <span id="title">ผลการค้นหาจาก</span>
+          <span id="by">Spotify</span>
         </div>
         {resultSpotify.length > 0 ? 
           (
-            <Row >
+            <div lang="jp">
               {resultSpotify.slice(0, 5).map((track, i) => {
                 return (
                   <Col lg={12} key={i}>
@@ -102,7 +117,7 @@ export default function ResultSpotify(props) {
                               </Container>
                             </Col>    
                             <Col xs={3} md={2} className="box-icon" 
-                              style={(screenSize) ? { zoom: '80%' } : { zoom: '100%' }}>
+                              style={(screenSize) ? { zoom: '90%' } : { zoom: '100%' }}>
                               <a href={track.url} target="_blank" rel="noopener noreferrer"> 
                                 <BsPlayCircleFill className="icon"/>
                               </a>
@@ -113,7 +128,7 @@ export default function ResultSpotify(props) {
                   </Col>    
                 )
               })}
-            </Row> 
+            </div> 
         )
         : (<NoResult/>)
         }
@@ -121,5 +136,6 @@ export default function ResultSpotify(props) {
         }  
         </Modal.Body>
         </Modal>
+        </div>
     )
 };

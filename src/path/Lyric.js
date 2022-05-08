@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import "../component/Lyrics/Lyrics.css"
 import { Container, Row, Col } from 'react-bootstrap';
 import Tooltip from '../component/Lyrics/Tooltip';
@@ -13,6 +13,8 @@ import { BiFontSize } from 'react-icons/bi';
 import { FaSpotify } from 'react-icons/fa';
 import ResultSpotify from '../component/Spotify/ResultSpotify';
 import useIsMobileLG from '../component/useIsMobileLG';
+import { ArtistLink, SeriesLink } from "../component/linkPath";
+import { backendSrc } from "../component/backendSrc";
 
 function Lyric({user, spotifyApi}) {
   const [show, setShow] = useState(false);
@@ -21,6 +23,8 @@ function Lyric({user, spotifyApi}) {
 
   const [tokenized_list, setTokenizedList] = useState([])
   const [title, setTitle] = useState([])
+  const [titleInfo, setTitleInfo] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const { trackId, trackArtist } = useParams() 
   const [collectedWord, setCollectedWord] = useState([]); 
@@ -28,28 +32,67 @@ function Lyric({user, spotifyApi}) {
   const [fontSize, setFontSize] = useState('');
   const screenSize = useIsMobileLG();
 
-  const timeOut = setTimeout(() => {setLoading(false);}, 3000);
-
   useEffect(() => {
+    //let timeOut = setTimeout(() => setLoading(false), 3000);
+
     if ( trackId && trackArtist ) {
-      setLoading(true)
-      getLyric()
-      
-    async function getLyric() {
-      const lyric = 
-        await axios.get('https://sudachi-api.herokuapp.com/lyric/'+ trackArtist + '/' + trackId , { mode: 'cors', crossDomain: true })
+      let isMounted = true;
+      console.log('start fetching...');
+      setLoading(true);
+
+      axios.get('https://sudachi-api.herokuapp.com/lyric/'+ trackArtist + '/' + trackId , { mode: 'cors', crossDomain: true })
             .then((response) => {
               setTokenizedList(response.data.tokenized_list);
               setTitle(response.data.title);
             })
+            .then(() => {
+              if(isMounted){
+                console.log('finish fetching lyrics!');
+                setLoading(false)
+                setIsOpen(false) //open dict
+                //clearTimeout(timeOut);
+              } 
+            })
             .catch(error => { console.log(error) });
 
-      console.log('finish fetching lyrics!');
-      clearTimeout(timeOut)
-      return lyric
-    }}
+      axios.get(`${backendSrc}/result/info`, { params: {  songId : trackId.replace(/-/g, ' '),
+                                                          artistId : trackArtist.replace(/-/g, ' ')
+                                                        } })
+            .then((response) => {
+              if(isMounted){
+                setTitleInfo(response.data && response.data[0]);
+              }
+            }) 
 
+      return () => { isMounted = false; };
+    }
   }, [trackId, trackArtist]);
+
+  function isSingers(titleInfo) {
+    let text = []
+      titleInfo.singers.map((singer, i) => {
+        text.push(
+          <Link to={ArtistLink(singer.id)} key={i}>
+              <button id="singer">{singer.name}</button>
+          </Link>
+        );
+      })
+      return text
+  }
+  function isSeries(titleInfo) {
+      return (
+        <>
+          <span id="head">
+            {titleInfo.series_info.type} 
+            <span id="pink">{titleInfo.series.theme}</span>
+          </span>
+          <Link to={SeriesLink(titleInfo.series.id)}>
+              <button id="artist">{titleInfo.series_info.name}</button>
+          </Link>
+     
+        </>
+      )
+  }
 
   function checkFeat(titleName) { //選んでくれてありがとう。 feat. 榎本虎太朗(花江夏樹)・瀬戸口雛(麻倉もも)
     const re = new RegExp('^(.+).(feat..+)', 'i'), matches = titleName.match(re);
@@ -63,36 +106,53 @@ function Lyric({user, spotifyApi}) {
   const resultTitle = title.name && checkFeat(title.name)
 
   function Title() {
-    return <Container className="titleLyric" fluid>
-           <Container fluid="md">
-            <Container className="text-left">
+    return (
+      <Container className="titleLyric" fluid>
+        <Container fluid="md">
+          <Container className="text-left">
             {resultTitle instanceof Array ? //if return titleList (is feat. in title)
               <>
-              <h1 className="font-semi-bold">{resultTitle[1]}</h1>
-              <h6 className="font-light">{resultTitle[2]}</h6>
+                <h1 className="font-semi-bold">{resultTitle[1]}</h1>
+                <h5 className="font-semi-light">{resultTitle[2]}</h5>
               </>
             : 
-              <h1 className="font-semi-bold">{title.name}</h1>
+                <h1 className="font-semi-bold">{title.name}</h1>
             }
-            <h6 className="font-light">{title.artist}</h6>
-            </Container>
+            <div className="info" style={{marginTop: 20}}>
+              <span id="head" lang="th">ศิลปิน</span>
+              <Link to={ArtistLink(trackArtist)}>
+                <button id="artist">{title.artist}</button>
+              </Link>
+              {titleInfo.singers?.length>0 &&  
+                isSingers(titleInfo)
+              }
+            </div> 
 
-            <Container className="items-center" id="readability" style={{marginTop:20}}>
-              <span>Text Readability Level :&nbsp;&nbsp;</span>
+            {titleInfo.series_info && 
+              <div className="info">
+                { isSeries(titleInfo) }
+              </div>
+            }
+
+            <div className="info" id="readability">
+              <span lang="th" id="head">
+                ความยากง่าย 
+                <span id="pink">{title.readability_score}</span>
+              </span>
               <div className="tagLevel" id="title-lyric">
                 <TagLevels levelScore={title.readability_score}/>
               </div>
-            </Container>
-            <Container className="items-center" id="readability">
-              <span>Readability Score :&nbsp;&nbsp;</span>
-              <span>{title.readability_score}</span>      
-            </Container>
-            {resultTitle instanceof Array ?
-              buttonSearchSpotify(resultTitle[1])
-              :buttonSearchSpotify(title.name)
-            }
+            </div>
+            
           </Container>
-          </Container>
+            
+          {resultTitle instanceof Array ?
+                  buttonSearchSpotify(resultTitle[1])
+                  :buttonSearchSpotify(title.name)
+          }
+      </Container>
+    </Container>
+    )
   };
 
   function mixPrefix(tokenized_list, i) {
@@ -119,7 +179,7 @@ function Lyric({user, spotifyApi}) {
   }
   function buttonChangeSize() {
     return (
-      <div className="filters">
+      <div className="filters" id="size" lang="jp">
         <span id='icon'><BiFontSize/></span>
         <button onClick={() => setFontSize('font-small')} id={isFocus('font-small')} 
           className="btn-font-small">
@@ -141,7 +201,7 @@ function Lyric({user, spotifyApi}) {
     if (user) { return (
       <>
       <Container id="spotify-btn">
-        <button onClick={handleShow} id="spotify-search">
+        <button onClick={handleShow} id="spotify-search" lang="th">
           <FaSpotify className="spotify-icon"/>
           Search on Spotify 
         </button> 
@@ -149,7 +209,7 @@ function Lyric({user, spotifyApi}) {
       {show &&
       <ResultSpotify spotifyApi={spotifyApi} show={show} handleClose={handleClose}
         trackName={checkSpecialChars(searchTitle)}
-        trackNameReal={title.name}
+        trackNameReal={searchTitle}
         trackArtist={title.artist}
         trackArtistId={trackArtist.replace(/-/," ")}
       />
@@ -158,13 +218,10 @@ function Lyric({user, spotifyApi}) {
     )}
   }
   
+  if (loading) return <LoadingIMG />
   return (
-    <div className="App">
-      {loading ? ( 
-            <LoadingIMG />
-      ) : (
-        <>
-        <Title />
+    <div lang="jp">
+      <Title />
         <Container style={{ marginBottom: 50 }} fluid="sm"> {/* marginLeft: screenSize ? 10 : 50 */}
           <Row>  
             {screenSize===false &&
@@ -181,9 +238,9 @@ function Lyric({user, spotifyApi}) {
                 }
                 <div className="btn-on-lyric">
                   {buttonChangeSize()}
-                  <hr/>
                 </div>
                 <br/>
+
                 <div id="lyric" className={fontSize}>
                   {(tokenized_list && tokenized_list.length>0) &&
                     tokenized_list.map((word, i) => {
@@ -219,11 +276,8 @@ function Lyric({user, spotifyApi}) {
               </Col>              
           </Row>
         </Container>
-        </>
-      )}     
     </div>
-    );
-    
+    ); 
 }
 
 export default Lyric;

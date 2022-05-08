@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ResultSearch from "./ResultSearch";
 import ResultSearchAll from "./ResultSearchAll";
 import ResultData from './ResultData';
-import { PLSMoreThreeChars, NoResult } from '../Loading';
+import { NoResult } from '../Loading';
 
 function ResultAll(props) {
     const {typing, selectedFilter, level} = props;

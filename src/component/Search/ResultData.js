@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Col } from 'react-bootstrap';
 import "./ResultSearch.css";
@@ -18,26 +17,29 @@ export default function ResultData(props) {
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(!searchAll ? 30 : 8);
     function loadMore() { setVisible(visible + 30) }
-    const navigate = useNavigate();
     //console.log({searchTerm, alphabet, searchAll})
 
     useEffect(() => {
+        let isMounted = true;
         setLoading(true);
         axios.get(`${backendSrc}/${src}` , { params: { alphabet : alphabet, searchTerm : searchTerm, spotify : spotify }
           })
           .then((response) => {
-            setDataList(response.data);
-            setLoading(false);
+            if(isMounted){
+              setDataList(response.data);
+              setLoading(false);
+            } 
           })
           .catch(error => {
             console.log(error.response)
           });
+          return () => { isMounted = false; };
     }, [alphabet, searchTerm]);
 
     function showList() {
       if (src==='artists') {
-        return isArtist(allDataList, visible, navigate)
-      } return isSeries(allDataList, visible, navigate)
+        return isArtist(allDataList, visible)
+      } return isSeries(allDataList, visible)
     }
 
     function showLoading() {
@@ -55,16 +57,22 @@ export default function ResultData(props) {
           ( 
             showLoading()
           ) : 
-          ( <>
+          ( 
+          <>
             <Col md={12}>
               {(!alphabet && allDataList.length > 0 && !props.spotify) &&
                 <div className="bg-search-all">
-                  <h3 className="search-all" id="is-result">{src.toUpperCase()}</h3>
+                  <h3 className="search-all" id="is-result">
+                    { src==="artists" ? 'ศิลปิน': 'ซีรีส์' }
+                  </h3>
                 </div>
               }
-              {allDataList.length > 0 && (
-                showList()
-              )}
+
+              <div lang="jp">
+                {allDataList.length > 0 && (
+                  showList()
+                )}
+              </div>
 
               {(alphabet && allDataList.length>10) ? //loading
                 (<> 
@@ -77,7 +85,8 @@ export default function ResultData(props) {
                 : null
               }
             </Col>
-          </>)
+          </>
+          )
         }
       </React.Fragment>  
     ) 

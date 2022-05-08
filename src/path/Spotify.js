@@ -7,14 +7,14 @@ import { FaSpotify, FaHeadphonesAlt } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { BsPatchCheck } from 'react-icons/bs';
 import { MdQueueMusic } from 'react-icons/md';
+import { VscCircleFilled } from 'react-icons/vsc';
 
 const PINK = {
     color: "var(--pink)"
 }
-const KASHIFY = <strong> Kashify </strong>
-const KASHIFY_PINK = <strong style={PINK}> Kashify </strong>
-const KASHIFY_InPINK = <strong style={PINK}> & Kashify </strong>
-const SPOTIFY = <span> <FaSpotify /> Spotify </span>
+const KASHIFY_PINK = <strong style={PINK}> & Kashify </strong>
+const KASHIFY = <span className="font-semi-bold"> Kashify </span>
+const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify </span>
 
 
 function popupSuccess(show, handleClose) {
@@ -28,19 +28,19 @@ function popupSuccess(show, handleClose) {
             id="popup-success"
         > 
             <Modal.Header>
-                <Modal.Title className="font-bold" lang="th">
+                <Modal.Title className="font-bold">
                     <BsPatchCheck id="icon-success" />
                     <br/>
                     เข้าสู่ระบบผ่าน {SPOTIFY} สำเร็จ!
                 </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+                <br/>
                 <div id="success-btn">
-                    <button lang='th' onClick={handleClose}>
+                    <button onClick={handleClose}>
                         เริ่มใช้งาน Kashify
                     </button>
                 </div>
-            </Modal.Body>
+                <br/>
+            </Modal.Header>
         </Modal>
     )
 }
@@ -57,78 +57,77 @@ function Spotify({code}) {
   return (
     <Container className="pages">
       <Row>
-        <Col xl={4}>
-          <div className="header-left" lang="th">
+        <Col xl={5} xxl={4}>
+          <div className="header-left">
             <h1 className="font-bold">
-                Spotify {KASHIFY_InPINK}
+                Spotify {KASHIFY_PINK}
             </h1>
             <div className="description">
+                <h5 className="underline">
+                    เข้าสู่ระบบแล้วทำอะไรได้บ้าง ?
+                </h5>
                 <p>
-                    เมื่อเข้าสู่ระบบผ่าน <FaSpotify /> Spotify แล้ว ก็จะสามารถใช้งานส่วนต่าง ๆ เหล่านี้ได้เลย!
+                    เมื่อเข้าสู่ระบบผ่าน {SPOTIFY} แล้ว ก็จะสามารถใช้งานส่วนต่าง ๆ ทั้งหมดเหล่านี้จาก {SPOTIFY} ได้เลย!
                 </p>
             </div>
           </div>
         </Col>
 
-        <Col xl={8} className="text-left" lang="th">
-          <div className="function-list">
-            <h2 className="font-bold">
-                <FaHeadphonesAlt id="icon-title"/>
-                <span> Currently Playing Track</span>
-            </h2>
-            <div className="spotify-description" id="current">
-                <Card>
-                    <span> 
-                        ค้นหาเพลงใน {KASHIFY_PINK} ผ่านเพลงที่กำลังเปิดอยู่บน {SPOTIFY}
-                        โดยกดรูปไอคอน <FaHeadphonesAlt id="icon-headphone"/> ที่อยู่บนแถบเมนูด้านบนได้เลย!
-                    </span>
-                </Card>
-            </div>
-          </div>
+        <Col xl={7} xxl={8}>
+          <div className="text-left spotify">
 
-          <div className="function-list">
-            <h2 className="font-bold">
-                <FiSearch id="icon-title"/>
-                <span> Search Tracks </span>
-            </h2>
-            <div className="spotify-description" id="current">
+            <div className="description">
+                <h5 className="underline">
+                    <FaHeadphonesAlt id="icon-title"/>
+                    <span> Currently Playing Track</span>
+                </h5>
                 <Card>
-                    <span> 
-                        เมื่อเปิดเนื้อเพลงใน {KASHIFY_PINK} 
-                        แล้วถ้าอยากเปิดเพลงฟังไปด้วยก็สามารถค้นหาผ่าน {SPOTIFY} และเปิดเพลงฟังกันได้เลย!
-                    </span>
+                    <p> 
+                    ค้นหาเพลงใน {KASHIFY} ผ่านเพลงที่กำลังเปิดอยู่บน {SPOTIFY}
+                    โดยกดรูปไอคอน <FaHeadphonesAlt id="icon-headphone"/> ที่อยู่บนแถบเมนูด้านบนได้เลย!
+                    </p>
                 </Card>
             </div>
-          </div>
 
-          <div className="function-list">
-            <h2 className="font-bold">
-                <MdQueueMusic id="icon-title"/>
-                <span> Japanese Playlists</span>
-            </h2>
-            <div className="spotify-description" id="current">
-                <Card>
-                    <span> 
-                        ถ้าไม่รู้จะฟังเพลงอะไรดี ลองเลือกเพลงใน Playlists เพลงญี่ปุ่นใน {SPOTIFY} ข้างล่างนี้ได้เลย!
-                    </span>
+            <div className="description">
+                <h5 className="underline">
+                    <FiSearch id="icon-title"/>
+                    <span> Search Tracks </span>
+                </h5>
+                <Card> 
+                    <p>
+                    เมื่อเปิดเนื้อเพลงใน {KASHIFY} 
+                    แล้วถ้าอยากเปิดเพลงฟังไปด้วยก็สามารถค้นหาผ่าน {SPOTIFY} และเปิดเพลงฟังกันได้เลย!
+                    </p>
                 </Card>
             </div>
-            <div className="spotify-description" id="playlist">
-                {PlaylistItems.map((item, index) => {
-                    return (
-                    <Link to={item.url} key={index}>
-                        <Card>
-                            <span> 
-                                <FaSpotify id="icon-spotify"/> 
-                                {item.title}
-                            </span>
-                        </Card>
-                    </Link>
-                    )}
-                )}
+
+            <div className="description">
+                <h5 className="underline">
+                    <MdQueueMusic id="icon-title"/>
+                    <span> Japanese Playlists</span>
+                </h5>
+                <Card>
+                    <p> 
+                    ถ้าไม่รู้จะฟังเพลงอะไรดี เราเตรียมมาให้แล้ว! ลองเลือกเพลงภาษาญี่ปุ่นใน Playlists ของ {SPOTIFY} ข้างล่างนี้ได้เลย!
+                    </p>
+                </Card>
+                <Card>
+                    <p className="radius" id="playlist">
+                        {PlaylistItems.map((item, index) => {
+                            return (
+                            <Link to={item.url} key={index}>
+                                    <span className="font-semi-bold pink-link"> 
+                                        <VscCircleFilled id="icon-spotify"/> 
+                                        {item.title}
+                                    </span>
+                            </Link>
+                            )}
+                        )}
+                    </p>
+                </Card>
             </div>
-          </div>
-            
+          </div>   
         </Col>
       </Row>
       {show && popupSuccess(show, handleClose)}

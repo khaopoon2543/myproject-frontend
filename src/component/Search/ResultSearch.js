@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import { Card } from 'react-bootstrap';
 import "./ResultSearch.css";
@@ -8,6 +7,7 @@ import TagLevels from "../Levels/TagLevels";
 import { Loading, LoadingIMGLevels, NoResult } from "../Loading";
 import { backendSrc } from "../backendSrc";
 import { reallyShowList, isOnlyNameSeries, resultDetails  } from "./ResultSearchFunction"
+import { LyricLink } from "../linkPath"
 
 export default function ResultSearch(props) {
   
@@ -29,8 +29,9 @@ export default function ResultSearch(props) {
 
   useEffect(() => {
     if ( filter && searchTerm ) {  
+      let isMounted = true;
       setLoading(true);
-      axios.get(`${backendSrc}/result`, { mode: 'cors', crossDomain: true,
+      axios.get(`${backendSrc}/result`, {
                 params: { searchTerm : searchTerm,
                           searchArtist : searchArtist,             
                           filter : filter,             
@@ -38,36 +39,54 @@ export default function ResultSearch(props) {
                         }
                 })
                 .then((response) => {
-                  setSongsList(response.data);
-                  //console.log(response.data)
-                  setLoading(false);
+                  if(isMounted){
+                    setSongsList(response.data);
+                    setLoading(false);
+                  }
                 })
                 .catch(error => {
                   console.log(error.response)
                 });  
+                return () => { isMounted = false; };
     } 
   }, [ filter, searchTerm ]);
 
   useEffect(() => {
     if ( filter==='show' && level ) {
+      let isMounted = true;
       setLoading(true);
       axios.get(`${backendSrc}/result` , { mode: 'cors', crossDomain: true,
                   params: { filter : filter,             
                             level : level }
                 })
                 .then((response) => {
-                  setSongsList(response.data);
-                  setLoading(false);
+                  if(isMounted){
+                    setSongsList(response.data);
+                    setLoading(false);
+                  }
                 })
                 .catch(error => {
                   console.log(error.response)
                 });
+                return () => { isMounted = false; };
     }
   }, [ filter, level ]);
   
 
   const RESULTS = reallyShowList(songs_list, level)
-          
+  
+  function checkFilter(filter) {
+    if (filter==='song') {
+      return 'เพลง'
+    } else if (filter==='artist') {
+      return 'เพลง'
+    } else if (filter==='series') {
+      return 'เพลง'
+    } else if (filter==='lyric') {
+      return 'เนื้อเพลง'
+    } 
+  }
+
   return (
     <React.Fragment>
     {loading ? ( 
@@ -81,52 +100,54 @@ export default function ResultSearch(props) {
         </>
       ) : ( 
       <>
-        {(searchTerm!=="" && filter && filter!=='artist' && filter!=='series' && filter!=='spotify' && RESULTS.length > 0) &&
+        {(searchTerm!=="" && !subArtists && !subSeries && filter && filter!=='spotify' && RESULTS.length > 0) &&
           <div className="bg-search-all">
-            <h3 className="search-all" id="is-result">{filter.toUpperCase()}</h3>
+            <h3 className="search-all" id="is-result">
+              {checkFilter(filter)}
+            </h3>
           </div>
         }
 
+      <div lang="jp">
         {RESULTS?.length > 0 ? (
           RESULTS
           .slice(0, visible) //selected elements in an array
           .map((track, index) => {
-            return (
-            <Link key={index} to={"/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")}>
-              <Card className="lyric flex-md-row">
-                
+            return ( //link to lyric page
+              <Card className="lyric flex-md-row" key={index}
+                //onClick={event => { navigate(LyricLink(track)); event.preventDefault(); }}
+              >
                 <div className="tagLevel">
                   <TagLevels levelScore={track.readability_score}/>
                 </div>
                 <Card.Body className="d-block">
-                  {resultDetails(searchTerm, track, 'title-subtitle-song', navigate)}
+                  {resultDetails(searchTerm, track, 'title-subtitle-song')}
 
                   {(!subArtists || (track.singers?.length>0 && subArtists!==track.artist)) &&
-                    <><br/>
-                    {resultDetails(searchTerm, track, 'title-subtitle-artist', navigate)}
+                    <>
+                    {resultDetails(searchTerm, track, 'title-subtitle-artist')}
                     </>
                   }
 
-                  {isOnlyNameSeries(track, navigate, subSeries)}
+                  {isOnlyNameSeries(track, subSeries)}
 
                   {filter==='lyric' &&
                     <>
-                    {resultDetails(searchTerm, track, 'lyric', navigate)}
+                    {resultDetails(searchTerm, track, 'lyric')}
                     </>
                   }
-                </Card.Body>
-                
+                </Card.Body>  
               </Card>
-            </Link>
             )
           })
         ) : (
-          <>
+          <div lang="th">
           {(searchAll || searchTerm == "") ? null : 
             <NoResult searchTerm={searchTerm} />
           } 
-          </>
+          </div>
         )}
+      </div>
 
         {(RESULTS?.length > 10)?
           (<>

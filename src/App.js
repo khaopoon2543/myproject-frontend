@@ -81,11 +81,11 @@ function App(){
           <Route path="*" element={<NoMatch />} />
           <Route path="/" element={ <Home/> } />
           <Route path="/search" element={ <Search/> } />
-          <Route path="/lyric/:trackArtist/:trackId" element={ <Lyric user={isUser} spotifyApi={spotifyApi}/> } />
-          <Route path="/levels" element={ <Levels/> } />
-          <Route path="/levels/:subLevels" element={ <SubLevels/> } />
           <Route path="/artists" element={ <Data src="artists" /> } />
           <Route path="/artists/:subArtists" element={ <SubData/> } />
+          <Route path="/artists/:trackArtist/:trackId" element={ <Lyric user={isUser} spotifyApi={spotifyApi}/> } />
+          <Route path="/levels" element={ <Levels/> } />
+          <Route path="/levels/:subLevels" element={ <SubLevels/> } />
           <Route path="/series" element={ <Data src="series"/> } />
           <Route path="/series/:subSeries" element={ <SubData/> } />
           <Route path="/playlist/:codePlaylist" element={ <Playlist spotifyApi={spotifyApi}/> } />

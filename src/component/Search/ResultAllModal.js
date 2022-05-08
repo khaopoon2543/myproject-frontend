@@ -9,15 +9,7 @@ import { SpotifyLoadingPopup } from "../Loading";
 
 const SPOTIFY_ICON = { marginBottom: 2, fontSize: 20, }
 const spotifyIcon = <FaSpotify style={SPOTIFY_ICON}/>
-const spotifyButton =
-    <div id="spotify-btn" className="font-small">
-      <a href={"https://open.spotify.com/"} target="_blank" rel="noopener nore">
-        <button id="spotify-open">
-          <FaSpotify className="spotify-icon"/>
-          Open Spotify
-        </button>
-      </a>
-    </div>
+
 
 export default function ResultAllModal(props) {
     const { show, handleClose, dataTrack, loading } = props;
@@ -28,7 +20,7 @@ export default function ResultAllModal(props) {
 
     function searchButton() { 
       return (
-          <div id="kashify-btn">
+          <div id="kashify-btn" lang="th">
             <button onClick={() => setSelectedSearch(true)}>
               <FiSearch className="kashify-icon"/> Kashify
             </button>
@@ -52,67 +44,37 @@ export default function ResultAllModal(props) {
         <Modal.Header closeButton id="result-all">
           <Modal.Title className="d-flex align-items-center">
             {loading ?  
-              <SpotifyLoadingPopup/>:
+              <SpotifyLoadingPopup/>
+              :
               <>
-              {(typing&&searchArtist) ?
+              {(typing&&searchArtist) &&
                 <div className="banner">
-                  {isImage()}
-                  <div className="d-block">
-                    <strong>{typing}</strong><br/>
-                    <span className="black-text"> {searchArtist}</span><br/>
-                    {!props.openResult && searchButton()}
-                  </div>
-                </div>
-                : 
-                <div lang="th" id="error-head">
-                  <span>
-                    ขออภัย พบข้อผิดพลาด 🙇‍♀️
-                  </span>
+                    {isImage()}
+                    <div className="d-block" lang="jp">
+                      <strong>{typing}</strong><br/>
+                      <span className="black-text"> {searchArtist}</span><br/>
+                      {!props.openResult && searchButton()}
+                    </div>
                 </div>
               }
-              </> 
+              </>
             }
-    
           </Modal.Title>
         </Modal.Header>
 
-        {(!loading) &&
-        <>
-          {(typing&&searchArtist) ?
-            <>
+        {(!loading&&typing&&searchArtist) &&
+          <>
             {(selectedSearch || props.openResult) &&
               <Modal.Body id="result">
-                <div id="result-title">
-                  <span lang="th">ผลการค้นหาจาก Kashify</span>
+                <div className="tag-result mb-2">
+                  <span id="title">ผลการค้นหาจาก</span>
+                  <span id="by">Kashify</span>
                 </div>
                 <ResultData src="artists" searchTerm={searchArtist.toLowerCase()} spotify={true} />
                 <ResultSearch searchTerm={typing} filter={'spotify'} searchArtist={searchArtist} />
               </Modal.Body>
             }
-            </>
-            :
-            <Modal.Body lang="th" id="error-body">
-              <ListGroup variant="flush">
-                <ListGroup.Item className="mb-3">
-                  <span>
-                    ตอนนี้ยังไม่ได้เปิดเพลงผ่าน
-                    <strong> {spotifyIcon} Spotify </strong> นะคับ
-                  </span>
-                  <br/>
-                  <span className="open-spotify">
-                    กรุณาเปิดเพลงฟังก่อนนะคับ กดเปิดได้ทางนี้เลย! &nbsp; {spotifyButton}
-                  </span> 
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <span>หรือระบบอาจเกิดข้อผิดพลาดขึ้น กรุณาโหลดหน้าเว็บไซต์ใหม่หรือเข้าสู่ระบบผ่าน 
-                        <strong> {spotifyIcon} Spotify </strong> 
-                        ใหม่อีกครั้งด้วยนะคับ
-                  </span>
-                </ListGroup.Item>
-              </ListGroup>
-            </Modal.Body>
-          }
-        </>
+          </>
         }        
         </Modal>
     );

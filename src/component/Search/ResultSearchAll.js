@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import { Card } from 'react-bootstrap';
 import "./ResultSearch.css";
@@ -10,17 +9,18 @@ import { backendSrc } from "../backendSrc";
 
 import { reallyShowList, isOnlyNameSeries, resultDetails  } from "./ResultSearchFunction"
 import { isArtist, isSeries } from "./ResultDataFunction"
+import { LyricLink } from "../linkPath"
 
 export default function ResultSearchAll(props) {
   
   const searchTerm = props.searchTerm && props.searchTerm.replace(/\s\s+/g, ' ');
   const level = props.level; //level from SubLevel.js
-  const navigate = useNavigate();
 
   const [songs_list, setSongsList] = useState([])
   const [lyric_list, setLyricList] = useState([])
   const [artists_list, setArtistsList] = useState([])
   const [series_list, setSeriesList] = useState([])
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -53,45 +53,39 @@ export default function ResultSearchAll(props) {
   }
 
   useEffect(() => {
-    if ( searchTerm ) {  
-      setLoading(true);
-      getData()
+    if ( searchTerm ) { 
+        let isMounted = true; 
+        setLoading(true);
+        getData().then(() => {
+          if (isMounted) {
+            setLoading(false);
+          }
+        });
+      
+      return () => { isMounted = false; };
+    }
     async function getData(){
       const all = 
         await axios.get(`${backendSrc}/result/song`, { params: { searchTerm : searchTerm } })
                 .then((response) => {
                   setSongsList(response.data);
                 })
-                .catch(error => {
-                  console.log(error.response)
-                });  
-
-        axios.get(`${backendSrc}/result/lyric`, { params: { searchTerm : searchTerm } })
+      const allLyric = 
+        await axios.get(`${backendSrc}/result/lyric`, { params: { searchTerm : searchTerm } })
                 .then((response) => {
                   setLyricList(response.data);
                 })
-                .catch(error => {
-                  console.log(error.response)
-                });  
-
-        axios.get(`${backendSrc}/artists`, { params: { searchTerm : searchTerm } })
+      const allArtists =                 
+        await axios.get(`${backendSrc}/artists`, { params: { searchTerm : searchTerm } })
                 .then((response) => {
                   setArtistsList(response.data);
                 })
-                .catch(error => {
-                  console.log(error.response)
-                });
-
-        axios.get(`${backendSrc}/series`, { params: { searchTerm : searchTerm } })
+      const allSeries = 
+        await axios.get(`${backendSrc}/series`, { params: { searchTerm : searchTerm } })
                 .then((response) => {
                   setSeriesList(response.data);
                 })
-                .catch(error => {
-                  console.log(error.response)
-                });
-      setLoading(false);
-      return all
-    }
+      return {all,allLyric,allArtists,allSeries}
   
   } 
   }, [ searchTerm ]);
@@ -99,13 +93,13 @@ export default function ResultSearchAll(props) {
 
   const RESULTS_SONG = songs_list.length > 0 && reallyShowList(songs_list, level)
   const RESULTS_LYRIC = lyric_list.length > 0 &&  reallyShowList(lyric_list, level)
-  const RESULTS_ARTIST = artists_list.length > 0 && isArtist(artists_list, visible_artist, navigate)
-  const RESULTS_SERIES = series_list.length > 0 && isSeries(series_list, visible_series, navigate)
+  const RESULTS_ARTIST = artists_list.length > 0 && isArtist(artists_list, visible_artist)
+  const RESULTS_SERIES = series_list.length > 0 && isSeries(series_list, visible_series)
 
   const ARTISTS = 
     <>
       <div className="bg-search-all">
-        <h3 className="search-all" id="is-result">ARTISTS</h3>
+        <h3 className="search-all" id="is-result">ศิลปิน</h3>
       </div>
       {RESULTS_ARTIST}
       {LOAD_MORE('artist', RESULTS_ARTIST, visible_artist)}
@@ -114,7 +108,7 @@ export default function ResultSearchAll(props) {
   const SERIES = 
     <>
       <div className="bg-search-all">
-        <h3 className="search-all" id="is-result">SERIES</h3>
+        <h3 className="search-all" id="is-result">ซีรีส์</h3>
       </div>
       {RESULTS_SERIES}
       {LOAD_MORE('series', RESULTS_SERIES, visible_series)}
@@ -125,40 +119,38 @@ export default function ResultSearchAll(props) {
     <>
         <div className="bg-search-all">
           <h3 className="search-all" id="is-result">
-            {filter==='song' ? 'SONGS' : 'LYRIC'}
+            {filter==='song' ? 'เพลง' : 'เนื้อเพลง'}
           </h3>
         </div>
+
+      <div lang="jp">
         {result?.length > 0 && (
           result
           .slice(0, visible) //selected elements in an array
           .map((track, index) => {
-            return (
-            <Link key={index} to={"/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")}>
-              <Card className="lyric flex-md-row">
+            return ( //link to lyric page
+              <Card className="lyric flex-md-row" key={index}
+                //onClick={event => { navigate(LyricLink(track)); event.preventDefault(); }}
+              >
                 <div className="tagLevel">
                   <TagLevels levelScore={track.readability_score}/>
                 </div>
                 <Card.Body className="d-block">
-                  {resultDetails(searchTerm, track, 'title-subtitle-song', navigate)}
-
-                    <><br/>
-                    {resultDetails(searchTerm, track, 'title-subtitle-artist', navigate)}
-                    </>
-                    
-                  {isOnlyNameSeries(track, navigate)}
-
+                  {resultDetails(searchTerm, track, 'title-subtitle-song')}
+                  {resultDetails(searchTerm, track, 'title-subtitle-artist')}
+                  {isOnlyNameSeries(track)}
                   {filter==='lyric' &&
                     <>
-                    {resultDetails(searchTerm, track, 'lyric', navigate)}
+                      {resultDetails(searchTerm, track, 'lyric')}
                     </>
                   }
                 </Card.Body> 
               </Card>
-            </Link>
             )
           })
         )}
-        {LOAD_MORE('song', result, visible)}
+      </div>
+        {LOAD_MORE(filter, result, visible)}
     </>
   )}
           

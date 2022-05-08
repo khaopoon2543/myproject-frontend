@@ -12,7 +12,7 @@ const PINK = {
   color: "var(--pink)"
 }
 const searchDescription = 
-  <div className="description" lang="th">
+  <div className="description">
     <h5><strong>ค้นหา เลือกเพลง แล้วไปเรียนรู้คำศัพท์กัน!</strong></h5>
     <p>
       ถ้าใครมีบัญชี <FaSpotify /> Spotify ก็สามารถ Login ผ่าน Spotify เพื่อเพิ่มความสะดวกในการค้นหาและใช้งาน 
@@ -47,7 +47,7 @@ function Result() {
             <h1 className="font-bold">
               Result
               <br/>
-              <span lang="th" className="font-semi-light">
+              <span className="font-semi-light">
                 <FiSearch /> ผลการค้นหา
               </span>
               <h1>{key}</h1>

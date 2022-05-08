@@ -1,13 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { Loading, SpotifyTokenExpired } from "../component/Loading";
+import { Loading, NoLoginSpotify } from "../component/Loading";
 import useIsMobile from '../component/useIsMobile';
 import ResultAllModal from '../component/Search/ResultAllModal';
 
 import { FiSearch } from 'react-icons/fi';
 import { BsPlayCircleFill } from 'react-icons/bs';
 import { FaSpotify } from 'react-icons/fa';
+
+const KASHIFY = <span className="font-semi-bold"> Kashify </span>
+const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify </span>
+
+const btnDetail = 
+  <div className="description" id="btn-detail"> 
+    <h5 className="underline"> ปุ่มกดข้าง ๆ คืออะไร ?</h5>
+    <p>
+      <div className="d-flex align-items-center" style={{marginBottom: '10px'}}>
+        <FaSpotify style={{fontSize: '40px'}}/> &nbsp;&nbsp;
+        เปิดเพลงฟังบน &nbsp; {SPOTIFY}
+      </div>
+      <div className="d-flex align-items-center">
+        <button className="icon" id="search-kashify"><FiSearch /></button> &nbsp;&nbsp;
+        ค้นหาเพลงใน &nbsp; {KASHIFY}
+      </div>
+    </p>
+  </div>
 
 function Playlist ({spotifyApi}){
 
@@ -26,12 +44,26 @@ function Playlist ({spotifyApi}){
     useEffect(() => {
       if (!window.localStorage.getItem("accessToken")) return setIsTokenExpired(true)
       if (!window.localStorage.getItem("accessToken") && !spotifyApi && codePlaylist) return
+        let isMounted = true;
+        setLoading(true)
         spotifyApi.setAccessToken(window.localStorage.getItem("accessToken"))
         console.log("Access token @result-spotify")
+        getPlaylist().then((dict) => {
+          if (isMounted && dict) {
+            setPlaylistsInfo({name:dict.result.body.name, 
+                description: dict.result.body.description,
+                url: dict.result.body.external_urls.spotify
+              })
+            setPlaylists(dict.all_tracks)
+            setLoading(false);
+          } else {
+            setIsTokenExpired(true)
+          }
+        });
+        return () => { isMounted = false; };
 
         async function getPlaylist() {
           try {
-            setLoading(true)
             const result = await spotifyApi.getPlaylist(codePlaylist)
             const track_item = result.body.tracks.items
             const all_tracks = [];
@@ -43,50 +75,61 @@ function Playlist ({spotifyApi}){
               track["url"] = result.body.tracks.items[index].track.external_urls.spotify;
               all_tracks.push(track);
             })
-            //console.log(result.body)
-            setPlaylistsInfo({name:result.body.name, 
-                              description: result.body.description,
-                              url: result.body.external_urls.spotify
-                            })
-            setPlaylists(all_tracks)
-            setLoading(false)
+            return {result, all_tracks}
           } catch (err) {
             console.log(err)
           }
         }
-        getPlaylist()
+
     }, [ codePlaylist ]);
 
+   const buttonOpenSpotify = 
+      <div id="spotify-btn">
+        <button  id="spotify-search" lang="th">
+          <FaSpotify className="spotify-icon"/>
+          Open Playlist on Spotify 
+        </button> 
+      </div>
+
+  if (isTokenExpired) return <NoLoginSpotify />
   return (
     <Container className="pages">
       <Row>
-
-        <Col xl={4} >
+        <Col xl={5} xxl={4}>
           <div className="header-left">
-            <h1 className="font-bold">SPOTIFY PLAYLIST</h1>
-            <a href={playlistsInfo.url} target="_blank" rel="noopener noreferrer">
-              <h2 className="font-bold playlist-name"><FaSpotify/> {playlistsInfo.name}</h2>
-            </a>
-            <span className="gray-text">{playlistsInfo.description}</span>
+            <div className="tag-series">
+              <Link to="/spotify">
+                <span id="button-back">  <FaSpotify /> Spotify Playlists </span>
+              </Link>   
+            </div>
+
+            <div lang="jp">
+              <h3 className="title-series"> 
+                {playlistsInfo.name} 
+                <a href={playlistsInfo.url} target="_blank" rel="noopener noreferrer">
+                  {buttonOpenSpotify}
+                </a>
+              </h3>
+              <span className="sub-title-series">{playlistsInfo.description}</span>
+            </div>
           </div>
-          <br/><br/>
+          
         </Col>
 
-        <Col xl={8} >
-        {isTokenExpired ? <SpotifyTokenExpired /> :
-        <>
+        <Col xl={7} xxl={8}>
+
           {loading ? (          
             <Loading />
           ) : ( 
-            <div>
-            <Row>
+          <div className="result-search" lang="jp">
+           
               {playlists.map((track, i) => {
                 return (
                   <Card key={i} className='spotify'>
                       <Card.Body>
 
                         <Row className="items-center">
-                          <Col xxs={10} xs={10} md={10}>
+                          <Col xxs={9} xs={10} md={10}>
                             <div className="d-flex justify-content-left align-items-center">
                               <Card.Img src={track.image} alt=''></Card.Img>
                               <Container className="d-block">
@@ -96,16 +139,14 @@ function Playlist ({spotifyApi}){
                             </div>
                           </Col> 
 
-                          <Col xxs={2} xs={2} md={2}>
+                          <Col xxs={3} xs={2} md={2}>
                               <div className="d-flex justify-content-end align-items-center"
-                                style={(screenSize) ? { zoom: '70%' } : { zoom: '100%' }}>
-                                <Card.Link href={track.url} target="blank">
-                                  <div style={{marginRight:10}}>
-                                    <BsPlayCircleFill className="icon"/>  
-                                  </div>
+                                style={(screenSize) ? { zoom: '80%' } : { zoom: '100%' }}>
+                                <Card.Link href={track.url} target="blank" style={{marginRight:10}}>
+                                  <BsPlayCircleFill className="icon"/>  
                                 </Card.Link>
                             
-                                <button id="search-kashify" 
+                                <button id="search-kashify"
                                   onClick={ () => {
                                     setKeySearch({name:track.name, 
                                                   artists:track.artists,
@@ -123,18 +164,16 @@ function Playlist ({spotifyApi}){
                   </Card>        
                 )
               })} 
-            </Row>
-            </div>   
+          </div>   
           )}
-        </>
-        }
+
         </Col>
+
         {keySearch &&
-          <>      
             <ResultAllModal  dataTrack={keySearch} show={show} handleClose={handleClose} openResult={true} />
-          </>
         }
-    </Row>
+
+      </Row>
     </Container>
   );
 }

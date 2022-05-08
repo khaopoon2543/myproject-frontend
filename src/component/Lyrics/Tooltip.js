@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { backendSrc } from "../backendSrc";
 
@@ -11,7 +11,6 @@ export default function Tooltip(props) {
     const [dataDic, setDataDic] = useState({dict: null, token: null})
 
     const [isActive, setActive] = useState('');
-    const ref = useRef();
 
     function handClick() {
         if (isActive === '') {
@@ -23,6 +22,8 @@ export default function Tooltip(props) {
 
     useEffect(() => {
         if ( word ) {
+            let isMounted = true;
+
             axios.get(`${backendSrc}/dict` , { mode: 'cors', crossDomain: true,
                 params: {   word : word,
                             dic_form : dic_form,             
@@ -30,11 +31,15 @@ export default function Tooltip(props) {
                             poses : poses } //list
             })
             .then((response) => {
-                setDataDic({dict: response.data, token: tokenizedList}); //send to PopupDict
+                if(isMounted){
+                    setDataDic({dict: response.data, token: tokenizedList}); //send to PopupDict
+                } 
             })
             .catch(error => {
               console.log(error.response)
             });
+            return () => { isMounted = false; };
+
     }}, [ word ]);
 
     function IsDict() {

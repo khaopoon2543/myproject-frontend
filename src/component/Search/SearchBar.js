@@ -17,21 +17,22 @@ function SearchBar({ level }) {
       event.preventDefault()
     }
     const onChangeData = event  => { 
-      if (typing) { setTyping('') }
-      setSearchTerm(event.target.value);
-
+      //if (typing) { setTyping('') }
+      if (selectedFilter==='') { setSelectedFilter('all') }
       if (selectedFilter==='show') { //SubLevels.js if user search --> filter'all'
         setSelectedFilter('all')
       }
+      setSearchTerm(event.target.value);
     }
     
-    //useEffect(() => {
-      //const newTimer = setTimeout(() => { setTyping(searchTerm) }, 2000)
-      //return () => {clearTimeout(newTimer)}
-    //}, [searchTerm])
+    useEffect(() => {
+      let isMounted = true;
+      if (!isMounted) return null;
+      let newTimer = setTimeout(() => { setTyping(searchTerm); }, 2000);
+      return () => { isMounted = false; clearTimeout(newTimer); }
+    }, [searchTerm])
 
     //filter
-    //function showALL() { setSelectedFilter('all') }
     function showLyric() { setSelectedFilter('lyric') }
     function showSong() { setSelectedFilter('song') }
     function showArtist() { setSelectedFilter('artist') }
@@ -50,7 +51,7 @@ function SearchBar({ level }) {
         <form onSubmit={onFormSubmit} className="searchbar">
           <input className="search_input"
               type="text" 
-              placeholder="Let's Search!" 
+              placeholder="ใส่คำค้นหาที่ต้องการได้เลย!" 
               onChange={onChangeData}
               value={searchTerm}
               required
@@ -68,16 +69,15 @@ function SearchBar({ level }) {
         </form>
         </div>
 
-        <br/>
-          <div className="filters">
-            <button onClick={() => showAll()} id={isFocus('all')}>All</button>
-            <button onClick={() => showSong()} id={isFocus('song')}>Song</button>
-            <button onClick={() => showArtist()} id={isFocus('artist')}>Artist</button>
-            <button onClick={() => showSeries()} id={isFocus('series')}>Series</button>
-            <button onClick={() => showLyric()} id={isFocus('lyric')}>Lyric</button>
-          </div>  
+        <div className="filters">
+          <button onClick={() => showAll()} id={isFocus('all')}>ทั้งหมด</button>
+          <button onClick={() => showSong()} id={isFocus('song')}>เพลง</button>
+          <button onClick={() => showArtist()} id={isFocus('artist')}>ศิลปิน</button>
+          <button onClick={() => showSeries()} id={isFocus('series')}>ซีรีส์</button>
+          <button onClick={() => showLyric()} id={isFocus('lyric')}>เนื้อเพลง</button>
+        </div>  
 
-        {(searchTerm||selectedFilter==='show') &&
+        {(typing||selectedFilter==='show') &&
           <ResultAll typing={typing} selectedFilter={selectedFilter} level={level}/>
         }
 

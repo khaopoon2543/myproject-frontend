@@ -34,12 +34,12 @@
   }
 }
 
-/*
 .nav-links span {
+  font-weight: 500;
   color: var(--black);
   position: relative;
   overflow: hidden;
-  margin-right: 10px;
+  margin-right: 0px;
   font-size: 16px;
 } .nav-links span:after {
   z-index: -1;
@@ -48,16 +48,20 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50%;
-  background: linear-gradient(to right, var(--pinkPastel) 50%, var(--white) 50%);
+  height: 5%;
+  background: linear-gradient(to right, var(--pink) 50%, var(--white) 50%);
   background-size: 220% 100%;
   background-position: right;
   transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
 } .nav-links span:hover:after {
   background-position: left;
+} .nav-links span:hover {
+  color: var(--pink);
+  transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
 }
-*/
 
+
+/* 
 .nav-links span {
   font-weight: 500;
   color: var(--black);
@@ -66,7 +70,8 @@
   color: var(--pink);
   border-bottom: 1px solid var(--pink);
   transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
-}
+} 
+*/
 
 button.btn-close, button.btn-close:focus {
   color: var(--gray) !important;
@@ -113,8 +118,8 @@ button.navbar-toggler svg{
 }
 #playlist-title {
   font-size: 16px ;
-  font-weight: 600;
-  color: var(--grayLight);
+  font-weight: 500;
+  color: var(--black);
 }
 
 .icon-dropdown {
@@ -125,12 +130,9 @@ button.navbar-toggler svg{
   border-radius: 50px;
   transition: all 0.25s;
   color: var(--white);
-  background-color: var(--grayLight);
-} 
-#question .icon-dropdown {
-  color: var(--white);
   background-color: var(--black);
-}
+} 
+
 #logout {
   color: var(--pink);
   font-weight: 900 !important;
@@ -141,7 +143,7 @@ button.navbar-toggler svg{
 
 a.dropdown-item#list {
   font-weight: 500 !important;
-  padding: 7px 20px !important;
+  padding: 7px 10px !important;
 } a.dropdown-item#list:hover {
   border-radius: 5px;
   color: var(--black) !important;
@@ -149,7 +151,7 @@ a.dropdown-item#list {
 }
 a.dropdown-item {
   font-weight: 500 !important;
-  padding: 5px 5px !important;
+  padding: 5px !important;
 } a.dropdown-item:hover {
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.048) !important;
@@ -160,7 +162,7 @@ a.dropdown-item {
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   #nav-dropdown {
     width: 150px !important;
   }

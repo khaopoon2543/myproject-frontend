@@ -1,26 +1,21 @@
 export const MenuItems = [
     {
-        title: 'ค้นหา',
+        title: 'ค้นหาเพลง',
         url: '/search',
         cName: 'nav-links'
     },
     {
-        title: 'ศิลปิน',
-        url: '/artists',
-        cName: 'nav-links'
-    },
-    {
-        title: 'ซีรีส์',
-        url: '/series',
-        cName: 'nav-links'
-    },
-    {
-        title: 'ระดับความยาก',
+        title: 'ระดับความยากง่าย',
         url: '/levels',
         cName: 'nav-links'
     },
     {
-        title: 'เกี่ยวกับ Kashify',
+        title: 'Spotify & Kashify',
+        url: '/spotify',
+        cName: 'nav-links'
+    },
+    {
+        title: 'เกี่ยวกับเรา',
         url: '/about',
         cName: 'nav-links'
     }

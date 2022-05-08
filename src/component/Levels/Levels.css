@@ -9,12 +9,9 @@
 }.levels-link {
     text-decoration: none;
 }.levelCard {
-    box-shadow: none !important;
     border-radius: 20px !important;
     cursor: pointer;
     text-align: center;
-}.levelCard:hover {
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 50px !important;
 }.levelCard .card-body {
     font-size: 14px !important;
 }
@@ -74,10 +71,19 @@
     display: flex;
     float: right;
 }
+
 #very-difficult .icon, #difficult .icon, #very-difficult .score, #difficult .score{
     color: var(--diffSRT);
 }#slightly-difficult .icon, #so-so .icon, #slightly-difficult .score, #so-so .score{
     color: var(--intSRT);
 }#easy .icon, #very-easy .icon, #easy .score, #very-easy .score{
     color: var(--easySRT);
+}
+
+
+#no-level {
+    color: var(--naSRT);
+    background: var(--naBG);
+} #no-level .icon, #no-level .score{
+    color: var(--naSRT);
 }

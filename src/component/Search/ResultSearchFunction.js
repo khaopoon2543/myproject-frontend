@@ -1,7 +1,18 @@
+import { Link } from "react-router-dom";
 import Highlighter from "react-highlight-words";
 import "./ResultSearch.css";
-import { MdMusicNote } from "react-icons/md"
+import { MdMusicNote } from "react-icons/md";
+import { LyricLink, SeriesLink, ArtistLink } from "../linkPath";
 
+  function checkFeat(titleName) { //選んでくれてありがとう。 feat. 榎本虎太朗(花江夏樹)・瀬戸口雛(麻倉もも)
+    const re = new RegExp('^(.+).(feat..+)', 'i'), matches = titleName.match(re);
+    if (matches) {
+      var titleList = titleName.match(re)
+      return titleList
+    } else {
+      return titleName
+    }
+  }
   //test Regex
   function findWordAndNeighbours(searchTerm, lyric) {
     if (searchTerm == "" || !lyric) {
@@ -18,7 +29,9 @@ import { MdMusicNote } from "react-icons/md"
   }
 
   function checkLevel(levelScore) {
-    if (0.5 <= levelScore && levelScore <= 1.49) {
+    if (6.5 <= levelScore || levelScore <= 0.4) {
+      return 'no-level'
+    } else if (0.5 <= levelScore && levelScore <= 1.49) {
         return 'very-difficult'
     } else if (1.5 <= levelScore && levelScore <= 2.49) {
         return 'difficult'
@@ -45,23 +58,22 @@ import { MdMusicNote } from "react-icons/md"
     return arrTracksList
   }
 
-  function isOnlyNameSeries(track, navigate, subSeries) { //filter Series    
+  function isOnlyNameSeries(track, subSeries) { //filter Series    
     if (track.series_info && track.series) {
       return (
           <div className="artist-series">
-              <span id="sub-data">{track.series_info.type} 「 </span>
+              <span id="sub-data">{track.series_info.type} </span>
               {!subSeries ? 
-                <button id='artist'
-                  onClick={event => { navigate('/series/'+ track.series.id.replaceAll(" ","-"), 
-                  { state: { seriesName: track.series_info.name, seriesType: track.series_info.type } }) 
-                  event.preventDefault()}}
-                > {track.series_info.name} &nbsp; 
-                </button>
+                <Link to={SeriesLink(track.series.id)}>
+                  <button id='artist'>
+                    {track.series_info.name} &nbsp; 
+                  </button>
+                </Link>
               
               : //subSeries === true
-                <span id="sub-data">{track.series_info.name} &nbsp;</span>
+                <span id="sub-data">{track.series_info.name}</span>
               }
-              <span id="sub-data"> 」 {track.series.theme}</span>
+              <span id="sub-data"> {track.series.theme}</span>
           </div>
         )
     } else if (track.series && track.series.name) { 
@@ -71,45 +83,56 @@ import { MdMusicNote } from "react-icons/md"
         //then app NOT setState(setSongsList) in useEffect!!
   }
 
-  function resultDetails(searchTerm, track, type, navigate) {
+  function resultDetails(searchTerm, track, type) {
     if (type==='title-subtitle-song') { //----------------------- title-subtitle-song ----------------------- //
-      return(
-        <>
-        <button className='title' id="song" 
-          onClick={event => { navigate("/lyric/" + track.artist_id.replaceAll(" ","-") + '/' + track.song_id.replaceAll(" ","-")) 
-          event.preventDefault()}}
-        > <h3 className='title' id="song">{track.name}</h3> 
-        </button>
-        </>
-      )
+      const resultTitle = track.name && checkFeat(track.name)
+      const isFeat = resultTitle instanceof Array
+      if (isFeat) {
+        return (
+          <>
+          <Link to={LyricLink(track)}>
+            <button className='title' id="song"> 
+              <h3 className='title' id="song">{resultTitle[1]}</h3> 
+            </button>
+          </Link>
+          &nbsp;<span id="sub-data">{resultTitle[2]}</span>
+          </>
+        )
+      } else {
+        return(
+          <Link to={LyricLink(track)}>
+            <button className='title' id="song"> 
+              <h3 className='title' id="song">{track.name}</h3> 
+            </button>
+          </Link>
+        )
+      }
     } else if (type==='title-subtitle-artist') { //----------------------- title-subtitle-artist ----------------------- //
-      const artist_id = track.artist_id
-      const artist = track.artist
       return(
         <div className="artist-series">
           <span id="sub-data">歌手 </span>
-          <button id='artist'
-            onClick={event => { navigate("/artists/"+ artist_id.replaceAll(" ","-"),
-            { state: { artistName: artist } }) 
-            event.preventDefault()}}
-          > {artist}
-          </button> 
+          <Link to={ArtistLink(track.artist_id)}>
+            <button id='artist'> 
+              {track.artist}
+            </button> 
+          </Link>
         </div>
       )
     } else if (type==='lyric') { //----------------------- lyric ----------------------- //
-      if (!track.lyric) return
+      let isTermInLyric = findWordAndNeighbours(searchTerm, track.lyric)
+      if (!track.lyric && !isTermInLyric) return
       return(
         searchTerm &&
-        <span className='subtitle' id='lyric'>
+        <div className='subtitle' id='lyric'>
           <MdMusicNote id="icon-lyric"/>
           <Highlighter
             highlightClassName='highlight'
             searchWords={[searchTerm]}
             autoEscape={true}
-            textToHighlight={findWordAndNeighbours(searchTerm, track.lyric)}
-            > {findWordAndNeighbours(searchTerm, track.lyric)} 
+            textToHighlight={isTermInLyric}
+            > {isTermInLyric} 
           </Highlighter>
-        </span>
+        </div>
       )
     }
   }

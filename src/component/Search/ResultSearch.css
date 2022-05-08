@@ -5,10 +5,18 @@
     border: none !important;
     /* border: 1px solid rgb(224, 224, 224) !important; */
     border-color: var(--white);
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 50px;
-    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 30px;
+    cursor: text;
     /* box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px; */
 }
+.card.spotify {
+    cursor: text !important;
+}
+.card:hover {
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 50px;
+    transition: all 0.5s cubic-bezier(.09,.64,.49,.98);
+}
+
 a:link, a:hover { /* LINK (in ResultSearch.js) */
     text-decoration: none;
 }
@@ -31,42 +39,46 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     text-decoration: none;
     color: var(--gray);
     margin: 0;
-}
-
-.artist-series {
-    margin-top: 3px;
-    font-size: 14px;
-    font-weight: 300;
-}
-.artist-series button{
-    font-size: 14px;
-    text-decoration: none;
-    color: var(--gray);
-}
-#song:hover, #artist:hover {
+    padding-bottom: 5px;
+} #song:hover {
     color: var(--pink);
     text-decoration: underline solid var(--pink) 1px;
 }
 
+.artist-series {
+    font-size: 12px;
+    margin-top: 3px;
+}.artist-series button{
+    font-weight: 500;
+    font-size: 12px;
+    padding: 1px 7px;
+    border-radius: 5px;
+    color: var(--gray);
+    background-color: rgba(0, 0, 0, 0.046);
+} #artist:hover {
+    background-color: var(--pinkLight);
+}
+
 .subtitle {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 12px;
+    font-weight: 400;
     color: var(--grayLight);
     margin: 0;
 }#lyric.subtitle {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: normal;
     color: var(--grayLight);
+    margin-left: 0;
+    margin-top: 5px;
+} #lyric.subtitle span{
     margin: 0;
-}
-
+} 
 
 .highlight, .highlightArtist {
-    font-weight: 400;
-    color: var(--black);
-    background: var(--pinkLight);
-    padding-top: 0px;
-    padding-bottom: 0px;
+    font-weight: 500;
+    color: var(--pink);
+    background: none;
+    padding: 0px; 
 }
 
 .tagLevel * {
@@ -93,7 +105,10 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     }
     .card {
         zoom: 88%;
-        margin: 0 10px;
+        margin: 10px;
+    }
+    .lyric .card-body {
+        padding-top: 7px;
     }
 }
 
@@ -123,6 +138,7 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     margin-bottom: 10px;
     font-weight: 500;
 } #button-back {
+    font-size: 18px;
     padding-bottom: 0px !important;
     color: var(--white);
     background: var(--pink);
@@ -130,20 +146,24 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     color: var(--white);
     background: var(--pink);
 } #type {
-    color: var(--white);
-    background: var(--grayLight);
+    font-weight: 800;
+    padding: 2px 20px;
+    color: var(--pink);
+    border: 1px solid  var(--pink);
 }
-.title-series {
+.title-series, .sub-title-series {
+    display: block;
     margin-top: 10px;
+    margin-bottom: 5px;
     padding: 20px;
     border-radius: 10px;
+} .title-series {
     color: var(--white);
     background: var(--black);
 } .sub-title-series {
-    margin-top: 5px;
-    padding: 0px 10px;
+    font-size: 16px;
     color: var(--grayLight);
-    font-size: 14px;
+    border: 1px solid  var(--grayLight);
 } 
 
 /* --- ResultSearch --- */
@@ -157,14 +177,6 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
 
 /* ----------------------------- ResultSearch & ResultData & SubData & Lyric .js ----------------------------- */
 
-.tagLevel#title-lyric p{ /* tagLevel in title Lyric.js*/
-    line-height: 25px;
-    min-width: none !important;
-    padding: 0px 20px !important;
-    margin: 0 auto;
-    font-size: 12px;
-} 
-
 p#sub-data { 
     text-align: left;
     color: var(--grayLight);
@@ -172,8 +184,9 @@ p#sub-data {
 }
 
 span#sub-data {
-    font-weight: 400;
+    font-weight: 500;
     color: var(--grayLight);
+    margin-right: 5px;
 } #sub-data:hover {
     color: none;
     border-bottom: none;
@@ -192,7 +205,7 @@ span#sub-data {
 
 .bg-search-all {
     position: sticky;
-    top: 121px;
+    top: 111px;
     z-index: 3;
     border-radius: 0 0 50px 50px;
     padding-top: 10px;
@@ -215,7 +228,7 @@ span#sub-data {
 }
 
 #icon-lyric {
-    font-size: 18px;
+    font-size: 14px;
     margin-right: 10px;
     color: var(--white);
     background: var(--grayLight);
