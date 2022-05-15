@@ -1,4 +1,4 @@
-import { Spinner, Modal, ListGroup } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import useIsMobile from '../component/useIsMobile';
 import { FaHome, FaSpotify } from 'react-icons/fa';
 
@@ -25,7 +25,7 @@ const loadingImage = {
     marginLeft: 'auto',
     marginRight: 'auto',
     height: 'auto',
-    marginTop:250,
+    marginTop:200,
 }
 const loadingImageSearch = {
   width: '300px',
@@ -50,7 +50,7 @@ function NoMatch() {
         </div>
         <br/>
         <span className="font-semi-bold">
-          ไม่พบหน้าที่ต้องการ ขออภัยด้วยนะคับ
+          ไม่พบหน้าที่ต้องการ ขออภัยด้วยนะคะ
         </span>
         <br/>
         <span className="font-semi-bold gray-text">
@@ -68,7 +68,7 @@ function Loading() {
   return (
       <div style={spinner}>
         <Spinner animation="border" style={inSpinner}/>
-        <span className="font-semi-bold"> กรุณารอสักครู่นะค้าบ </span>
+        <span className="font-semi-bold"> กรุณารอสักครู่... </span>
       </div>
   )
 }
@@ -82,11 +82,11 @@ function LoadingIMG() {
 
           <div style={spinnerIMG}>
             <Spinner animation="border" style={inSpinner}/>
-            <span className="font-big font-semi-bold"> กรุณารอสักครู่นะคับ </span>
+            <span className="font-big font-semi-bold"> กรุณารอสักครู่... </span>
           </div>
 
           <span className="font-semi-bold gray-text">
-              ตอนนี้กำลังโหลดเนื้อเพลงอยู่ค้าบ
+              ตอนนี้กำลังโหลดเนื้อเพลงอยู่ค่า
           </span>
         </div>
     )
@@ -102,14 +102,14 @@ function LoadingIMGLevels(props) {
 
         <div style={spinnerIMG}>
             <Spinner animation="border" style={inSpinner}/>
-            <span className="font-big font-semi-bold"> กรุณารอสักครู่นะคับ </span>
+            <span className="font-big font-semi-bold"> กรุณารอสักครู่... </span>
         </div>
 
         <div className="d-block font-semi-bold gray-text">
           <span>
-            กำลังค้นหาเพลงระดับ<strong> {level} </strong>อยู่คับ
+            กำลังค้นหาเพลงระดับ<strong> {level} </strong>อยู่ค่า
             <br/>
-            (แต่ถ้าไม่อยากรอสามารถพิมพ์คำค้นหาที่ต้องการได้เลยนะคับ)
+            (แต่ถ้าไม่อยากรอสามารถพิมพ์คำค้นหาที่ต้องการได้เลยนะคะ)
           </span>
         </div>
       </div>
@@ -132,7 +132,7 @@ function NoResult(props) {
         </span>
         <br/>
         <span style={TEXT}>
-          ไม่พบผลการค้นหาจากคำค้นหา<strong> {searchTerm} </strong>ขออภัยด้วยนะคับ
+          ไม่พบผลการค้นหาจากคำค้นหา<strong> {searchTerm} </strong>ขออภัยด้วยนะคะ
         </span>
       </div>
   )
@@ -144,7 +144,7 @@ const MARGIN_TOP = {
   marginTop: 80,
 }
 const MARGIN_TOP_MB = {
-  marginTop: 0,
+  marginTop: 20,
 }
 const emojiAll = ['( ◜◒◝ )♡', 'ʕっ• ᴥ • ʔっ', '♡ ´･ᴗ･ `♡', '( ๑>ᴗ<๑ )', '( つ´∀｀)つ', '( ♡ >ω< ♡)','(≥o≤)','\(^Д^)/']
 const emoji = emojiAll[Math.floor(Math.random()*emojiAll.length)];
@@ -159,101 +159,22 @@ function EmojiData() {
   )
 }
 
-// ---------------------------------- Spotify ---------------------------------- //
+// ---------------------------------- ModalLoading ---------------------------------- //
 
 const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify </span>
-
-function NoLoginSpotify() {
-  return (
-    <div style={loadingImage}>
-        <span style={EMOJI}>
-          {emojiSad}
-        </span>
-        <br/><br/>
-        <h5 className="font-bold">
-          กรุณาเข้าสู่ระบบผ่าน {SPOTIFY} ก่อนนะค้าบ
-        </h5>
-        <span>
-              หรือระบบอาจเกิดข้อผิดพลาดขึ้น กรุณาโหลดหน้าเว็บไซต์ใหม่หรือเข้าสู่ระบบผ่าน {SPOTIFY}
-              ใหม่อีกครั้งด้วยนะคับ
-        </span>
-    </div>
-  )
-}
-
-const spotifyButton =
-    <div id="spotify-btn" className="font-small">
-      <a href={"https://open.spotify.com/"} target="_blank" rel="noopener nore">
-        <button id="spotify-open">
-          <FaSpotify className="spotify-icon"/>
-          Open Spotify
-        </button>
-      </a>
-    </div>
-const TokenExpiredPopup = 
-  <div className="d-block" style={{ paddingLeft: 15, paddingRight: 15 }}>
-    <span>
-      กรุณาเข้าสู่ระบบผ่าน&nbsp; {SPOTIFY} ใหม่อีกครั้งนะคับ 🙇‍♀️
-    </span>
-  </div>
-
-const NoResultPopup = 
-              <ListGroup variant="flush">
-                <ListGroup.Item className="mb-3">
-                  <span>
-                    ตอนนี้ยังไม่ได้เปิดเพลงผ่าน {SPOTIFY} นะคับ
-                  </span>
-                  <br/>
-                  <span className="open-spotify">
-                    กรุณาเปิดเพลงฟังก่อนนะคับ กดเปิดได้ทางนี้เลย! &nbsp; {spotifyButton}
-                  </span> 
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <span>
-                    หรือระบบอาจเกิดข้อผิดพลาดขึ้น กรุณาโหลดหน้าเว็บไซต์ใหม่หรือเข้าสู่ระบบผ่าน {SPOTIFY}
-                    ใหม่อีกครั้งด้วยนะคับ
-                  </span>
-                </ListGroup.Item>
-              </ListGroup>
-
-function SpotifyErrorPopup(props) {
-  return (
-    <Modal  
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      show={props.show} onHide={props.handleClose}
-      animation={false} 
-    > 
-      <Modal.Header closeButton>
-        <Modal.Title>
-          <div id="error-head">
-            <span>
-              ขออภัย พบข้อผิดพลาด
-            </span>
-          </div>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body id="error-body">
-        { props.isTokenExpired ? TokenExpiredPopup :NoResultPopup }
-      </Modal.Body>
-    </Modal>
-  )
-}
-
 const inSpinnerPopup = {
   margin: '5px 20px',
 }
-function SpotifyLoadingPopup() {
+function ModalLoading() {
   return (
     <div className="d-flex align-items-center">
         <Spinner animation="border" style={inSpinnerPopup}/>  
         <div className="d-block">
           <span className="font-semi-bold">
-            กรุณารอสักครู่นะค้าบ
+            กรุณารอสักครู่...
           </span>
           <br/>
-          <span className="font-big font-semi-bold gray-text">กำลังโหลดจาก {SPOTIFY} อยู่คับ</span>
+          <span className="font-big font-semi-bold gray-text">กำลังโหลดข้อมูล</span>
         </div>
     </div>
   )
@@ -266,7 +187,5 @@ export {
     NoResult,
     EmojiData,
     LoadingIMGLevels,
-    NoLoginSpotify,
-    SpotifyErrorPopup,
-    SpotifyLoadingPopup,
+    ModalLoading,
 }

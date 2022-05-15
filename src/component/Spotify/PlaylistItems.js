@@ -8,12 +8,16 @@ export const PlaylistItems = [
         url: '/playlist/37i9dQZF1DXafb0IuPwJyF',
     },
     {
-        title: 'Japanese Top Hits',
-        url: '/playlist/2SLokaKcysXRIY4IxsJ7o9',
+        title: 'J-pop Hits',
+        url: '/playlist/37i9dQZF1DXdbRLJPSmnyq',
     },
     {
         title: 'Global Hits From Japan 2021',
         url: '/playlist/37i9dQZF1DX9hThfji1Q6J',
+    }, 
+    {
+        title: 'Jpop 2020s -2022',
+        url: '/playlist/2QmnoSI9FqCPTQ7V6HQQYj',
     }
 ]
 

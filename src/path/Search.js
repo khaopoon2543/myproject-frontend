@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from 'react-bootstrap';
 import SearchBar from "../component/Search/SearchBar";
-import useIsMobileLG from '../component/useIsMobileLG';
 import { FiSearch } from 'react-icons/fi';
-import { FaSpotify } from 'react-icons/fa';
+import { FaSpotify, FaStar, FaSortAlphaDown } from 'react-icons/fa';
 import { IoMusicalNotes, IoLanguage } from 'react-icons/io5';
 import { MdMusicNote } from 'react-icons/md';
+import TopLists from "./TopLists";
+import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
+import useIsMobileLG from '../component/useIsMobileLG';
 
 const KASHIFY = <span className="font-semi-bold"> Kashify </span>
 const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify </span>
@@ -22,7 +24,10 @@ const searchDescription =
     </h5>
   </div>
 
+
 function Search() {
+  const screenSize = useIsMobileLG()
+  const [isOpen, setIsOpen] = useState(screenSize ? false : true); 
 
   return (
     <Container className="pages">
@@ -35,7 +40,7 @@ function Search() {
             </h1>
 
             <div className="tag-series search">
-              <h5 className="gray-text font-semi-bold">ค้นหาโดยตัวอักษร </h5> 
+              <h5 className="gray-text font-semi-bold"> ค้นหาโดยตัวอักษร </h5> 
               <Link to="/artists">
                 <span id="button-back"> ศิลปิน </span>
               </Link>
@@ -44,6 +49,14 @@ function Search() {
                 <span id="button-back"> ซีรีส์ </span>
               </Link>              
             </div>
+
+            <div className="search">
+              <h5 className="gray-text font-semi-bold"> ศิลปินและซีรี่ส์ยอดนิยม </h5> 
+              {!isOpen ? <TiArrowSortedDown  className="icon-playlists" onClick={() => setIsOpen(!isOpen)}/> 
+                       : <TiArrowSortedUp  className="icon-playlists" onClick={() => setIsOpen(!isOpen)}/>
+              }
+            </div>
+            <TopLists open={isOpen} />
 
           </div>
         </Col>

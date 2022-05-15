@@ -153,26 +153,46 @@ export default function ResultSearchAll(props) {
         {LOAD_MORE(filter, result, visible)}
     </>
   )}
-          
+
   return (
     <React.Fragment>
+
     {loading ? ( 
         <Loading />
       ) : ( 
       <>
-        {(!RESULTS_SONG && !RESULTS_LYRIC && !RESULTS_ARTIST && !RESULTS_SERIES) ?
+        {!level ?
           <>
-            { (searchTerm == "") ? null : <NoResult searchTerm={searchTerm}/> } 
+            {( ((RESULTS_SONG?.length===0)||(!RESULTS_SONG)) && ((RESULTS_SONG?.length===0)||(!RESULTS_LYRIC)) 
+                && !RESULTS_ARTIST && !RESULTS_SERIES ) ?
+              <>
+                { (searchTerm === "") ? null : <NoResult searchTerm={searchTerm}/> } 
+              </>
+            :
+              <>
+                {(RESULTS_SONG?.length>0) && SONG_LYRIC('song', RESULTS_SONG, visible_song)}
+                {(RESULTS_LYRIC?.length>0) && SONG_LYRIC('lyric', RESULTS_LYRIC, visible_lyric)}
+                {(RESULTS_ARTIST) && ARTISTS}
+                {(RESULTS_SERIES) && SERIES}
+              </>
+            }
           </>
-        :
+          :
           <>
-            {(RESULTS_SONG) && SONG_LYRIC('song', RESULTS_SONG, visible_song)}
-            {(RESULTS_LYRIC) && SONG_LYRIC('lyric', RESULTS_LYRIC, visible_lyric)}
-
-            {(!level&&RESULTS_ARTIST) && ARTISTS}
-            {(!level&&RESULTS_SERIES) && SERIES}
+            {( ((RESULTS_SONG?.length===0)||(!RESULTS_SONG)) && ((RESULTS_SONG?.length===0)||(!RESULTS_LYRIC)) ) ?
+            
+              <>
+                { (searchTerm === "") ? null : <NoResult searchTerm={searchTerm}/> } 
+              </>
+            :
+              <>
+                {(RESULTS_SONG?.length>0) && SONG_LYRIC('song', RESULTS_SONG, visible_song)}
+                {(RESULTS_LYRIC?.length>0) && SONG_LYRIC('lyric', RESULTS_LYRIC, visible_lyric)}
+              </>
+            }
           </>
         }
+
       </>
       )
     

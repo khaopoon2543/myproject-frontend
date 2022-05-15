@@ -18,10 +18,26 @@
   border: 1px solid var(--gray);
   font-weight: 600;
 }
-.info#readability {
+.info#readability, .info#search {
   display: flex;
   align-items: center;
 }
+
+.info#search { 
+  margin-top: 20px;
+} .info#search button{ 
+  font-size: 12px;
+} .info#search svg{ 
+  font-size: 20px;
+} button#spotify-search {
+  margin-right: 5px;
+  font-size: 14px;
+} button#spotify-search:hover {
+  padding: 2px 20px 2px 5px;
+  color: var(--black);
+  background-color: var(--white);
+}
+
 span#pink {
   color: var(--white);
   margin-left: 10px;
@@ -48,7 +64,11 @@ span#pink {
   background: rgba(255, 255, 255, 0.15);
 } #singer:hover {
   background-color: #ffffff49;
-}
+} #singer.no-id {
+  color: var(--grayLight) !important;
+} #singer.no-id:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+} 
 .info #artist {
   font-weight: 500;
   color: var(--white);
@@ -130,7 +150,7 @@ button.pink-text {
 }
 
 @media only screen and (max-width: 320px) {
-  .info#readability {
+  .info#readability, .info#search {
     display: inline-block;
   } 
   .titleLyric .info#readability .tagLevel p{

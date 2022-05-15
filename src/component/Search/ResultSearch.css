@@ -18,7 +18,7 @@
 }
 
 a:link, a:hover { /* LINK (in ResultSearch.js) */
-    text-decoration: none;
+    text-decoration: none !important;
 }
 .card-body {
     text-align: left;

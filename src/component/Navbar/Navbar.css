@@ -91,9 +91,9 @@ button.navbar-toggler svg{
 /* ------------------- OFF CANVAS ------------------- */
 
 #offcanvas-item {
-  margin: 0px 20px !important;
+  margin: 10px 20px !important;
 } #offcanvas-item-spotify {
-  margin-top: 20px !important;
+  margin-top: 30px !important;
 }
 
 /* ------------------- DROPDOWN ------------------- */
@@ -102,17 +102,19 @@ button.navbar-toggler svg{
   display: flex; align-items: center;
   font-weight: 600;
   letter-spacing: 1px;
-  color: var(--white);
-  padding: 3px 20px 3px 3px;
+  padding: 3px 10px 3px 3px;
   transition: all 0.25s;
   border-radius: 25px;
-  background-color: var(--black);
+  color: var(--black);
+  background-color: var(--white);
 } #nav-dropdown:hover {
-  background-color: var(--green);
+  color: var(--white);
+  background-color: var(--pink);
 }
 .dropdown-menu {
   padding: 10px 10px !important;
-}
+} 
+
 .dropdown-header {
   padding: 5px 5px !important;
 }
@@ -164,7 +166,7 @@ a.dropdown-item {
 
 @media screen and (max-width: 992px) {
   #nav-dropdown {
-    width: 150px !important;
+    width: 200px !important;
   }
   .dropdown-item {
     font-size: 14px !important;

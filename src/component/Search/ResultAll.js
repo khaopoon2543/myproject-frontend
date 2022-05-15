@@ -12,10 +12,10 @@ function ResultAll(props) {
 
           {(typing || selectedFilter==='show') &&
             <>
-            {selectedFilter==='artist' && 
+            {!level && selectedFilter==='artist' && 
               <ResultData src="artists" searchTerm={typing} />   
             }
-            {selectedFilter==='series' &&
+            {!level && selectedFilter==='series' &&
               <ResultData src="series" searchTerm={typing} />   
             }
             {(selectedFilter!=='all') &&

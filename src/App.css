@@ -24,13 +24,15 @@
 
 .App {
   text-align: center;
-  font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-family: 'Noto Sans JP', sans-serif;
   font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+@media only screen and (max-width: 370px) {
+  .App {
+    zoom: 80%;
+  }
 }
 
 :lang(th) {
-  font-family: 'Noto Sans Thai', sans-serif;
   font-family: 'IBM Plex Sans Thai', sans-serif;
 }:lang(jp) {
   font-family: 'Noto Sans JP', sans-serif;
@@ -104,8 +106,8 @@ span.nav-button{
   color: var(--pink);
 } 
 .description {
-  padding: 20px 0px;
-} .description p {
+  padding: 20px 0px 10px 0px;
+} .description p , .description div#search{
   margin-top: -9px;
   padding: 20px;
   border: var(--pink) 1px solid;
@@ -157,7 +159,7 @@ span.nav-button{
   color: var(--pink);
 } .pink-link:hover {
   color: var(--pink);
-  text-decoration: underline solid 1px var(--pink);
+  text-decoration: underline solid 1px var(--pink) !important;
 }
 
 /* ----------------------------- Home ----------------------------- */
@@ -167,7 +169,7 @@ span.nav-button{
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
+  margin-top: 30px;
   padding: 0px 100px;
   text-align: left;
   position: relative;
@@ -184,6 +186,7 @@ span.nav-button{
 } #description-title #title {
   color: var(--pink);
 }
+
 #home-btn {
   display: flex;
   align-items: center;
@@ -350,13 +353,7 @@ span.nav-button{
   margin: 0px !important;
   margin-right: 10px !important;
 }
-@media only screen and (max-width: 370px) {
-  .search {
-    display: block;
-  } .search #button-back {
-    margin: 10px 0px !important;
-  }
-}
+
 
 .bg-search {
   background-color: var(--white);
@@ -596,15 +593,16 @@ span.nav-button{
   border-radius: 25px;
 }
 .spotify-icon {
-  font-size: 26px;
-  margin-right: 10px; 
+  font-size: 22px;
+  margin-right: 5px; 
 }  
 button#spotify-login {
   padding: 3px 20px 3px 3px;
   background: var(--black);
 } button#spotify-login:hover {
   background-color: var(--green);
-}
+} 
+
 button#spotify-open {
   font-size: 14px;
   background: var(--black);
@@ -616,16 +614,6 @@ button#spotify-open {
 
 .open-spotify *{
   display: inline-block;
-}
-
-button#spotify-search {
-  padding: 3px 20px 3px 3px;
-  margin-top: 20px;
-  font-size: 14px;
-  background: rgba(255, 255, 255, 0.15);
-} button#spotify-search:hover {
-  color: var(--black);
-  background-color: var(--white);
 }
 
 /* ----- ResultAllModal.js ----- */
@@ -650,7 +638,7 @@ button#spotify-search {
 
 /* ----- Home.js ----- */
 #home button {
-  padding: 3px 50px 3px 3px !important;
+  padding: 3px 40px 3px 3px !important;
   width: auto;
   margin-right: 10px;
   font-weight: 600;
@@ -666,7 +654,7 @@ button#spotify-search {
 } #home .kashify-icon {
   font-size: 36px;
   padding: 3px;
-  margin-right: 30px;
+  margin-right: 20px;
   color: var(--pink);
   background: var(--white) !important;
 }
@@ -675,13 +663,11 @@ button#spotify-search {
   color: var(--white);
   background: var(--black);
 } #home button#spotify-login:hover {
-  color: var(--white);
-  background: var(--green);
-  box-shadow: var(--easyBG) 0px 0px 10px;
+  box-shadow: var(--pinkPastel) 0px 0px 30px;  
 } #home .spotify-icon {
   color: var(--white);
   font-size: 36px;
-  margin-right: 30px; 
+  margin-right: 20px; 
 }
 
 /* ----------------------------- Spotify Playlists & ResultSpotify  ----------------------------- */
@@ -696,11 +682,12 @@ button#search-kashify {
 
 button#search-kashify {
   color: var(--pink) !important;
-  border: 1px solid var(--pink);
   background: var(--white);
+  border: 2px solid var(--pink);
+
 } button#search-kashify:hover {
   color: var(--white) !important;
-  border: 1px solid var(--pink);
+  border: 2px solid var(--pink);
   background: var(--pink);
   box-shadow: var(--pinkLight) 0px 0px 50px;
 } 
@@ -845,3 +832,60 @@ button#search-kashify {
   color: var(--black);
   background-color: var(--pinkPastel);
 }
+
+/* ------------------------ เพิ่มหลังจากรู้ว่า Spotify ใช้กับ user อื่นไม่ได้ยยยแอแงงงง ----------------------------- */
+
+.icon-playlists {
+  color: var(--white);
+  background-color: var(--black);
+  font-size: 20px;
+  padding: 0;
+  border-radius: 2px;
+  margin-left: 5px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+.top-lists {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.description#search {
+  padding-top: 0px !important;
+} .description#search .underline {
+  padding-right: 30px;
+  background-color: var(--black);
+} .description#search div#search {
+  border: 1px solid var(--grayLight);
+}
+
+.footer {
+  background-color: var(--black);
+  padding: 20px;
+  padding-top: 20px;
+}
+.footer #me {
+  color: var(--grayLight);
+}
+.footer #left {
+  color: var(--grayLight) !important;
+  font-weight: 300 !important;
+  text-align: left;
+  padding: 0px 100px;
+}
+#home {
+  margin-bottom: 0px !important;
+}
+@media only screen and (max-width: 1200px) {
+  .footer #left {
+    padding: 0px 40px;
+  }
+  .footer #first {
+    padding-bottom: 20px;
+  }
+}
+
+#btn-detail p {
+  margin-bottom: 0;
+} #btn-detail  {
+  padding-bottom: 0;
+} 

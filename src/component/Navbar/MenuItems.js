@@ -1,5 +1,10 @@
 export const MenuItems = [
     {
+        title: 'หน้าหลัก',
+        url: '/',
+        cName: 'nav-links'
+    },
+    {
         title: 'ค้นหาเพลง',
         url: '/search',
         cName: 'nav-links'
@@ -10,12 +15,7 @@ export const MenuItems = [
         cName: 'nav-links'
     },
     {
-        title: 'Spotify & Kashify',
-        url: '/spotify',
-        cName: 'nav-links'
-    },
-    {
-        title: 'เกี่ยวกับเรา',
+        title: 'เกี่ยวกับ Kashify',
         url: '/about',
         cName: 'nav-links'
     }

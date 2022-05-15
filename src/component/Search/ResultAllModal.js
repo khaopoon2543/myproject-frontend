@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import ResultSearch from "./ResultSearch";
 import ResultData from "./ResultData";
-import { Modal, ListGroup } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { FaSpotify } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
-import { SpotifyLoadingPopup } from "../Loading";
-
-
-const SPOTIFY_ICON = { marginBottom: 2, fontSize: 20, }
-const spotifyIcon = <FaSpotify style={SPOTIFY_ICON}/>
+import { ModalLoading } from "../Loading";
 
 
 export default function ResultAllModal(props) {
@@ -44,7 +40,7 @@ export default function ResultAllModal(props) {
         <Modal.Header closeButton id="result-all">
           <Modal.Title className="d-flex align-items-center">
             {loading ?  
-              <SpotifyLoadingPopup/>
+              <ModalLoading/>
               :
               <>
               {(typing&&searchArtist) &&

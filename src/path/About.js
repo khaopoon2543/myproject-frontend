@@ -7,7 +7,7 @@ const PINK = {
 }
 const KASHIFY_PINK = <strong style={PINK}> Kashify </strong>
 const KASHIFY = <span className="font-semi-bold"> Kashify </span>
-const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify </span>
+const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify Playlists </span>
 
 const SOURCES_ITEMS = [
   {
@@ -18,10 +18,26 @@ const SOURCES_ITEMS = [
                   โดยข้อมูลเพลงและเนื้อเพลงบน Kashify นั้นนำมาจากเว็บไซต์นี้ทั้งหมด`
   },
   {
+    title: 'SudachiPy',
+    url: 'https://github.com/WorksApplications/SudachiPy',
+    description: `SudachiPy คือ Japanese morphological analyzer (Python version) 
+                  โดยสามารถนำไปใช้ในการประมวลผลภาษาธรรมชาติ (Natural language processing) 
+                  สำหรับภาษาญี่ปุ่นได้อย่างง่าย โดยใน Kashify ใช้ SudachiPy ในการตัดคำ (Tokenization) และการแปะป้ายชนิดของคํา (Part of speech tagging) เนื้อเพลงภาษาญี่ปุ่น
+                  `
+  },
+  {
     title: 'JTDIC',
     url: 'http://www.jtdic.com',
     description: `JTDIC (Japanese Thai Dictionary) เป็นพจนานุกรมภาษาญี่ปุ่น-ไทย พัฒนาโดยคุณไพฑูรย์ แซ่ตั้ง
-                  โดย JTDIC เป็นพจนานุกรมที่ใช้แสดงความหมายของคำศัพท์ภาษาญี่ปุ่นที่ปรากฎบนเนื้อเพลงใน Kashify
+                  โดย JTDIC เป็นพจนานุกรมที่ใช้แสดงความหมายภาษาไทยของคำศัพท์ภาษาญี่ปุ่นที่ปรากฎบนเนื้อเพลงใน Kashify
+                  `
+  },
+  {
+    title: 'EDICT',
+    url: 'http://www.edrdg.org/jmdict/edict.html',
+    description: `EDICT (Japanese English Dictionary) เป็นพจนานุกรมภาษาญี่ปุ่น-อังกฤษ เป็นฐานเปิดของทางมหาวิทยาลัยโมนาช (ออสเตรเลีย)
+                  โดยข้อมูลพจนานุกรมจาก EDICT ที่ใช้ใน Kashify นั้นนำมาจากทางคุณไพฑูรย์ แซ่ตั้ง ผู้พัฒนา JTDIC ซึ่งได้รวมข้อมูลของ EDICT (พจนานุกรมภาษาญี่ปุ่น-อังกฤษ) กับ JTDIC (พจนานุกรมภาษาญี่ปุ่น-ไทย) ไว้ร่วมกันแล้ว
+                  โดย EDICT เป็นพจนานุกรมที่ใช้แสดงความหมายภาษาอังกฤษของคำศัพท์ภาษาญี่ปุ่นที่ปรากฎบนเนื้อเพลงใน Kashify
                   `
   },
   {
@@ -40,16 +56,7 @@ const SOURCES_ITEMS = [
                   ซึ่งเปิดให้ผู้ใช้เข้าถึงบทเพลงจำนวนมากและเนื้อหาอื่นๆ จากศิลปินทั่วทุกมุมโลก 
                   ซึ่ง Spotify เองนั้นก็มี Spotify API ที่เปิดให้นักพัฒนาสามารถเข้าถึงข้อมูลบางส่วนเกี่ยวกับ
                   ผู้ใช้ เพลย์ลิสต์ และศิลปินผ่าน Web API
-                  โดย Kashify ได้นำ Spotify API มาใช้ในส่วนของการดึงข้อมูลเพลงที่ผู้ใช้กำลังฟังอยู่ ข้อมูล Playlists 
-                  และการค้นหาเพลงบน Spotify
-                  `
-  },
-  {
-    title: 'SudachiPy',
-    url: 'https://github.com/WorksApplications/SudachiPy',
-    description: `SudachiPy คือ Japanese morphological analyzer (Python version) 
-                  โดยสามารถนำไปใช้ในการประมวลผลภาษาธรรมชาติ (Natural language processing) 
-                  สำหรับภาษาญี่ปุ่นได้อย่างง่าย โดยใน Kashify ใช้ SudachiPy ในการตัดคำ (Tokenization) และการแปะป้ายชนิดของคํา (Part of speech tagging) เนื้อเพลงภาษาญี่ปุ่น
+                  โดย Kashify ได้ใช้ Spotify API ในการเก็บข้อมูล Spotify Playlists
                   `
   }
 ]
@@ -79,13 +86,19 @@ function About() {
                   <p>
                     เป็นเว็บไซต์สำหรับเรียนรู้คำศัพท์ภาษาญี่ปุ่นผ่านเนื้อเพลงภาษาญี่ปุ่น
                     โดยมีการแบ่งระดับความยากง่ายของเนื้อเพลง เพื่อให้ผู้เรียนสามารถเลือกเพลงที่อยากเรียนรู้ได้เหมาะสมกับตัวเองได้
+                    นอกจากนี้แล้ว ถ้าหากไม่รู้จะฟังเพลงภาษาญี่ปุ่นอะไรดี ผู้ใช้ก็สามารถเลือกเพลงภาษาญี่ปุ่นจาก {SPOTIFY} ตามที่เราได้จัดเตรียมมาให้ได้เลย!
                   </p>
                   <p className="radius">
-                    นอกจากนี้แล้ว ผู้ใช้สามารถเชื่อมต่อกับ {SPOTIFY} 
-                    เพื่อเพิ่มความสะดวกในการใช้งาน 
-                    {KASHIFY}
-                    ได้ด้วย โดยผู้ใช้สามารถค้นหาเนื้อเพลงของเพลงที่กำลังเล่นผ่าน {SPOTIFY} ได้ทันที หรือค้นหาเพลงผ่าน {SPOTIFY} ก็ทำได้เช่นเดียวกัน
+                    โดยเว็บแอพลิเคชัน {KASHIFY} นี้เป็นส่วนหนึ่งของรายวิชา 2209491 โครงการเทคโนโลยีภาษา 1 และ 2209492 โครงการเทคโนโลยีภาษา 2 ภาควิชาภาษาศาสตร์ คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
                   </p>
+
+                  <h5 className="underline">เกี่ยวกับผู้พัฒนา</h5>
+                  <p>
+                    <span className="font-semi-bold">ญาธิป เจริญวราวุฒิ </span>
+                    ปัจจุบันเป็นนิสิตชั้นปีที่ 4 สาขาวิชาเทคโนโลยีภาษาและสารสนเทศ คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
+                    
+                  </p>
+                  
                 </div>
               </div>
             </Col>

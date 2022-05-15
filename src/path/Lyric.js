@@ -11,16 +11,12 @@ import { toHiragana, isJapanese } from 'wanakana';
 import { checkSpecialChars } from '../component/Spotify/checkSpecialChars'
 import { BiFontSize } from 'react-icons/bi';
 import { FaSpotify } from 'react-icons/fa';
-import ResultSpotify from '../component/Spotify/ResultSpotify';
+import { IoLogoYoutube } from 'react-icons/io5';
 import useIsMobileLG from '../component/useIsMobileLG';
 import { ArtistLink, SeriesLink } from "../component/linkPath";
 import { backendSrc } from "../component/backendSrc";
 
-function Lyric({user, spotifyApi}) {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+function Lyric() {
   const [tokenized_list, setTokenizedList] = useState([])
   const [title, setTitle] = useState([])
   const [titleInfo, setTitleInfo] = useState([]);
@@ -72,9 +68,15 @@ function Lyric({user, spotifyApi}) {
     let text = []
       titleInfo.singers.map((singer, i) => {
         text.push(
-          <Link to={ArtistLink(singer.id)} key={i}>
+          <>
+          {singer.id ?
+            <Link to={ArtistLink(singer.id)} key={i}>
               <button id="singer">{singer.name}</button>
-          </Link>
+            </Link>
+          : 
+            <button id="singer" className="no-id" key={i}>{singer.name}</button>
+          }
+          </>
         );
       })
       return text
@@ -123,7 +125,7 @@ function Lyric({user, spotifyApi}) {
               <Link to={ArtistLink(trackArtist)}>
                 <button id="artist">{title.artist}</button>
               </Link>
-              {titleInfo.singers?.length>0 &&  
+              {(titleInfo.singers?.length>0) &&  
                 isSingers(titleInfo)
               }
             </div> 
@@ -155,23 +157,6 @@ function Lyric({user, spotifyApi}) {
     )
   };
 
-  function mixPrefix(tokenized_list, i) {
-    if (tokenized_list[i].poses[0]==='接頭辞') {
-      return null
-    } else if (i!==0 && tokenized_list[i-1].poses[0]==='接頭辞') {
-      return tokenized_list[i-1].surface + tokenized_list[i].surface
-    } else {
-      return tokenized_list[i].surface
-    }
-  }
-  function isPrefix(tokenized_list, i) {
-    if (i!==0 && tokenized_list[i-1].poses[0]==='接頭辞') {
-      return tokenized_list[i-1].dictionary_form + tokenized_list[i].dictionary_form
-    } else {
-      return tokenized_list[i].dictionary_form
-    }
-  }
-
   function isFocus(filter) {
     if (fontSize === filter){
       return "focus"
@@ -198,24 +183,31 @@ function Lyric({user, spotifyApi}) {
   }
 
   function buttonSearchSpotify(searchTitle) {
-    if (user) { return (
-      <>
-      <Container id="spotify-btn">
-        <button onClick={handleShow} id="spotify-search" lang="th">
-          <FaSpotify className="spotify-icon"/>
-          Search on Spotify 
-        </button> 
+    const title = checkSpecialChars(searchTitle)
+    const artist_id = trackArtist.replace(/-/," ")
+    return (
+      <Container className="info text-left" id="search">
+       <div className="d-flex align-items-center">
+        <span id="head" lang="th">ค้นหาเพลง</span>
+        <div id="spotify-btn">
+          <a href={`https://open.spotify.com/search/${title}%20${artist_id}`} target="_blank" rel="noopener nore">
+          <button id="spotify-search" lang="th">
+            <FaSpotify className="spotify-icon"/>
+            Spotify 
+          </button> 
+          </a>
+        </div>
+        <div id="spotify-btn">
+          <a href={`https://www.youtube.com/results?search_query=${title}%20${artist_id}`} target="_blank" rel="noopener nore">
+          <button id="spotify-search" lang="th">
+            <IoLogoYoutube className="spotify-icon"/>
+            Youtube 
+          </button> 
+          </a>
+        </div>
+       </div>
       </Container>
-      {show &&
-      <ResultSpotify spotifyApi={spotifyApi} show={show} handleClose={handleClose}
-        trackName={checkSpecialChars(searchTitle)}
-        trackNameReal={searchTitle}
-        trackArtist={title.artist}
-        trackArtistId={trackArtist.replace(/-/," ")}
-      />
-      }
-      </>
-    )}
+    )
   }
   
   if (loading) return <LoadingIMG />

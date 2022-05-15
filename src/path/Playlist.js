@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, DropdownButton, Dropdown } from 'react-bootstrap';
 import { Loading, NoLoginSpotify } from "../component/Loading";
 import useIsMobile from '../component/useIsMobile';
 import ResultAllModal from '../component/Search/ResultAllModal';
+
+import axios from 'axios';
+import { backendSrc } from "../component/backendSrc";
 
 import { FiSearch } from 'react-icons/fi';
 import { BsPlayCircleFill } from 'react-icons/bs';
 import { FaSpotify } from 'react-icons/fa';
 
+import { PlaylistItems } from '../component/Spotify/PlaylistItems';
+import { VscCircleFilled } from 'react-icons/vsc';
+import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
+
+
 const KASHIFY = <span className="font-semi-bold"> Kashify </span>
 const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify </span>
 
 const btnDetail = 
-  <div className="description" id="btn-detail"> 
-    <h5 className="underline"> ปุ่มกดข้าง ๆ คืออะไร ?</h5>
-    <p>
+  <div className="description" id="btn-detail" lang="th"> 
+    <p className="radius">
       <div className="d-flex align-items-center" style={{marginBottom: '10px'}}>
-        <FaSpotify style={{fontSize: '40px'}}/> &nbsp;&nbsp;
+        <BsPlayCircleFill style={{fontSize: '40px'}}/> &nbsp;&nbsp;
         เปิดเพลงฟังบน &nbsp; {SPOTIFY}
       </div>
       <div className="d-flex align-items-center">
@@ -27,14 +34,15 @@ const btnDetail =
     </p>
   </div>
 
-function Playlist ({spotifyApi}){
+function Playlist (){
 
     const [playlists, setPlaylists] = useState([]);
     const [playlistsInfo, setPlaylistsInfo] = useState({})
     const [loading, setLoading] = useState(false);
-    const [isTokenExpired, setIsTokenExpired] = useState(false);
     const { codePlaylist } = useParams();
     const screenSize = useIsMobile()
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const [keySearch, setKeySearch] = useState({}); 
     const [show, setShow] = useState(false);
@@ -42,46 +50,23 @@ function Playlist ({spotifyApi}){
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-      if (!window.localStorage.getItem("accessToken")) return setIsTokenExpired(true)
-      if (!window.localStorage.getItem("accessToken") && !spotifyApi && codePlaylist) return
-        let isMounted = true;
-        setLoading(true)
-        spotifyApi.setAccessToken(window.localStorage.getItem("accessToken"))
-        console.log("Access token @result-spotify")
-        getPlaylist().then((dict) => {
-          if (isMounted && dict) {
-            setPlaylistsInfo({name:dict.result.body.name, 
-                description: dict.result.body.description,
-                url: dict.result.body.external_urls.spotify
-              })
-            setPlaylists(dict.all_tracks)
+      let isMounted = true;
+      setLoading(true);
+      axios.get(`${backendSrc}/playlists` , { params: { code : codePlaylist }
+        })
+        .then((response) => {
+          if(isMounted){
+            setPlaylists(response.data.tracks);
+            setPlaylistsInfo(response.data);
             setLoading(false);
-          } else {
-            setIsTokenExpired(true)
-          }
+          } 
+        })
+        .catch(error => {
+          console.log(error.response)
         });
         return () => { isMounted = false; };
+    }, [codePlaylist]);
 
-        async function getPlaylist() {
-          try {
-            const result = await spotifyApi.getPlaylist(codePlaylist)
-            const track_item = result.body.tracks.items
-            const all_tracks = [];
-            track_item.forEach(function(track, index) {
-              var track = {};
-              track["name"] = result.body.tracks.items[index].track.name;
-              track["artists"] = result.body.tracks.items[index].track.artists[0].name;
-              track["image"] = result.body.tracks.items[index].track.album.images[0].url;
-              track["url"] = result.body.tracks.items[index].track.external_urls.spotify;
-              all_tracks.push(track);
-            })
-            return {result, all_tracks}
-          } catch (err) {
-            console.log(err)
-          }
-        }
-
-    }, [ codePlaylist ]);
 
    const buttonOpenSpotify = 
       <div id="spotify-btn">
@@ -91,26 +76,53 @@ function Playlist ({spotifyApi}){
         </button> 
       </div>
 
-  if (isTokenExpired) return <NoLoginSpotify />
+  const PLAYLISTS = 
+    <div className="description">
+      <div className="spotify">
+          <p className="radius" id="playlist">
+              {PlaylistItems.map((item, index) => {
+                  return (
+                  <Link to={item.url} key={index}>
+                      <span className="font-semi-bold pink-link"> 
+                          <VscCircleFilled id="icon-spotify"/> 
+                          {item.title}
+                      </span>
+                  </Link>
+                  )}
+              )}
+          </p>
+      </div>
+    </div>
+
+  const TITLE_DROPDOWN = <h2 className="font-bold" style={{marginBottom:0}}>  <FaSpotify /> Spotify Playlists </h2>
+
   return (
     <Container className="pages">
       <Row>
         <Col xl={5} xxl={4}>
           <div className="header-left">
-            <div className="tag-series">
-              <Link to="/spotify">
-                <span id="button-back">  <FaSpotify /> Spotify Playlists </span>
-              </Link>   
-            </div>
+            <div className="d-flex align-items-center">
+              {TITLE_DROPDOWN} &nbsp;&nbsp;
+              <button onClick={() => setIsOpen(!isOpen)} className="font-semi-bold">
+                ALL
+                {!isOpen ? 
+                  <TiArrowSortedDown  className="icon-playlists"/>
+                  : <TiArrowSortedUp  className="icon-playlists"/>
+                }
+              </button> 
+            </div>   
 
+            {isOpen && PLAYLISTS}
+   
             <div lang="jp">
-              <h3 className="title-series"> 
-                {playlistsInfo.name} 
-                <a href={playlistsInfo.url} target="_blank" rel="noopener noreferrer">
-                  {buttonOpenSpotify}
-                </a>
-              </h3>
-              <span className="sub-title-series">{playlistsInfo.description}</span>
+              <div className="title-series"> 
+                <h3>
+                  {playlistsInfo.name} 
+                </h3>
+              </div>
+              
+              {btnDetail}
+              
             </div>
           </div>
           
@@ -121,7 +133,7 @@ function Playlist ({spotifyApi}){
           {loading ? (          
             <Loading />
           ) : ( 
-          <div className="result-search" lang="jp">
+          <div  lang="jp">
            
               {playlists.map((track, i) => {
                 return (

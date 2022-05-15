@@ -3,12 +3,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { MdMusicNote } from 'react-icons/md';
 import { IoMusicalNotes, IoLanguage } from 'react-icons/io5';
 import { FiSearch } from 'react-icons/fi';
-import { LoginButton } from "../component/Navbar/NavbarButton";
+import { PlaylistsHome } from "../component/Navbar/NavbarButton";
 import { FaSpotify } from 'react-icons/fa';
 import { VscCircleFilled } from 'react-icons/vsc';
 
 const KASHIFY = <span className="font-semi-bold"> Kashify </span>
-const SPOTIFY = <span className="font-semi-bold"> <FaSpotify /> Spotify </span>
+const SPOTIFY = <span className="font-semi-bold"> <FaSpotify /> Spotify Playlists</span>
 
 function searchButton() { 
     return (
@@ -38,6 +38,7 @@ const PLS_HELP_ME =
 function Home() {
 
   return (
+    <>
     <Container className="pages" id="home">
         <Row>
             <Col xl={6} id="home-title">   
@@ -49,7 +50,7 @@ function Home() {
                 </h2>
 
                 <div id="home-btn">
-                    {searchButton()} <LoginButton/>
+                    {searchButton()} <PlaylistsHome/>
                 </div>
 
                 <div id="description-title">
@@ -61,11 +62,11 @@ function Home() {
                             {KASHIFY} เป็นเว็บไซต์สำหรับเรียนรู้คำศัพท์ภาษาญี่ปุ่น ผ่านเนื้อเพลงภาษาญี่ปุ่น 
                             ผู้ใช้สามารถเรียนรู้ความหมายของคำศัพท์ต่าง ๆ ในเนื้อเพลงได้อย่างสะดวก รวดเร็ว
                             และสามารถเลือกเนื้อเพลงได้ตามความเหมาะสมกับตัวเองได้ตามระดับความยากง่ายของเนื้อเพลง
-                            นอกจากนี้แล้วผู้ใช้สามารถเข้าสู่ระบบผ่าน {SPOTIFY} เพื่อเพิ่มความสะดวกในการใช้งาน {KASHIFY} ได้อีกด้วย
+                            นอกจากนี้ถ้าไม่รู้จะฟังเพลงภาษาญี่ปุ่นอะไรดี {KASHIFY} ก็ได้เตรียม {SPOTIFY} ที่มีเพลงภาษาญี่ปุ่นให้พร้อมแล้ว กดไปฟังเพลงกันได้เลย!
                         </p> 
                         <p className="radius">
-                            <Link to="/spotify" className="pink-link font-semi-bold">
-                                <VscCircleFilled/> เข้าสู่ระบบผ่าน {SPOTIFY} แล้วทำอะไรได้บ้าง ?
+                            <Link to="/playlist/37i9dQZEVXbKXQ4mDTEBXq" className="pink-link font-semi-bold">
+                                <VscCircleFilled/> เลือกเพลงใน  {SPOTIFY} 
                             </Link>
                             <br/>
                             <Link to="/levels" className="pink-link font-semi-bold">
@@ -74,7 +75,7 @@ function Home() {
                             <br/>
                             <Link to="/about" className="pink-link font-semi-bold">
                                 <VscCircleFilled/> เกี่ยวกับ Kashify และแหล่งข้อมูลที่ใช้
-                            </Link>
+                            </Link>                            
                         </p>
                                                 
                         {PLS_HELP_ME}
@@ -90,8 +91,23 @@ function Home() {
                 </div>
             </Col>
         </Row>  
-
     </Container>
+    <Container className="footer" fluid>
+        <Container id="left">
+            <Row>
+                <Col xl={6} id="first">
+                    เว็บแอพลิเคชัน {KASHIFY} นี้เป็นส่วนหนึ่งของรายวิชา 2209491 โครงการเทคโนโลยีภาษา 1 และ 2209492 โครงการเทคโนโลยีภาษา 2 ภาควิชาภาษาศาสตร์ คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
+                </Col>
+                <Col xl={6}>
+                    พัฒนาโดย <span className="font-semi-bold"> ญาธิป เจริญวราวุฒิ </span>
+                    ปัจจุบันเป็นนิสิตชั้นปีที่ 4 สาขาวิชาเทคโนโลยีภาษาและสารสนเทศ คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
+                </Col>
+            </Row>
+        
+        </Container>
+    </Container>
+    </>
+
     );
 }
 export default Home;
