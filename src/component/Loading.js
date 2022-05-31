@@ -46,7 +46,7 @@ function NoMatch() {
   return (
       <>
         <div style={loadingImage}>
-          <img src={require(`../images/pien_girl.gif`)}></img> 
+          <img src={require(`../images/icon.png`)}></img> 
         </div>
         <br/>
         <span className="font-semi-bold">
@@ -77,7 +77,7 @@ function LoadingIMG() {
     return (
         <div lang="th">
           <div style={loadingImage}>
-            <img src={require(`../images/pien_girl.gif`)}></img> 
+            <img src={require(`../images/icon.png`)}></img> 
           </div>
 
           <div style={spinnerIMG}>
@@ -97,18 +97,19 @@ function LoadingIMGLevels(props) {
   return (
       <div style={{marginTop:100}}>
         <div style={loadingImageSearch}>
-          <img src={require(`../images/pien_girl.gif`)}></img> 
+          <Spinner animation="border" style={inSpinner}/>
         </div>
 
         <div style={spinnerIMG}>
-            <Spinner animation="border" style={inSpinner}/>
             <span className="font-big font-semi-bold"> กรุณารอสักครู่... </span>
         </div>
 
-        <div className="d-block font-semi-bold gray-text">
+        <div className="d-block font-semi-bold gray-text" style={{paddingLeft:20, paddingRight:20}}>
           <span>
             กำลังค้นหาเพลงระดับ<strong> {level} </strong>อยู่ค่า
-            <br/>
+          </span>
+          <br/>
+          <span>
             (แต่ถ้าไม่อยากรอสามารถพิมพ์คำค้นหาที่ต้องการได้เลยนะคะ)
           </span>
         </div>

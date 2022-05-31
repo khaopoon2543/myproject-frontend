@@ -23,14 +23,14 @@ const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify </span>
 const btnDetail = 
   <div className="description" id="btn-detail" lang="th"> 
     <p className="radius">
-      <div className="d-flex align-items-center" style={{marginBottom: '10px'}}>
+      <span className="d-flex align-items-center" style={{marginBottom: '10px'}}>
         <BsPlayCircleFill style={{fontSize: '40px'}}/> &nbsp;&nbsp;
         เปิดเพลงฟังบน &nbsp; {SPOTIFY}
-      </div>
-      <div className="d-flex align-items-center">
+      </span>
+      <span className="d-flex align-items-center">
         <button className="icon" id="search-kashify"><FiSearch /></button> &nbsp;&nbsp;
         ค้นหาเพลงใน &nbsp; {KASHIFY}
-      </div>
+      </span>
     </p>
   </div>
 

@@ -77,7 +77,11 @@ import { LyricLink, SeriesLink, ArtistLink } from "../linkPath";
           </div>
         )
     } else if (track.series && track.series.name) { 
-        return ( <><br/><span id="sub-data">{track.series.name}</span></>)
+        return ( 
+          <div className="artist-series">
+            <span id="sub-data">{track.series.name}</span>
+          </div>
+        )
     }  return null 
         //if change filter from another to 'series' & searchTerm no result in 'series'
         //then app NOT setState(setSongsList) in useEffect!!

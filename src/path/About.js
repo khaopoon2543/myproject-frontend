@@ -1,6 +1,7 @@
 import { Container, Col, Row, Card} from 'react-bootstrap';
-import { FaSpotify } from 'react-icons/fa';
+import { FaSpotify, FaFacebook } from 'react-icons/fa';
 import { MdSource } from 'react-icons/md';
+import { IoMail } from 'react-icons/io5';
 
 const PINK = {
   color: "var(--pink)"
@@ -11,19 +12,11 @@ const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify Playlists 
 
 const SOURCES_ITEMS = [
   {
-    title: 'LYRICAL NONSENSE',
+    title: 'Lyrical Nonsense',
     url: 'https://www.lyrical-nonsense.com',
     description: `Lyrical Nonsense เป็นเว็บไซต์ค้นหาเนื้อเพลงหลากหลายภาษา โดยมีเนื้อเพลงภาษาญี่ปุ่นเป็นส่วนใหญ่ 
                   และมีการอัปเดตเนื้อเพลงใหม่ ๆ อยู่ตลอด
                   โดยข้อมูลเพลงและเนื้อเพลงบน Kashify นั้นนำมาจากเว็บไซต์นี้ทั้งหมด`
-  },
-  {
-    title: 'SudachiPy',
-    url: 'https://github.com/WorksApplications/SudachiPy',
-    description: `SudachiPy คือ Japanese morphological analyzer (Python version) 
-                  โดยสามารถนำไปใช้ในการประมวลผลภาษาธรรมชาติ (Natural language processing) 
-                  สำหรับภาษาญี่ปุ่นได้อย่างง่าย โดยใน Kashify ใช้ SudachiPy ในการตัดคำ (Tokenization) และการแปะป้ายชนิดของคํา (Part of speech tagging) เนื้อเพลงภาษาญี่ปุ่น
-                  `
   },
   {
     title: 'JTDIC',
@@ -38,6 +31,14 @@ const SOURCES_ITEMS = [
     description: `EDICT (Japanese English Dictionary) เป็นพจนานุกรมภาษาญี่ปุ่น-อังกฤษ เป็นฐานเปิดของทางมหาวิทยาลัยโมนาช (ออสเตรเลีย)
                   โดยข้อมูลพจนานุกรมจาก EDICT ที่ใช้ใน Kashify นั้นนำมาจากทางคุณไพฑูรย์ แซ่ตั้ง ผู้พัฒนา JTDIC ซึ่งได้รวมข้อมูลของ EDICT (พจนานุกรมภาษาญี่ปุ่น-อังกฤษ) กับ JTDIC (พจนานุกรมภาษาญี่ปุ่น-ไทย) ไว้ร่วมกันแล้ว
                   โดย EDICT เป็นพจนานุกรมที่ใช้แสดงความหมายภาษาอังกฤษของคำศัพท์ภาษาญี่ปุ่นที่ปรากฎบนเนื้อเพลงใน Kashify
+                  `
+  },
+  {
+    title: 'SudachiPy',
+    url: 'https://github.com/WorksApplications/SudachiPy',
+    description: `SudachiPy คือ Japanese morphological analyzer (Python version) 
+                  โดยสามารถนำไปใช้ในการประมวลผลภาษาธรรมชาติ (Natural language processing) 
+                  สำหรับภาษาญี่ปุ่นได้อย่างง่าย โดยใน Kashify ใช้ SudachiPy ในการตัดคำ (Tokenization) และการแปะป้ายชนิดของคํา (Part of speech tagging) เนื้อเพลงภาษาญี่ปุ่น
                   `
   },
   {
@@ -94,11 +95,17 @@ function About() {
 
                   <h5 className="underline">เกี่ยวกับผู้พัฒนา</h5>
                   <p>
-                    <span className="font-semi-bold">ญาธิป เจริญวราวุฒิ </span>
+                    <span className="font-semi-bold">ญาธิป เจริญวราวุฒิ (ข้าวปุ้น) </span>
+                    <br/>
                     ปัจจุบันเป็นนิสิตชั้นปีที่ 4 สาขาวิชาเทคโนโลยีภาษาและสารสนเทศ คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
-                    
                   </p>
-                  
+                  <p className="radius">
+                    <IoMail /> khaopoon2543@gmail.com
+                    <br/>
+                    <a href="https://www.facebook.com/111873184863262" id="fb" target="_blank">
+                        <FaFacebook /> Kashify เว็บเรียนคำศัพท์ญี่ปุ่นผ่านเนื้อเพลง
+                    </a>
+                  </p>
                 </div>
               </div>
             </Col>
@@ -108,7 +115,7 @@ function About() {
                 <div className="content">
                   <h5 className="underline" id="about">
                     <MdSource id="icon-title"/> 
-                    แหล่งข้อมูล
+                    แหล่งข้อมูลที่ใช้
                   </h5>
                 </div>
                 {SOURCES_ITEMS.map((item, index) => {

@@ -48,15 +48,15 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 5%;
-  background: linear-gradient(to right, var(--pink) 50%, var(--white) 50%);
+  height: 50%;
+  background: linear-gradient(to right, var(--pinkPastel) 50%, var(--white) 50%);
   background-size: 220% 100%;
   background-position: right;
   transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
 } .nav-links span:hover:after {
   background-position: left;
 } .nav-links span:hover {
-  color: var(--pink);
+  color: var(--black);
   transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
 }
 
@@ -93,24 +93,23 @@ button.navbar-toggler svg{
 #offcanvas-item {
   margin: 10px 20px !important;
 } #offcanvas-item-spotify {
-  margin-top: 30px !important;
+  margin: 5px 0 !important;
 }
 
 /* ------------------- DROPDOWN ------------------- */
 
 #nav-dropdown {
   display: flex; align-items: center;
-  font-weight: 600;
-  letter-spacing: 1px;
-  padding: 3px 10px 3px 3px;
-  transition: all 0.25s;
+  font-weight: 500;
+  letter-spacing: .5px;
+  padding: 2px 10px;
   border-radius: 25px;
   color: var(--black);
-  background-color: var(--white);
-} #nav-dropdown:hover {
-  color: var(--white);
-  background-color: var(--pink);
-}
+  border: 2px solid var(--white);
+} #nav-dropdown:hover, #nav-dropdown:focus {
+  background-color: var(--pinkPastel);
+  transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
+} 
 .dropdown-menu {
   padding: 10px 10px !important;
 } 
@@ -166,7 +165,10 @@ a.dropdown-item {
 
 @media screen and (max-width: 992px) {
   #nav-dropdown {
-    width: 200px !important;
+    width: 150px !important;
+    margin-left: -2px;
+    padding-left: 0;
+    border-radius: 0;
   }
   .dropdown-item {
     font-size: 14px !important;

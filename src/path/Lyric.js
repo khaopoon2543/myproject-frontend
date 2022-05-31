@@ -25,8 +25,9 @@ function Lyric() {
   const { trackId, trackArtist } = useParams() 
   const [collectedWord, setCollectedWord] = useState([]); 
   const [isOpen, setIsOpen] = useState(false);
-  const [fontSize, setFontSize] = useState('');
   const screenSize = useIsMobileLG();
+  const [fontSize, setFontSize] = useState(screenSize ? 16 : 18);
+
 
   useEffect(() => {
     //let timeOut = setTimeout(() => setLoading(false), 3000);
@@ -36,7 +37,8 @@ function Lyric() {
       console.log('start fetching...');
       setLoading(true);
 
-      axios.get('https://sudachi-api.herokuapp.com/lyric/'+ trackArtist + '/' + trackId , { mode: 'cors', crossDomain: true })
+      //https://sudachi-api.herokuapp.com/lyric/
+      axios.get(`${backendSrc}/lyric/`+ trackArtist + '/' + trackId , { mode: 'cors', crossDomain: true })
             .then((response) => {
               setTokenizedList(response.data.tokenized_list);
               setTitle(response.data.title);
@@ -157,26 +159,16 @@ function Lyric() {
     )
   };
 
-  function isFocus(filter) {
-    if (fontSize === filter){
-      return "focus"
-    } return null
-  }
   function buttonChangeSize() {
     return (
       <div className="filters" id="size" lang="jp">
         <span id='icon'><BiFontSize/></span>
-        <button onClick={() => setFontSize('font-small')} id={isFocus('font-small')} 
-          className="btn-font-small">
-            Aa
+        <button onClick={() => setFontSize(fontSize-2)}>
+            -
         </button>
-        <button onClick={() => setFontSize('font-mid')} id={isFocus('font-mid')} 
-          className="btn-font-mid">
-            Aa
-        </button>
-        <button onClick={() => setFontSize('font-big')} id={isFocus('font-big')}
-          className="btn-font-big">
-            Aa
+        <span> {fontSize} px </span>
+        <button onClick={() => setFontSize(fontSize+2)}>
+            +
         </button>
       </div>
     )
@@ -233,7 +225,7 @@ function Lyric() {
                 </div>
                 <br/>
 
-                <div id="lyric" className={fontSize}>
+                <div id="lyric" style={{ fontSize: fontSize }}>
                   {(tokenized_list && tokenized_list.length>0) &&
                     tokenized_list.map((word, i) => {
                     if (word.surface === '\n'){
@@ -242,13 +234,13 @@ function Lyric() {
                       return <div key={i}><br/></div>
                     }else if(word.poses[0] === '空白'){
                       return <span key={i}>&nbsp;</span>
-                    }else if(!isJapanese(word.surface)){
+                    }else if(!isJapanese(word.dictionary_form)){ //change to dictionary_form //ex FLY HIGH!! 艱難(かんなん)
                         return <span key={i}>{word.surface}</span>
                     }else if(/\s/.test(word.surface)){ //check str is space?
                       return <span key={i}>&nbsp;</span>
 
                     //}else if(['助詞','助動詞','空白','補助記号','記号','代名詞','接尾辞','接頭辞'].indexOf(word.poses[0]) === -1 ){  //Value does not exists!
-                    }else if(['名詞','動詞','形容詞','形状詞','連体詞','副詞','接続詞','感動詞'].includes(word.poses[0]) 
+                    }else if(['名詞','動詞','形容詞','形状詞','連体詞','副詞','接続詞','感動詞','代名詞','接尾辞','接頭辞'].includes(word.poses[0]) 
                               && word.surface != parseInt(word.surface, 10) ){  //Value does exists!
                       return   <Tooltip key={i} 
                                         word={word.surface}  

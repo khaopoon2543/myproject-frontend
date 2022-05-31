@@ -34,7 +34,7 @@ export const LevelsItems = [
     {
         title: 'Difficult',
         subtitle: 'Lower Advanced',
-        textTh: 'ผู้อ่านสามารถเข้าใจคำศัพท์พื้นฐานและรูปแบบไวยากรณ์ได้ สามารถจัดการกับประโยคที่ซับซ้อนแบบพื้นฐาน',
+        textTh: 'ผู้อ่านสามารถเข้าใจการเขียนทางเทคนิคได้เป็นส่วนใหญ่ สามารถอ่านโครงสร้างประโยคที่ซับซ้อนที่ปรากฎอยู่บ่อยในงานวรรณกรรมได้',
         textEn: 'The reader is able to mostly understand technical writing. S/he can deal with complex structures often observed in literary works.',
         id: 'difficult',
         readabilityScore: '1.5-2.4'

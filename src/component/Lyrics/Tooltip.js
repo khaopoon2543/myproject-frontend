@@ -45,7 +45,7 @@ export default function Tooltip(props) {
     function IsDict() {
         if (dataDic.dict && dataDic.dict.length > 0) {
             return (<button className={`pink-text`} 
-                        onClick={() => {props.onOpen(dataDic); props.isOpen(true);}}>
+                        onMouseOver={() => {props.onOpen(dataDic); props.isOpen(true);}}>
                         {word}       
                     </button>)
 

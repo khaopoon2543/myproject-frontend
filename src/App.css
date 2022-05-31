@@ -68,6 +68,13 @@
 }.gray-text {
   color: var(--grayLight);
 }
+.font-small {
+  font-size: 14px !important;
+}.font-mid {
+  font-size: 16px !important;
+}.font-big {
+  font-size: 18px !important;
+}
 
 img {
   max-width: 50%;  
@@ -474,8 +481,7 @@ span.nav-button{
     margin-left: 10px;
   }.filters button {
     font-size: 14px;
-    padding: 3px 5px;
-    border: none;
+    padding: 3px 10px;
   }.filters button:hover {
     padding: 3px 20px;
     background: var(--black);
@@ -487,11 +493,7 @@ span.nav-button{
     color: var(--white);
     transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
   }
-}
-
-.filters#size button { /* Lyric.js */
-  padding: 3px 30px;
-}
+} 
 
 /* ----------------------------- Artists ----------------------------- */
 
@@ -862,6 +864,13 @@ button#search-kashify {
   background-color: var(--black);
   padding: 20px;
   padding-top: 20px;
+  padding-bottom: 50px;
+}
+@media only screen and (min-width: 1960px) {
+  .footer {
+    position: absolute;
+    bottom: 0;
+  }
 }
 .footer #me {
   color: var(--grayLight);
@@ -871,6 +880,19 @@ button#search-kashify {
   font-weight: 300 !important;
   text-align: left;
   padding: 0px 100px;
+}
+#fb {
+  color: var(--black);
+} a#fb:hover {
+  transition: all 0.25s;
+  color: var(--pink);
+  text-decoration: underline solid var(--pink) 1px !important;
+}.footer #fb {
+  color: var(--grayLight);
+} .footer a#fb:hover {
+  transition: all 0.25s;
+  color: var(--white);
+  text-decoration: underline solid var(--white) 1px !important;
 }
 #home {
   margin-bottom: 0px !important;

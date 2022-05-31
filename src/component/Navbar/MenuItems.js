@@ -13,11 +13,5 @@ export const MenuItems = [
         title: 'ระดับความยากง่าย',
         url: '/levels',
         cName: 'nav-links'
-    },
-    {
-        title: 'เกี่ยวกับ Kashify',
-        url: '/about',
-        cName: 'nav-links'
     }
 ]
-

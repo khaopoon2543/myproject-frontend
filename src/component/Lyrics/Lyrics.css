@@ -85,7 +85,25 @@ span#pink {
   border-radius: 10px;
   border: 2px solid var(--pinkPastel);
 }
+#size span {
+  color: var(--gray);
+}
+#size button { 
+  font-size: 16px;
+  padding: 0px 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 50px;
+  transition: all 0.25s;
+}
+.filters span#icon svg{
+  font-size: 24px;
+  margin: 0px;
+  margin-right: 15px;
+  color: var(--gray);
+}
 
+ /* Lyric.js */
 div#lyric{
   text-align: left;
   font-weight: 300;
@@ -96,31 +114,6 @@ div#lyric{
   display: inline-block;
   padding:0;margin:0;
   margin-bottom: 25px; /* line height lyric */
-}
-
-/* user selected font size */
-.font-small {
-  font-size: 14px !important;
-}.font-mid {
-  font-size: 16px !important;
-}.font-big {
-  font-size: 18px !important;
-}.btn-font-small {
-  font-size: 12px !important;
-}.btn-font-mid {
-  font-size: 14px !important;
-  padding-top: 1px !important;
-  padding-bottom: 1px !important;
-}.btn-font-big {
-  font-size: 16px !important;
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-}
-.filters span#icon svg{
-  font-size: 24px;
-  margin: 0px;
-  margin-right: 15px;
-  color: var(--gray);
 }
 
 button, button:focus{

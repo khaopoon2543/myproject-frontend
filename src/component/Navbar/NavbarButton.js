@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { NavDropdown } from 'react-bootstrap';
 import { PlaylistItems } from '../Spotify/PlaylistItems';
 import { FaSpotify } from 'react-icons/fa';
-import { MdQueueMusic } from 'react-icons/md';
 
-const TITLE_DROPDOWN2 = <><FaSpotify className="spotify-icon"/> Spotify Playlists </>
+const TITLE_DROPDOWN2 = <> Spotify Playlists </>
 function PlaylistsDropdown() {
     return (
         <NavDropdown title={TITLE_DROPDOWN2} id="nav-dropdown" align={{ md: 'end' }}>

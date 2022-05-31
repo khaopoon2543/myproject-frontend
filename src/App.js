@@ -13,7 +13,12 @@ import About from "./path/About";
 import { NoMatch } from "./component/Loading";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import useGaTracker from './component/useGaTracker'
+
+
 function App(){
+  
+    useGaTracker();
 
     return (
       <div className="App">
