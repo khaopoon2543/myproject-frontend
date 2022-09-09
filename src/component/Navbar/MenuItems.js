@@ -13,5 +13,10 @@ export const MenuItems = [
         title: 'ระดับความยากง่าย',
         url: '/levels',
         cName: 'nav-links'
+    },
+    {
+        title: 'แปลงเนื้อเพลงเอง',
+        url: '/input',
+        cName: 'nav-links'
     }
 ]

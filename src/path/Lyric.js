@@ -16,7 +16,7 @@ import useIsMobileLG from '../component/useIsMobileLG';
 import { ArtistLink, SeriesLink } from "../component/linkPath";
 import { backendSrc } from "../component/backendSrc";
 
-function Lyric() {
+function Lyric({inputLyric}) {
   const [tokenized_list, setTokenizedList] = useState([])
   const [title, setTitle] = useState([])
   const [titleInfo, setTitleInfo] = useState([]);
@@ -65,6 +65,28 @@ function Lyric() {
       return () => { isMounted = false; };
     }
   }, [trackId, trackArtist]);
+
+  useEffect(() => {
+    if ( inputLyric ) {
+      let isMounted = true;
+      console.log('start tokenize...');
+      setLoading(true);
+
+      axios.get(`${backendSrc}/lyric`, { params: { lyric:inputLyric }})
+            .then((response) => {
+              setTokenizedList(response.data.tokenized_list);
+            })
+            .then(() => {
+              if(isMounted){
+                console.log('finish fetching lyrics!');
+                setLoading(false)
+              } 
+            })
+            .catch(error => { console.log(error) });
+
+      return () => { isMounted = false; };
+    }
+  }, [inputLyric]);
 
   function isSingers(titleInfo) {
     let text = []
@@ -205,7 +227,7 @@ function Lyric() {
   if (loading) return <LoadingIMG />
   return (
     <div lang="jp">
-      <Title />
+      {!inputLyric && <Title />}
         <Container style={{ marginBottom: 50 }} fluid="sm"> {/* marginLeft: screenSize ? 10 : 50 */}
           <Row>  
             {screenSize===false &&
@@ -230,7 +252,7 @@ function Lyric() {
                     tokenized_list.map((word, i) => {
                     if (word.surface === '\n'){
                       return <div key={i}></div>
-                    }else if(word.surface === '\n\n'){
+                    }else if((word.surface === '\n\n') || (word.surface === '\n\n\n')){
                       return <div key={i}><br/></div>
                     }else if(word.poses[0] === '空白'){
                       return <span key={i}>&nbsp;</span>

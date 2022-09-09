@@ -12,9 +12,6 @@ const ABOUT_FORM =
     <Nav.Link href="/about" className="nav-links">
         <span>เกี่ยวกับเรา</span>
     </Nav.Link> 
-    <Nav.Link href='https://airtable.com/shrQF9cQwkt3UJzIO' className="nav-links" target='_blank'>
-        <span>รายงานปัญหา</span>
-    </Nav.Link>
     <Nav.Link  href="https://www.facebook.com/111873184863262" id="fb" target="_blank">
         <FaFacebook style={{fontSize:20}}/>
     </Nav.Link>

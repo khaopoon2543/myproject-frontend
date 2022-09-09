@@ -10,6 +10,8 @@ import SubLevels from "./path/SubLevels";
 import Data from "./path/Data";
 import SubData from "./path/SubData";
 import About from "./path/About";
+import Input from './path/Input';
+
 import { NoMatch } from "./component/Loading";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -36,6 +38,7 @@ function App(){
           <Route path="/series" element={ <Data src="series"/> } />
           <Route path="/series/:subSeries" element={ <SubData/> } />
           <Route path="/playlist/:codePlaylist" element={ <Playlist/> } />
+          <Route path="/input" element={ <Input/> } />
 
           <Route path="/about" element={ <About/> } />
         </Routes>

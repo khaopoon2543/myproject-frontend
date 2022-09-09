@@ -495,6 +495,22 @@ span.nav-button{
   }
 } 
 
+/* ------ input btn ------ */
+#input-btn .filters button{
+  margin-left: 0px !important;
+  color: var(--white);
+  background: var(--pink);
+  border: 1px solid var(--pink);
+}
+@media only screen and (max-width: 768px) {
+  #input-btn .filters{
+    text-align: center !important;
+  }
+  #input-btn .filters button{
+    font-size: 16px;
+    padding: 3px 20px;
+  }
+} 
 /* ----------------------------- Artists ----------------------------- */
 
 .alphabet {
@@ -756,6 +772,10 @@ button#search-kashify {
   .tag-result {
     padding: 0 10px; 
   }
+}
+
+#input-modal .modal-content {
+  width: 100% !important;
 }
 
 /* ----------------------------- Spotify Callback Successes ----------------------------- */
