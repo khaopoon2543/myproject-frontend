@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Container, Col, Row, Card} from 'react-bootstrap';
 import { FaSpotify, FaFacebook } from 'react-icons/fa';
 import { MdSource } from 'react-icons/md';
@@ -8,7 +9,12 @@ const PINK = {
 }
 const KASHIFY_PINK = <strong style={PINK}> Kashify </strong>
 const KASHIFY = <span className="font-semi-bold"> Kashify </span>
-const SPOTIFY = <span className="font-semi-bold"><FaSpotify/> Spotify Playlists </span>
+const SPOTIFY =     <Link to={"/playlist/37i9dQZEVXbKXQ4mDTEBXq"}  className="pink-link font-semi-bold">
+                        <FaSpotify /> Spotify Playlists
+                    </Link>
+const INPUT_LINK =  <Link to={"/input"}  className="pink-link font-semi-bold">
+                        แปลงเนื้อเพลงเอง
+                    </Link>
 
 const SOURCES_ITEMS = [
   {
@@ -87,6 +93,7 @@ function About() {
                   <p>
                     เป็นเว็บไซต์สำหรับเรียนรู้คำศัพท์ภาษาญี่ปุ่นผ่านเนื้อเพลงภาษาญี่ปุ่น
                     โดยมีการแบ่งระดับความยากง่ายของเนื้อเพลง เพื่อให้ผู้เรียนสามารถเลือกเพลงที่อยากเรียนรู้ได้เหมาะสมกับตัวเองได้
+                    หรือถ้าหากไม่มีเพลงที่ชอบในเว็บก็สามารถนำเนื้อเพลงมาใส่แล้ว {INPUT_LINK} ได้อีกด้วย
                     นอกจากนี้แล้ว ถ้าหากไม่รู้จะฟังเพลงภาษาญี่ปุ่นอะไรดี ผู้ใช้ก็สามารถเลือกเพลงภาษาญี่ปุ่นจาก {SPOTIFY} ตามที่เราได้จัดเตรียมมาให้ได้เลย!
                   </p>
                   <p className="radius">
@@ -97,10 +104,12 @@ function About() {
                   <p>
                     <span className="font-semi-bold">ญาธิป เจริญวราวุฒิ (ข้าวปุ้น) </span>
                     <br/>
-                    ปัจจุบันเป็นนิสิตชั้นปีที่ 4 สาขาวิชาเทคโนโลยีภาษาและสารสนเทศ คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
+                    จบจากสาขาวิชาเทคโนโลยีภาษาและสารสนเทศ คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
                   </p>
                   <p className="radius">
-                    <IoMail /> khaopoon2543@gmail.com
+                    <a href="mailto: khaopoon2543@gmail.com" id="fb">
+                        <IoMail /> khaopoon2543@gmail.com 
+                    </a>
                     <br/>
                     <a href="https://www.facebook.com/111873184863262" id="fb" target="_blank">
                         <FaFacebook /> Kashify เว็บเรียนคำศัพท์ญี่ปุ่นผ่านเนื้อเพลง

@@ -496,7 +496,7 @@ span.nav-button{
 } 
 
 /* ------ input btn ------ */
-#input-btn .filters button{
+#input-btn .filters button#process-lyric-btn{
   margin-left: 0px !important;
   color: var(--white);
   background: var(--pink);
@@ -506,7 +506,7 @@ span.nav-button{
   #input-btn .filters{
     text-align: center !important;
   }
-  #input-btn .filters button{
+  #input-btn .filters button#process-lyric-btn{
     font-size: 16px;
     padding: 3px 20px;
   }
@@ -662,20 +662,31 @@ button#spotify-open {
   font-weight: 600;
   margin-top: 10px;
 }
-#home button#search-btn {
+#home button#pink-btn {
   color: var(--white);
   background-color: var(--pink);
-} #home button#search-btn:hover {
+} #home button#pink-btn:hover {
   box-shadow: var(--pinkPastel) 0px 0px 30px;  
-} #home button#search-btn:hover>.kashify-icon  {
+} #home button#pink-btn:hover>.icon-btn  {
   color: var(--pink) !important;
-} #home .kashify-icon {
+} 
+#home button#black-btn {
+  color: var(--white);
+  background-color: var(--black);
+}  #home button#black-btn:hover {
+  box-shadow: var(--pinkPastel) 0px 0px 30px;  
+} #home button#black-btn .icon-btn {
+  color: var(--black) !important;
+} 
+#home .icon-btn {
   font-size: 36px;
   padding: 3px;
   margin-right: 20px;
   color: var(--pink);
   background: var(--white) !important;
+  border-radius: 50px;
 }
+
 
 #home button#spotify-login {
   color: var(--white);

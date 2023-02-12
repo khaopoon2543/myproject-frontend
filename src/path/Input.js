@@ -40,7 +40,7 @@ function Input() {
             <Form.Control as="textarea" rows={3} onChange={onChangeData} style={{height:"200px"}}/>
           </Form.Group>
           <div className="filters">
-            <button type="submit"> 
+            <button type="submit" id="process-lyric-btn">
               แปลงเนื้อเพลง
             </button>
           </div>
