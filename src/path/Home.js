@@ -121,8 +121,8 @@ function Home() {
                     จบจากสาขาวิชาเทคโนโลยีภาษาและสารสนเทศ คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
                     <br/>
                     <div style={{paddingTop: 10}}>
-                        <a href="mailto: khaopoon2543@gmail.com" id="fb">
-                            <IoMail /> khaopoon2543@gmail.com 
+                        <a href="mailto: kaopun.yathip@gmail.com" id="fb">
+                            <IoMail /> kaopun.yathip@gmail.com 
                         </a>
                         &nbsp;&nbsp;
                         <a href="https://www.facebook.com/111873184863262" id="fb" target="_blank">
