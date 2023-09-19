@@ -1,7 +1,7 @@
 /* ----------------------------- Lyric ----------------------------- */
 
 .titleLyric {
-  background-color: var(--black);
+  background: linear-gradient(var(--black), black);
   color: var(--white);
   padding: 40px;
 }.titleLyric .info{
@@ -23,19 +23,18 @@
   align-items: center;
 }
 
-.info#search { 
-  margin-top: 20px;
-} .info#search button{ 
+.info#search button{ 
   font-size: 12px;
 } .info#search svg{ 
   font-size: 20px;
-} button#spotify-search {
+} button#spotify-search, button#toggle-video {
   margin-right: 5px;
   font-size: 14px;
+  padding: 2px 15px 2px 5px;
 } button#spotify-search:hover {
-  padding: 2px 20px 2px 5px;
   color: var(--black);
   background-color: var(--white);
+  transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
 }
 
 span#pink {
@@ -154,7 +153,6 @@ button.pink-text {
 }
 
 @media only screen and (max-width: 768px) {
-
   .titleLyric {
     padding: 40px 0px !important;
   } .titleLyric h5 {
@@ -192,10 +190,30 @@ button.pink-text {
   }
 }
 
-/* -------------- sidebar-dict -------------- */
-.sidebar .card {
-  cursor: text !important;
+.img-song {
+  text-align: right;
+  margin-right: 10px;
 }
+.img-song img{
+  object-fit: cover;
+  max-width: 100%;
+  height: 100%;
+  width: 500px;
+}
+@media only screen and (max-width: 992px) {
+  .img-song {
+    margin-bottom: 30px;
+    margin-right: 0px;
+    text-align: center;
+  }
+  .img-song img{
+    max-width: 100%;
+    height: 100%;
+    width: 200px;
+  }
+}
+
+/* -------------- sidebar-dict -------------- */
 #dict.card {
   color: var(--grayLight);
   border-radius: 0 !important;
@@ -209,26 +227,26 @@ button.pink-text {
   padding-right: 10px;
 }
 
-.sidebar .card {
+.sidebar {
+  position: sticky;
+  text-align: left;
+  top: 220px;
+}/* #is-mv */
+.sidebar#is-mv{
+  top: 420px !important;
+}
+.dict-box .card {
+  cursor: text !important;
   margin-top: 0px;
   border: 2px solid var(--pinkPastel) !important;
   border-top: 0 !important;
   margin-bottom: 0;
-}.sidebar {
-  position: sticky;
-  text-align: left;
-  top: 220px;
-}.sidebar #header{
+}.dict-box #header{
   background-color: var(--black);
   color: var(--white);
   padding: 15px 5px;
   margin-right: 8px;
   border-radius: 10px 10px 0 0;
-}.sidebar #header h4{
-  display: inline;
-}.sidebar #header h4#head-word{
-  margin-right: 10px;
-  margin-left: 10px;
 }
 
 #no-scroll {
@@ -259,27 +277,39 @@ button.pink-text {
 .scroll .card {
   box-shadow: none !important;
 }
-#dictTh {
-  font-size: 18px;
-  color: var(--pink);
-}#dictEn span{
-  font-size: 14px;
-  display: block;
+
+/* ---------- TEXT FONT-SIZE ---------- */
+.dict-box #header span{
+  display: inline;
+  font-size: 20px;
+  font-weight: 500;
+}.dict-box #header span#head-word{
+  margin-right: 10px;
+  margin-left: 10px;
 }
-.tagPos span{ 
-  display: inline-block;
+#dictTh{
+  /* font-size: 18px; */
+  color: var(--pink);
+}#dictEn{
+  /* font-size: 14px; */
+  display: block;
+  font-size: 14px;
+}.tagPos span{ 
+  /* font-size: 12px; */
+  font-size: 12px; 
   font-weight: 600;
-  font-size: 12px;
+  display: inline-block;
   padding: 3px 20px;
   margin-right: 5px;
   border-radius: 25px;
   color: var(--diffSRT);
   background: var(--diffBG);
-} 
-
+}
 .head-each-word {
   margin-bottom: 5px;
 }.head-each-word #kanji{
+  font-size: 18px; 
+  font-weight: 500;
   color: var(--gray);
 }.head-each-word #read-form{
   font-size: 16px;
@@ -290,36 +320,33 @@ button.pink-text {
   ::-webkit-scrollbar {
     width: 0px !important;
   }
-  .sidebar-mobile{
-    position: sticky;
-    top: 51px;
-    background-color: var(--white);
+  .sidebar.sidebar-mobile{
+    top: 51px !important;
     margin-top: -30px;
     margin-bottom: 50px;
-    padding: 20px 0;
-    box-shadow: var(--pinkLight) 0 10px 10px -10px;
+    background-color: var(--white);
+    padding: 20px 0 0 0;
+    box-shadow: var(--pinkPastel) 0 10px 10px -10px;
+    border-bottom: 1px solid var(--pinkPastel);
+    border-radius: 10px;
   }
-  .sidebar {
+  /* #is-mv */
+  .sidebar.sidebar-mobile#is-mv{
+    top: 200px !important;
+  }
+  .dict-box {
     position: sticky;
-    padding: 0 10px;
-  }.sidebar #header{
+    padding: 0;
+
+  }.dict-box #header{
     margin-right: 0px !important;
+    padding: 12px 5px;
   }
   .scroll {
     overflow-y: scroll;
-    height: 25vh ;
+    height: 20vh ;
   } 
   .tagPos span{ 
     font-size: 10px;
-  }
-  #dictEn {
-    line-height: 1.2;
-    font-size: 14px;
-  }
-  .head-each-word #kanji{
-    font-size: 18px;
-  }.head-each-word #read-form{
-    font-size: 14px;
-    color: var(--grayLight);
   }
 }

@@ -23,6 +23,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-sticky": "^6.0.3",
+    "react-youtube": "^10.1.0",
     "spotify-web-api-node": "^5.0.2",
     "wanakana": "^4.0.2",
     "web-vitals": "^2.1.4"

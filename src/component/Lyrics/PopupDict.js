@@ -74,23 +74,23 @@ export default function PopupDict({ dictList, isOpen }) {
     return (
       isOpen ?
         <>
-        <div className="sidebar">
+        <div className="dict-box">
           <div id="header">
-            <h4 id="head-word">{dictList.token.word}</h4>
+            <span id="head-word">{dictList.token.word}</span>
             {isReadForm(dictList)!==null &&
-              <h4 className="gray-text">({isReadForm(dictList)})</h4>
+              <span className="gray-text">({isReadForm(dictList)})</span>
             }
           </div>
           <div className="scroll">       
             {mapDict}
           </div>
-        </div> 
+        </div>
         </>
       : 
         <>
-        <div className="sidebar" lang="th">
-          <div id="header">
-            <h4 id="head-word">ความหมายคำศัพท์</h4>
+        <div className="dict-box" lang="th">
+          <div className="dict-box" id="header">
+            <span id="head-word">ความหมายคำศัพท์</span>
           </div>
           <div className="scroll" id="no-scroll">  
             <Card id="last-dict">  
