@@ -55,7 +55,7 @@ function Result() {
 
               {level && 
                 <div className="tagLevel" id="title-lyric">
-                  <p id={level}> {level} </p>
+                  <span id={level}> {level} </span>
                 </div>
               }  
 

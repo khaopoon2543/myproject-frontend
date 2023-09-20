@@ -54,7 +54,7 @@ function buttonSearchSpotify(searchTitle, trackArtist) {
     const title = checkSpecialChars(searchTitle)
     const artist_id = trackArtist.replace(/-/," ")
     return (
-      <Container className="info text-left" id="search">
+      <div className="info text-left" id="search">
        <div className="d-flex align-items-center">
         <span id="head" lang="th">ค้นหาเพลง</span>
         <div id="spotify-btn">
@@ -74,16 +74,16 @@ function buttonSearchSpotify(searchTitle, trackArtist) {
           </a>
         </div>
        </div>
-      </Container>
+      </div>
     )
 }
 
 function SongImage() { // width="761" height="426"
   const img_url="https://www.lyrical-nonsense.com/wp-content/uploads/2022/08/HoneyWorks-Kawaii-ne-tte-Iwarechatta-feat-Juri-Hattori-Ayane-Sakura.jpg"
   return (
-      <Container className="img-song">
+      <div className="img-song">
       <img src={img_url} width="761" height="426"/>
-      </Container>
+      </div>
   );
 }
 
@@ -108,86 +108,91 @@ function TitleLyrics(props) {
     <Container className="titleLyric" fluid>
       <Container fluid="md">
         <Row>
-        <Col md={5} lg={4} xl={3}>
-          {SongImage()}
-        </Col>
-        <Col md={7} lg={8} xl={9}>
-        <Container className="text-left">  
-          {resultTitle instanceof Array ? //if return titleList (is feat. in title)
-            <>
-              <h1 className="font-semi-bold">{resultTitle[1]}</h1>
-              <h5 className="font-semi-light">{resultTitle[2]}</h5>
-            </>
-          : 
-              <h1 className="font-semi-bold">{titleInfo.name}</h1>
-          }
-          <div className="info" style={{marginTop: 20}}>
-            <span id="head" lang="th">ศิลปิน</span>
-            <Link to={ArtistLink(trackArtist)}>
-              <button id="artist">{titleInfo.artist}</button>
-            </Link>
-            {(titleInfo.singers?.length>0) &&  
-              isSingers(titleInfo)
-            }
-          </div> 
-
-          {titleInfo.series_info && 
-            <div className="info">
-              { isSeries(titleInfo) }
-            </div>
-          }
-
-          <div className="info" id="readability">
-            <span lang="th" id="head">
-              ความยากง่าย 
-              <span id="pink">{titleInfo.readability_score}</span>
-            </span>
-            <div className="tagLevel" id="title-lyric">
-              <TagLevels levelScore={titleInfo.readability_score}/>
-            </div>
-          </div>
-        </Container>
-      
-        {resultTitle instanceof Array ?
-          buttonSearchSpotify(resultTitle[1], trackArtist)
-          :buttonSearchSpotify(titleInfo.name, trackArtist)
-        }
-
-        <Container className="info text-left" id="search">
-          <div className="d-flex align-items-center">
-            <span id="head" lang="th">คลิปวีดีโอเพลง</span>
-            <div id="spotify-btn">
-              {!videoVisible ?
-                  <button id="toggle-video" lang="th" onClick={toggleVideo}>
-                    <ImPlay className="spotify-icon"/>
-                    เปิดคลิปวีดีโอ
-                  </button>
-                :
-                  <button id="toggle-video" className="close" lang="th" onClick={toggleVideo}>
-                    <AiFillCloseCircle className="spotify-icon"/>
-                    ปิดคลิปวีดีโอ
-                  </button>
+          <Col md={5} lg={4} xl={3}>
+            {SongImage()}
+          </Col>
+          <Col md={7} lg={8} xl={9}>
+            <Container className="text-left">  
+              {resultTitle instanceof Array ? //if return titleList (is feat. in title)
+                <>
+                  <h1 className="font-semi-bold">{resultTitle[1]}</h1>
+                  <h5 className="font-semi-light">{resultTitle[2]}</h5>
+                </>
+              : 
+                  <h1 className="font-semi-bold">{titleInfo.name}</h1>
               }
-            </div>
-          </div>
-        </Container>
+              <div className="info" style={{marginTop: 20}}>
+                <span id="head" lang="th">ศิลปิน</span>
+                <Link to={ArtistLink(trackArtist)}>
+                  <button id="artist">{titleInfo.artist}</button>
+                </Link>
+                {(titleInfo.singers?.length>0) &&  
+                  isSingers(titleInfo)
+                }
+              </div> 
 
-        </Col>
+              {titleInfo.series_info && 
+                <div className="info">
+                  { isSeries(titleInfo) }
+                </div>
+              }
+
+              <div className="info" id="readability">
+                <span lang="th" id="head">
+                  ความยากง่าย 
+                  <span id="pink">{titleInfo.readability_score}</span>
+                </span>
+                <div className="tagLevel" id="title-lyric">
+                  <TagLevels levelScore={titleInfo.readability_score}/>
+                </div>
+              </div>
+          
+            {resultTitle instanceof Array ?
+              buttonSearchSpotify(resultTitle[1], trackArtist)
+              :buttonSearchSpotify(titleInfo.name, trackArtist)
+            }
+
+            <div className="info text-left" id="search">
+              <div className="d-flex align-items-center">
+                <span id="head" lang="th">คลิปวีดีโอเพลง</span>
+                <div id="spotify-btn">
+                  {!videoVisible ?
+                      <button id="toggle-video" lang="th" onClick={toggleVideo}>
+                        <ImPlay className="spotify-icon"/>
+                        เปิดคลิปวีดีโอ
+                      </button>
+                    :
+                      <button id="toggle-video" className="close" lang="th" onClick={toggleVideo}>
+                        <AiFillCloseCircle className="spotify-icon"/>
+                        ปิดคลิปวีดีโอ
+                      </button>
+                  }
+                </div>
+              </div>
+            </div>
+
+            </Container>
+          </Col>
         </Row>   
         
       </Container>
     </Container>
- 
-      {videoVisible && (
-        <div className="video-container">
-          <iframe
-              id="video-frame"
-              src={"https://www.youtube.com/embed/"+ embed_code +"?loop=1&playlist=" + embed_code} 
-              frameBorder="0" allow="accelerometer; autoplay; clipboard-write;
-              encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen>
-          </iframe>
-        </div>
-      )}
+
+    <Container fluid className="video-container">
+    <Container>
+        {videoVisible && (
+          <div>
+            <iframe
+                id="video-frame"
+                src={"https://www.youtube.com/embed/"+ embed_code +"?loop=1&playlist=" + embed_code} 
+                frameBorder="0" allow="accelerometer; autoplay; clipboard-write;
+                encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen>
+            </iframe>
+          </div>
+        )}
+    </Container>
+    </Container>
+      
 
     </>
   )

@@ -1,0 +1,125 @@
+
+/* -------------- sidebar-dict -------------- */
+#dict.card {
+  color: var(--grayLight);
+  border-radius: 0 !important;
+  margin: 0px;
+}#last-dict.card {
+  color: var(--grayLight);
+  border-radius: 0 0 10px 10px !important;
+  margin: 0px;
+}#dict .card-body, #last-dict .card-body{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.sidebar {
+  position: sticky;
+  text-align: left;
+  top: 220px;
+}
+.dict-box .card {
+  cursor: text !important;
+  margin-top: 0px;
+  border: 2px solid var(--pinkPastel) !important;
+  border-top: 0 !important;
+  margin-bottom: 0;
+}.dict-box #header{
+  background: var(--black);
+  color: var(--white);
+  padding: 8px 10px 12px 10px;
+  margin-right: 8px;
+  border-radius: 10px 10px 0 0;
+} 
+#no-scroll {
+  margin-right: 0px;
+} #no-scroll span{
+    margin: 0px !important;
+  }#no-scroll button{
+    margin-bottom: 5px;
+  }
+.scroll {
+  overflow-y: scroll;
+  height: 50vh;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}/* Track */
+::-webkit-scrollbar-track {
+  background: var(--white); 
+}/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--pinkPastel); 
+}/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pinkPastel); 
+}
+
+.scroll .card {
+  box-shadow: none !important;
+}
+
+/* #is-video */
+.sidebar#is-video{
+  top: 320px !important;
+}
+
+/* ---------- TEXT FONT-SIZE ---------- */
+.dict-box #header span{
+  display: inline;
+  font-weight: 500;
+}
+#dictTh{ /* font-size: 18px; */
+  color: var(--pink);
+}#dictEn{ /* font-size: 14px; */
+  display: block;
+}.tagPos span{ /* font-size: 12px; */
+  font-weight: 600;
+  display: inline-block;
+  padding: 3px 20px;
+  margin-right: 5px;
+  border-radius: 25px;
+  color: var(--diffSRT);
+  background: var(--diffBG);
+}
+.head-each-word {
+  margin-bottom: 5px;
+}.head-each-word #kanji{ /* font-size: 18px; */
+  font-weight: 500;
+  color: var(--gray);
+}.head-each-word #read-form{ /* font-size: 16px; */
+  color: var(--grayLight);
+}
+
+@media only screen and (max-width: 992px) {
+  ::-webkit-scrollbar {
+    width: 0px !important;
+  }
+  .sidebar.sidebar-mobile{
+    top: 51px !important;
+    margin-top: -30px;
+    margin-bottom: 50px;
+    background-color: var(--white);
+    padding: 20px 0 0 0;
+    box-shadow: var(--pinkPastel) 0 10px 10px -10px;
+    border-bottom: 1px solid var(--pinkPastel);
+    border-radius: 10px;
+  }
+  /* #is-video */
+  .sidebar.sidebar-mobile#is-video{
+    top: 190px !important;
+  }
+  .dict-box {
+    position: sticky;
+    padding: 0;
+
+  }.dict-box #header{
+    margin-right: 0px !important;
+    padding: 8px 10px 12px 10px;
+  }
+  .scroll {
+    overflow-y: scroll;
+    height: 20vh ;
+  } 
+}

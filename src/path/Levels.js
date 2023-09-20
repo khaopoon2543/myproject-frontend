@@ -5,6 +5,8 @@ import { LevelsItems } from "../component/Levels/LevelsItems";
 import useIsMobileLG from '../component/useIsMobileLG';
 import "../component/Levels/Levels.css"
 import { AiOutlineInfoCircle, AiFillInfoCircle } from 'react-icons/ai';
+import { StarLevels } from "../component/Levels/StarLevels";
+import { TbStarFilled, TbStarHalfFilled, TbStar } from "react-icons/tb";
 
 const KASHIFY = <span className="font-semi-bold"> Kashify </span>
 const JReadability = 
@@ -29,7 +31,10 @@ const levelsDescription =
     </p>
     <p className="radius">
       แต่อาจจะมีบางเพลงที่ไม่สามารถประมวลผลความสามารถในการอ่านได้ เนื่องจากเนื้อเพลงอาจมีตัวอักษรน้อยหรือมากไป หรือมีเนื้อหาที่ง่ายหรือยากเกินไปกว่าที่ระบบจะสามารถประมวลผลให้มีประสิทธิภาพได้
-      โดยใน {KASHIFY} จะแสดงเป็น No level 
+      โดยใน {KASHIFY} จะแสดงเป็น 
+      <div className="tagLevel" style={{ display: 'inline-block' }}>
+        <span id='no-level' style={{ padding: '0 10px 0 10px' }}><TbStar/><TbStar/><TbStar/></span>
+      </div>
     </p>
   </div>
 
@@ -69,10 +74,16 @@ function Levels() {
                     <Link to={"/levels/" + item.id } className="levels-link"> 
                       <Card className="levelCard" id="level">
                         <Card.Header id={item.id} lang="jp"> 
+                          <div className="levelStar" id={item.id}>
+                            <span>
+                              {StarLevels(item.id)}
+                            </span>
+                          </div>
                           <Card.Title className="font-bold" style={{ fontSize: 30 }}>
                             {item.title}
                           </Card.Title>
                           <Card.Subtitle>{item.subtitle}</Card.Subtitle>
+                          
                         </Card.Header>
                         <Card.Body>
                           <Card.Text>

@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import "../component/Lyrics/Lyrics.css"
+import "../component/Lyrics/Dict.css"
 import { Container, Row, Col } from 'react-bootstrap';
 import Tooltip from '../component/Lyrics/Tooltip';
 import PopupDict from '../component/Lyrics/PopupDict';
 import { LoadingIMG } from "../component/Loading";
 import { toHiragana, isJapanese } from 'wanakana';
-import { BiFontSize } from 'react-icons/bi';
 import useIsMobileLG from '../component/useIsMobileLG';
 import { backendSrc } from "../component/backendSrc";
 import TitleLyrics from "../component/Lyrics/TitleLyrics";
-import YouTube from 'react-youtube';
+import { PiBookOpenTextFill, PiMusicNotesFill, PiPlusBold, PiMinusBold } from 'react-icons/pi';
 
 function Lyric({inputLyric}) {
   const { trackId, trackArtist } = useParams() 
@@ -22,6 +22,7 @@ function Lyric({inputLyric}) {
   const [isOpen, setIsOpen] = useState(false);
   const screenSize = useIsMobileLG();
   const [fontSize, setFontSize] = useState(screenSize ? 16 : 18);
+  const [fontSizeDict, setFontSizeDict] = useState(screenSize ? 16 : 18);
 
   const [videoVisible, setVideoVisible] = useState(false);
 
@@ -54,7 +55,6 @@ function Lyric({inputLyric}) {
             .then((response) => {
               if(isMounted){
                 setTitleInfo(response.data && response.data[0]);
-                console.log(response.data[0])
               }
             }) 
 
@@ -86,16 +86,37 @@ function Lyric({inputLyric}) {
 
   function buttonChangeSize() {
     return (
-      <div className="filters" id="size" lang="jp">
-        <span id='icon'><BiFontSize/></span>
-        <button onClick={() => setFontSize(fontSize-2)}>
-            -
-        </button>
-        <span> {fontSize} px </span>
-        <button onClick={() => setFontSize(fontSize+2)}>
-            +
-        </button>
+      <div className="tab-change-size" lang="jp">
+        <Row>
+          <Col xs={12} md={6} lg={12} xl={6}>
+            <div className="btn-change-size vocab">
+              <span id='icon'><PiBookOpenTextFill/></span>
+              <span id='topic' lang="th"> คำศัพท์ </span>
+              <button onClick={() => setFontSizeDict(fontSizeDict-2)}>
+                  <PiMinusBold/>
+              </button>
+              <span> {fontSizeDict} px </span>
+              <button onClick={() => setFontSizeDict(fontSizeDict+2)}>
+                  <PiPlusBold/>
+              </button>
+            </div>
+          </Col>
+          <Col xs={12} md={6} lg={12} xl={6}>
+            <div className="btn-change-size lyric">
+              <span id='icon'><PiMusicNotesFill/></span>
+              <span id='topic' lang="th"> เนื้อเพลง </span>
+              <button onClick={() => setFontSize(fontSize-2)}>
+                  <PiMinusBold/>
+              </button>
+              <span> {fontSize} px </span>
+              <button onClick={() => setFontSize(fontSize+2)}>
+                  <PiPlusBold/>
+              </button>
+            </div>
+          </Col>
+        </Row>
       </div>
+      
     )
   }
   
@@ -113,21 +134,23 @@ function Lyric({inputLyric}) {
           <Row>  
             {screenSize===false &&
               <Col lg={6} xl={5} style={{ marginTop: 50 }}>
-                <div className="sidebar" id={videoVisible ? 'is-mv' : ''}>
-                  <PopupDict dictList={collectedWord} isOpen={isOpen} />
+                <div  className="sidebar" 
+                      id={videoVisible ? 'is-video' : ''}
+                >
+                  <PopupDict dictList={collectedWord} isOpen={isOpen} fontSize={fontSizeDict} />
                 </div>
               </Col>
             }
 
               <Col lg={6} xl={7} style={{ marginTop: 50 }}>
                 {screenSize===true &&
-                  <div className="sidebar sidebar-mobile" id={videoVisible ? 'is-mv' : ''}>
-                    <PopupDict dictList={collectedWord} isOpen={isOpen} />
+                  <div  className="sidebar sidebar-mobile" 
+                        id={videoVisible ? 'is-video' : ''}
+                  >
+                    <PopupDict dictList={collectedWord} isOpen={isOpen} fontSize={fontSizeDict} />
                   </div>
                 }
-                <div className="btn-on-lyric">
-                  {buttonChangeSize()}
-                </div>
+                {buttonChangeSize()}
                 <br/>
 
                 <div id="lyric" style={{ fontSize: fontSize }}>
@@ -153,7 +176,7 @@ function Lyric({inputLyric}) {
                                         read_form= {toHiragana(word.reading_form, { passRomaji: true })}//reading_form
                                         poses={word.poses}
                                         onOpen={collectedWord => setCollectedWord(collectedWord)}
-                                        isOpen={isOpen => setIsOpen(isOpen)}            
+                                        isOpen={isOpen => setIsOpen(isOpen)}  
                                     />
                     }else{
                           return  <span key={i}>
@@ -161,10 +184,10 @@ function Lyric({inputLyric}) {
                                   </span>
                     } 
                   })}
-                </div> 
+                </div>
               </Col>              
           </Row>
-        </Container>
+        </Container> 
     </div>
     ); 
 }

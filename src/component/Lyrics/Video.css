@@ -3,16 +3,16 @@
     position: sticky;
     top: 0;
     z-index: 2000;
-    background-color: black;  
     left:0;
     width: 100%; 
+    background: black;
 }
 #video-frame {
     position: relative;
-    width: 70%;
-    height: 400px;
+    width: 100%;
+    height: 300px;
     margin-top: 0px;
-    margin-bottom: -5px;
+    margin-bottom: -5px;    
 }
 .hide-video {
     display: none;

@@ -4,7 +4,7 @@ import "./ResultSearch.css";
 import { RiUserStarLine } from 'react-icons/ri';
 import { SeriesLink, ArtistLink } from "../linkPath";
 
-const alignItem = 'data flex-md-row'
+const alignItem = 'data flex-row'
 const TAGARTIST = { fontSize:20 }
 
   function isArtist(allDataList, visible) { 
@@ -15,8 +15,8 @@ const TAGARTIST = { fontSize:20 }
               return (
                 <Link key={index} to={ArtistLink(artist.artist_id)}> 
                   <Card className={alignItem}>
-                    <div className="tagLevel">
-                      <p id="tag-data" style={TAGARTIST}><RiUserStarLine/></p>
+                    <div className="tagData">
+                      <p style={TAGARTIST}><RiUserStarLine/></p>
                     </div>
                     <Card.Body className='d-block artist-series-data'>
                       <button id='data'> 
@@ -44,7 +44,7 @@ const TAGARTIST = { fontSize:20 }
               return (
                 <Link key={index} to={SeriesLink(series.series_id)}>
                   <Card className={alignItem}>
-                    <div className="tagLevel">
+                    <div className="tagData">
                       <p id="tag-data">「{series.type}」</p>
                     </div>
                     <Card.Body className='artist-series-data'>

@@ -7,7 +7,7 @@ import TagLevels from "../Levels/TagLevels";
 import { Loading, LoadingIMGLevels, NoResult } from "../Loading";
 import { backendSrc } from "../backendSrc";
 import { reallyShowList, isOnlyNameSeries, resultDetails  } from "./ResultSearchFunction"
-import { LyricLink } from "../linkPath"
+import useIsMobileLG from '../useIsMobileLG';
 
 export default function ResultSearch(props) {
   
@@ -87,6 +87,17 @@ export default function ResultSearch(props) {
     } 
   }
 
+  function SongImage() { // width="761" height="426"
+    const img_url="https://www.lyrical-nonsense.com/wp-content/uploads/2023/01/mona-Shiina-Natsukawa-ChouzetsuKawaii.jpg"
+    return (
+        <div className="img-song-search">
+          <img src={img_url}/>
+        </div>
+    );
+  }
+  
+  const screenSize = useIsMobileLG()
+
   return (
     <React.Fragment>
     {loading ? ( 
@@ -114,12 +125,11 @@ export default function ResultSearch(props) {
           .slice(0, visible) //selected elements in an array
           .map((track, index) => {
             return ( //link to lyric page
-              <Card className="lyric flex-md-row" key={index}
+              <Card className="lyric flex-row" key={index}
                 //onClick={event => { navigate(LyricLink(track)); event.preventDefault(); }}
               >
-                <div className="tagLevel">
-                  <TagLevels levelScore={track.readability_score}/>
-                </div>
+                {SongImage()}
+                 
                 <Card.Body className="d-block">
                   {resultDetails(searchTerm, track, 'title-subtitle-song')}
 
@@ -137,6 +147,11 @@ export default function ResultSearch(props) {
                     </>
                   }
                 </Card.Body>  
+                <div className="tagLevel">
+                  <TagLevels  levelScore={track.readability_score}
+                              isScreenSize={screenSize}
+                  />
+                </div>
               </Card>
             )
           })

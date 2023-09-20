@@ -1,9 +1,8 @@
 .card#level {
     color: var(--grayLight);
     margin: 10px;
-
 }.card-header {
-    padding: 30px !important;
+    padding: 0 30px 30px 30px !important;
     border-radius: 20px  !important;
     border-bottom: none !important;
 }.levels-link {
@@ -16,13 +15,58 @@
     font-size: 14px !important;
 }
 
+
+.levelStar * {
+    height: 25px;
+}.levelStar {
+    display: flex;
+    justify-content: right;
+    margin-bottom: -10px;
+    margin-right: -30px;
+    border-radius: 20px;
+}.levelStar span{
+    text-align: center;
+    font-size: 16px;
+    border-radius: 20px;
+    margin: 10px;
+    line-height: 20px;
+    min-width: 70px;
+}
+
+/*
+.levelStar {
+    display: block;
+    text-align: right;
+    margin-top: 5px;
+    margin-right: -30px;
+    border-radius: 20px;
+}.levelStar span{
+    text-align: center;
+    font-size: 12px;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 0px 10px 5px 10px;
+}*/
+
+.levelStar#very-difficult span, .levelStar#difficult span{
+    color: var(--diffBG);
+    background: var(--diffSRT);
+}.levelStar#slightly-difficult span, .levelStar#so-so span{
+    color: var(--intBG);
+    background: var(--intSRT);
+}.levelStar#easy span, .levelStar#very-easy span{
+    color: var(--easyBG);
+    background: var(--easySRT);
+}
+
+
 #sub-level {
     text-align: left;
     box-shadow: none !important;
     cursor: text;
     position: -webkit-sticky;
     position: sticky;
-    top: 100px;
+    top: 70px;
     z-index: 1;
     margin: 0px!important;    
 }#sub-level.card-body {
@@ -36,6 +80,10 @@
 }#sub-level .card-header {
     margin: 0px;
     margin-bottom: 30px;
+}#sub-level .levelStar {
+    margin-top: 30px;
+    margin-bottom: -40px;
+    margin-right: -10px;
 }
 
 #very-difficult, #difficult{
@@ -47,10 +95,6 @@
 }#easy, #very-easy{
     color: var(--easySRT);
     background: var(--easyBG);
-}
-#tag-data {
-    color: var(--pinkLight);
-    background: var(--blackLight);
 }
 
 @media only screen and (max-width: 768px) {

@@ -5,6 +5,7 @@ import { LevelsItems } from "../component/Levels/LevelsItems";
 import SearchBar from "../component/Search/SearchBar";
 import useIsMobile from '../component/useIsMobile';
 import { AiOutlineInfoCircle, AiFillInfoCircle } from 'react-icons/ai';
+import { StarLevels } from "../component/Levels/StarLevels";
 
 function subLevelsDescription(item) {
   return (
@@ -39,6 +40,11 @@ function SubLevels() {
                   return (
                     <Card key={index} className="levelCard" id="sub-level">
                       <Card.Header id={item.id}> 
+                        <div className="levelStar" id={item.id}>
+                          <span>
+                            {StarLevels(item.id)}
+                          </span>
+                        </div>
                         <h2 className="font-bold" lang="jp">
                           {item.title}
                         </h2>

@@ -1,7 +1,14 @@
 import { Card, Col, Row } from 'react-bootstrap';
 import { isKatakana, isHiragana } from 'wanakana';
 
-export default function PopupDict({ dictList, isOpen }) {
+export default function PopupDict({ dictList, isOpen, fontSize }) {
+  //fontSize = 18 auto
+  const fontHeadWord = fontSize+2 //20
+  const fontReadForm = fontSize-2 //16 
+  const fontDictTh = fontSize //18 
+  const fontDictEn = fontSize-4 //14 
+  const fontTagPos = fontSize-6 //12 
+  const fontKanji = fontSize //18 
   
   function isReadForm(dictList) {
     const surface = dictList.token.word
@@ -43,25 +50,29 @@ export default function PopupDict({ dictList, isOpen }) {
             <Card key={i} id={(i!==(dictList.dict.length-1)) ? "dict" : "last-dict"}>
               <Card.Body>
                 <Row>
-                <Col xs={6} md={5}>
+                <Col xs={4} md={5}>
                   <Card.Title> 
                     <div className="head-each-word">
-                      <span id="kanji">{dict.Kanji}</span>
+                      <span id="kanji" style={{fontSize: fontKanji}}>
+                        {dict.Kanji}
+                      </span>
                       <br/>
                       {dict.Kanji!==dict.Yomikata && 
-                        <span id="read-form">{dict.Yomikata}</span>
+                        <span id="read-form" style={{fontSize: fontReadForm}}>
+                          {dict.Yomikata}
+                        </span>
                       }
                     </div>
-                    <div className="tagPos">
+                    <div className="tagPos" style={{fontSize: fontTagPos}}>
                       {splitPos(dict.Type)}
                     </div>
                   </Card.Title>
                 </Col>
-                <Col xs={6} md={7}>
-                  <div lang="th" id="dictTh" className="font-semi-bold">
+                <Col xs={8} md={7}>
+                  <div lang="th" id="dictTh" className="font-semi-bold" style={{fontSize: fontDictTh}}>
                     {dict.Thai}
                   </div>
-                  <div id="dictEn">
+                  <div id="dictEn"  style={{fontSize: fontDictEn}}>
                     {splitDictEng(dict.English)}
                   </div>
                 </Col>
@@ -76,10 +87,20 @@ export default function PopupDict({ dictList, isOpen }) {
         <>
         <div className="dict-box">
           <div id="header">
-            <span id="head-word">{dictList.token.word}</span>
-            {isReadForm(dictList)!==null &&
-              <span className="gray-text">({isReadForm(dictList)})</span>
-            }
+            <Row>
+              <Col xs={4} md={5}></Col>
+              <Col xs={8} md={7} id="header-text">
+                {isReadForm(dictList)!==null &&
+                  <span className="gray-text" id="read-form" style={{fontSize: fontReadForm}}>
+                    {isReadForm(dictList)}
+                  </span>
+                }
+                <br/>
+                <span id="head-word" style={{fontSize: fontHeadWord}}>
+                  {dictList.token.word}
+                </span>
+              </Col>
+            </Row>
           </div>
           <div className="scroll">       
             {mapDict}
@@ -90,11 +111,14 @@ export default function PopupDict({ dictList, isOpen }) {
         <>
         <div className="dict-box" lang="th">
           <div className="dict-box" id="header">
-            <span id="head-word">ความหมายคำศัพท์</span>
+            <br/>
+            <span id="head-word" style={{marginLeft:"8px", fontSize: fontHeadWord}}>
+              ความหมายคำศัพท์
+            </span>
           </div>
           <div className="scroll" id="no-scroll">  
             <Card id="last-dict">  
-              <Card.Body className="black-text">    
+              <Card.Body className="black-text" style={{fontSize: fontReadForm}}>    
                 <span>
                   เลือกคำศัพท์ที่
                   <button className="pink-text font-semi-bold black-text">

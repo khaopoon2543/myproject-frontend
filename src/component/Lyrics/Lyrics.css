@@ -42,12 +42,14 @@ span#pink {
   margin-left: 10px;
   font-weight: 400;
 }
-.tagLevel#title-lyric p{ /* tagLevel in title Lyric.js*/
-  line-height: 28px;
-  min-width: none !important;
-  padding: 0px 15px !important;
+
+ /* -------- tagLevel in title Lyric.js -------- */
+.tagLevel#title-lyric *{
+  height: 25px !important;
+} 
+.tagLevel#title-lyric span{ 
   margin: 0 auto;
-  font-size: 12px !important;
+  line-height: 10px !important;
 } 
 
 #singer, .info #artist {
@@ -77,30 +79,60 @@ span#pink {
   text-decoration: none !important;
 }
 
-
-.btn-on-lyric { /* btn change font size */
+/* btn change font size */
+.tab-change-size {
   display: flex; justify-content: left; align-items: center;
-  padding: 15px 10px 5px 10px;
+  padding: 15px 10px 15px 10px;
   border-radius: 10px;
   border: 2px solid var(--pinkPastel);
-}
-#size span {
-  color: var(--gray);
-}
-#size button { 
+  background: var(--pinkPastel);
+}.tab-change-size span {
+  color: var(--pink);
+  font-weight: 800;
+} .tab-change-size button {
   font-size: 16px;
-  padding: 0px 20px;
-  margin-left: 10px;
-  margin-right: 10px;
   border-radius: 50px;
   transition: all 0.25s;
-}
-.filters span#icon svg{
+  margin: 0px 5px;
+  padding: 0px 12px 0px 12px;
+  color: var(--pink) !important;
+  background: var(--white) !important;
+} .tab-change-size svg{
+  margin: -5px 5px 0 5px;
+} .tab-change-size span svg{
   font-size: 24px;
-  margin: 0px;
-  margin-right: 15px;
-  color: var(--gray);
+} .btn-change-size {
+  width: 280px;
 }
+.tab-change-size button:hover {
+  color: var(--white) !important;
+  background: var(--pink) !important;
+}
+
+@media only screen and (max-width: 1200px) {
+  .btn-change-size.vocab {
+    margin-bottom: 10px;
+  } .btn-change-size.vocab #topic{
+    margin-right: 5px;
+  }
+} @media only screen and (max-width: 992px) {
+  .tab-change-size  {
+    display: block;
+  } .btn-change-size {
+    width: auto;
+  } .btn-change-size.vocab {
+    margin-bottom: 0px;
+  }
+} @media only screen and (max-width: 768px) {
+  .btn-change-size {
+    width: 280px;
+  } .btn-change-size.vocab {
+    margin-bottom: 10px;
+  } .btn-change-size.vocab #topic{
+    margin-right: 5px;
+  }
+}
+
 
  /* Lyric.js */
 div#lyric{
@@ -145,7 +177,7 @@ button.pink-text {
   .info#readability, .info#search {
     display: inline-block;
   } 
-  .titleLyric .info#readability .tagLevel p{
+  .titleLyric .info#readability .tagLevel {
     zoom: 90%;
     margin-top: 2px;
     margin-left: 0px !important;
@@ -191,162 +223,19 @@ button.pink-text {
 }
 
 .img-song {
-  text-align: right;
-  margin-right: 10px;
+  text-align: left;
 }
 .img-song img{
   object-fit: cover;
   max-width: 100%;
   height: 100%;
-  width: 500px;
+  width: 250px;
+  border-radius: 10px;
 }
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 767px) {
   .img-song {
     margin-bottom: 30px;
-    margin-right: 0px;
     text-align: center;
   }
-  .img-song img{
-    max-width: 100%;
-    height: 100%;
-    width: 200px;
-  }
 }
 
-/* -------------- sidebar-dict -------------- */
-#dict.card {
-  color: var(--grayLight);
-  border-radius: 0 !important;
-  margin: 0px;
-}#last-dict.card {
-  color: var(--grayLight);
-  border-radius: 0 0 10px 10px !important;
-  margin: 0px;
-}#dict .card-body, #last-dict .card-body{
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.sidebar {
-  position: sticky;
-  text-align: left;
-  top: 220px;
-}/* #is-mv */
-.sidebar#is-mv{
-  top: 420px !important;
-}
-.dict-box .card {
-  cursor: text !important;
-  margin-top: 0px;
-  border: 2px solid var(--pinkPastel) !important;
-  border-top: 0 !important;
-  margin-bottom: 0;
-}.dict-box #header{
-  background-color: var(--black);
-  color: var(--white);
-  padding: 15px 5px;
-  margin-right: 8px;
-  border-radius: 10px 10px 0 0;
-}
-
-#no-scroll {
-  margin-right: 0px;
-} #no-scroll span{
-    margin: 0px !important;
-  }#no-scroll button{
-    margin-bottom: 5px;
-  }
-.scroll {
-  overflow-y: scroll;
-  height: 50vh;
-}
-/* width */
-::-webkit-scrollbar {
-  width: 8px;
-}/* Track */
-::-webkit-scrollbar-track {
-  background: var(--white); 
-}/* Handle */
-::-webkit-scrollbar-thumb {
-  background: var(--pinkPastel); 
-}/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: var(--pinkPastel); 
-}
-
-.scroll .card {
-  box-shadow: none !important;
-}
-
-/* ---------- TEXT FONT-SIZE ---------- */
-.dict-box #header span{
-  display: inline;
-  font-size: 20px;
-  font-weight: 500;
-}.dict-box #header span#head-word{
-  margin-right: 10px;
-  margin-left: 10px;
-}
-#dictTh{
-  /* font-size: 18px; */
-  color: var(--pink);
-}#dictEn{
-  /* font-size: 14px; */
-  display: block;
-  font-size: 14px;
-}.tagPos span{ 
-  /* font-size: 12px; */
-  font-size: 12px; 
-  font-weight: 600;
-  display: inline-block;
-  padding: 3px 20px;
-  margin-right: 5px;
-  border-radius: 25px;
-  color: var(--diffSRT);
-  background: var(--diffBG);
-}
-.head-each-word {
-  margin-bottom: 5px;
-}.head-each-word #kanji{
-  font-size: 18px; 
-  font-weight: 500;
-  color: var(--gray);
-}.head-each-word #read-form{
-  font-size: 16px;
-  color: var(--grayLight);
-}
-
-@media only screen and (max-width: 992px) {
-  ::-webkit-scrollbar {
-    width: 0px !important;
-  }
-  .sidebar.sidebar-mobile{
-    top: 51px !important;
-    margin-top: -30px;
-    margin-bottom: 50px;
-    background-color: var(--white);
-    padding: 20px 0 0 0;
-    box-shadow: var(--pinkPastel) 0 10px 10px -10px;
-    border-bottom: 1px solid var(--pinkPastel);
-    border-radius: 10px;
-  }
-  /* #is-mv */
-  .sidebar.sidebar-mobile#is-mv{
-    top: 200px !important;
-  }
-  .dict-box {
-    position: sticky;
-    padding: 0;
-
-  }.dict-box #header{
-    margin-right: 0px !important;
-    padding: 12px 5px;
-  }
-  .scroll {
-    overflow-y: scroll;
-    height: 20vh ;
-  } 
-  .tagPos span{ 
-    font-size: 10px;
-  }
-}

@@ -80,34 +80,38 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     padding: 0px; 
 }
 
+/* ----------- tagLevel ----------- */
 .tagLevel * {
-    height: auto;
-    font-weight: 500;
+    height: 30px;
     letter-spacing: .5px;
 }
 .tagLevel  {
     display: flex;
 }
-.tagLevel p{
+.tagLevel span{
     text-align: center;
     font-size: 12px;
-    min-width: 120px;
     border-radius: 20px;
     margin: 10px;
-    line-height: 90px;
+    line-height: 20px;
+    min-width: 70px;
 }
 
 @media screen and (max-width: 767px) {
-    .tagLevel p {
-        margin-bottom: 0;
-        line-height: 30px;
-    }
     .card {
         zoom: 88%;
         margin: 10px;
     }
     .lyric .card-body {
         padding-top: 7px;
+    }
+}
+@media screen and (max-width: 992px) {
+    .tagLevel * {
+        height: 25px;
+    }
+    .tagLevel span{
+        min-width: 60px;
     }
 }
 
@@ -164,6 +168,26 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     color: var(--grayLight);
     border: 1px solid  var(--grayLight);
 } 
+
+.tagData * {
+    height: auto;
+    font-weight: 500;
+    letter-spacing: .5px;
+}
+.tagData {
+    display: flex;
+    min-width: 100px;
+}
+.tagData p{
+    text-align: center;
+    font-size: 12px;
+    min-width: 100px;
+    border-radius: 10px;
+    margin: 10px;
+    line-height: 80px;
+    color: var(--pinkLight);
+    background: var(--blackLight);
+}
 
 /* --- ResultSearch --- */
 .result-search {
@@ -233,4 +257,21 @@ span#sub-data {
     background: var(--grayLight);
     border-radius: 50%;
     padding: 3px
+}
+
+
+.img-song-search  {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100px;
+    margin: 10px;
+}
+.img-song-search img{
+    min-width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 767px) {
 }
