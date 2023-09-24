@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Card } from 'react-bootstrap';
 import "./ResultSearch.css";
+import { Card } from 'react-bootstrap';
 import TagLevels from "../Levels/TagLevels";
 import { Loading, NoResult } from "../Loading";
 import { backendSrc } from "../backendSrc";
 
-import { reallyShowList, isOnlyNameSeries, resultDetails  } from "./ResultSearchFunction"
+import { reallyShowList, isOnlyNameSeries, resultDetails } from "./ResultSearchFunction"
+import { songImageSearch, noSongImageSearch } from "../ImageSong/ImageSongFunction";
 import { isArtist, isSeries } from "./ResultDataFunction"
 import { LyricLink } from "../linkPath"
+import { checkHeadFilter } from "./HeadFilterResult"
 
 export default function ResultSearchAll(props) {
   
@@ -99,7 +101,9 @@ export default function ResultSearchAll(props) {
   const ARTISTS = 
     <>
       <div className="bg-search-all">
-        <h3 className="search-all" id="is-result">ศิลปิน</h3>
+        <h3 className="search-all" id="is-result">
+          {checkHeadFilter('artist')}
+        </h3>  
       </div>
       {RESULTS_ARTIST}
       {LOAD_MORE('artist', RESULTS_ARTIST, visible_artist)}
@@ -108,28 +112,24 @@ export default function ResultSearchAll(props) {
   const SERIES = 
     <>
       <div className="bg-search-all">
-        <h3 className="search-all" id="is-result">ซีรีส์</h3>
+        <h3 className="search-all" id="is-result">
+          {checkHeadFilter('series')}
+        </h3>
       </div>
       {RESULTS_SERIES}
       {LOAD_MORE('series', RESULTS_SERIES, visible_series)}
     </>
-
-  
-  function SongImage() { // width="761" height="426"
-    const img_url="https://www.lyrical-nonsense.com/wp-content/uploads/2023/01/mona-Shiina-Natsukawa-ChouzetsuKawaii.jpg"
-    return (
-        <div className="img-song-search">
-          <img src={img_url}/>
-        </div>
-    );
-  }
 
   function SONG_LYRIC(filter, result, visible) {
     return (
     <>
         <div className="bg-search-all">
           <h3 className="search-all" id="is-result">
-            {filter==='song' ? 'เพลง' : 'เนื้อเพลง'}
+            {filter==='song' ? 
+              checkHeadFilter('song')
+              : 
+              checkHeadFilter('lyric')
+            }
           </h3>
         </div>
 
@@ -142,7 +142,7 @@ export default function ResultSearchAll(props) {
               <Card className="lyric flex-row" key={index}
                 //onClick={event => { navigate(LyricLink(track)); event.preventDefault(); }}
               >
-                {SongImage()} 
+                {track.pic ? songImageSearch(track.pic) : noSongImageSearch()} 
 
                 <Card.Body className="d-block">
                   {resultDetails(searchTerm, track, 'title-subtitle-song')}

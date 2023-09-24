@@ -224,15 +224,20 @@ span#sub-data {
 } .search-all {
     color: var(--black);
     background-color: var(--white);
-}
+} .search-all svg {
+    margin-top: -3px;
+    margin-right: 5px;
+    color: var(--pink);
+} 
 
 .bg-search-all {
     position: sticky;
-    top: 111px;
+    top: 95px;
     z-index: 3;
-    border-radius: 0 0 50px 50px;
+    border-radius: 0 0 5px 5px;
+    margin-top: -10px;
     padding-top: 10px;
-    transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
+    transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
 }
 
 .search-all-load-more {
@@ -257,21 +262,4 @@ span#sub-data {
     background: var(--grayLight);
     border-radius: 50%;
     padding: 3px
-}
-
-
-.img-song-search  {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    width: 100px;
-    margin: 10px;
-}
-.img-song-search img{
-    min-width: 100px;
-    height: auto;
-    border-radius: 5px;
-}
-
-@media screen and (max-width: 767px) {
 }

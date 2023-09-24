@@ -10,7 +10,8 @@
   --pinkPastel: #FFD8F3;
   --pinkLight: #FEE9F8;
   --background: #f6f6f9;
-  --green: #1db954;
+  --green: #1DB954;
+  --spotify: #1ED760;
 
   --easyBG: #D1FBE9;
   --easySRT: #0EBFBF;
@@ -39,8 +40,8 @@
 }
 
 .pages {
-  margin-top: 30px;
-  margin-bottom: 50px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 .result-right {
   margin-top: 80px;
@@ -103,7 +104,7 @@ span.nav-button{
   cursor: text;
   position: -webkit-sticky;
   position: sticky;
-  top: 100px;
+  top: 60px;
   z-index: 1;
   margin-bottom: 10px;
   margin-right: 20px;
@@ -361,11 +362,10 @@ span.nav-button{
   margin-right: 10px !important;
 }
 
-
 .bg-search {
   background-color: var(--white);
   position: sticky;
-  top: 71px;
+  top: 55px;
   z-index: 10;
   box-shadow: var(--white) 0px 5px 20px;
   margin-bottom: 20px
@@ -759,6 +759,7 @@ button#search-kashify {
   background-color: var(--white);
   border: 1px solid var(--grayLight);
   color: var(--grayLight);
+  padding: 2px 12px 2px 4px;
 }
 
 #error-head {

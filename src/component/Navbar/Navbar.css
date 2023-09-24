@@ -1,5 +1,6 @@
 .NavbarItems {
   background:  var(--white);
+  padding: 0 !important;
 }
 #offcanvas-item a {
   font-family: 'IBM Plex Sans Thai', sans-serif;

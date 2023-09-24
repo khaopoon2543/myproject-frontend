@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Card } from 'react-bootstrap';
 import "./ResultSearch.css";
+import { Card } from 'react-bootstrap';
 import TagLevels from "../Levels/TagLevels";
 import { Loading, LoadingIMGLevels, NoResult } from "../Loading";
 import { backendSrc } from "../backendSrc";
-import { reallyShowList, isOnlyNameSeries, resultDetails  } from "./ResultSearchFunction"
+import { reallyShowList, isOnlyNameSeries, resultDetails } from "./ResultSearchFunction"
+import { songImageSearch, noSongImageSearch } from "../ImageSong/ImageSongFunction";
 import useIsMobileLG from '../useIsMobileLG';
+import { checkHeadFilter } from "./HeadFilterResult"
 
 export default function ResultSearch(props) {
   
@@ -76,24 +78,11 @@ export default function ResultSearch(props) {
   const RESULTS = reallyShowList(songs_list, level)
   
   function checkFilter(filter) {
-    if (filter==='song') {
-      return 'เพลง'
-    } else if (filter==='artist') {
-      return 'เพลง'
-    } else if (filter==='series') {
-      return 'เพลง'
+    if (filter==='song' || filter==='artist' || filter==='series') {
+      return 'song'
     } else if (filter==='lyric') {
-      return 'เนื้อเพลง'
+      return 'lyric'
     } 
-  }
-
-  function SongImage() { // width="761" height="426"
-    const img_url="https://www.lyrical-nonsense.com/wp-content/uploads/2023/01/mona-Shiina-Natsukawa-ChouzetsuKawaii.jpg"
-    return (
-        <div className="img-song-search">
-          <img src={img_url}/>
-        </div>
-    );
   }
   
   const screenSize = useIsMobileLG()
@@ -114,7 +103,7 @@ export default function ResultSearch(props) {
         {(searchTerm!=="" && !subArtists && !subSeries && filter && filter!=='spotify' && RESULTS.length > 0) &&
           <div className="bg-search-all">
             <h3 className="search-all" id="is-result">
-              {checkFilter(filter)}
+              {checkHeadFilter(checkFilter(filter))}
             </h3>
           </div>
         }
@@ -128,7 +117,7 @@ export default function ResultSearch(props) {
               <Card className="lyric flex-row" key={index}
                 //onClick={event => { navigate(LyricLink(track)); event.preventDefault(); }}
               >
-                {SongImage()}
+                {track.pic ? songImageSearch(track.pic) : noSongImageSearch()}
                  
                 <Card.Body className="d-block">
                   {resultDetails(searchTerm, track, 'title-subtitle-song')}

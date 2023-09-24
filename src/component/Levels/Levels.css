@@ -66,7 +66,7 @@
     cursor: text;
     position: -webkit-sticky;
     position: sticky;
-    top: 70px;
+    top: 55px;
     z-index: 1;
     margin: 0px!important;    
 }#sub-level.card-body {

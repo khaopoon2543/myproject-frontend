@@ -1,13 +1,14 @@
-.video-container {
+/* ---------------- VIDEO EMBED ---------------- */
+.video-container, .spotify-embed-container {
+    z-index: 2000;
     position: -webkit-sticky; /* Safari */
     position: sticky;
     top: 0;
-    z-index: 2000;
     left:0;
     width: 100%; 
     background: black;
 }
-#video-frame {
+.video-frame {
     position: relative;
     width: 100%;
     height: 300px;
@@ -30,13 +31,33 @@ button#toggle-video {
     box-shadow: var(--pink) 0px 0px 8px;
     transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
   }
-  
+
+
+/* ---------------- SPOTIFY EMBED ---------------- */
+
+.spotify-embed {    
+    width: 100%;
+    height: 200px;
+    margin-bottom: -30px;
+    padding-top: 10px;
+} .spotify-embed.open {
+    display: flex;
+} .spotify-embed.close {
+    display: none;
+}
+.spotify-search {
+    width: 100%;
+}
+.modal {
+    z-index: 3000 !important;
+}
+
+
 @media only screen and (max-width: 992px) {
-    #video-frame {
+    .video-frame {
         width: 100%;
         max-height: 200px;
     }
 }
 @media only screen and (max-width: 768px) {
 }
-

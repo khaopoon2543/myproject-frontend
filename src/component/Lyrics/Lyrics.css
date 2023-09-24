@@ -18,6 +18,11 @@
   border: 1px solid var(--gray);
   font-weight: 600;
 }
+.titleLyric .info span#head.media {
+  padding: 1px 12px 1px 8px;
+} .titleLyric .info span#head.media svg {
+  margin-top: -2px;
+}
 .info#readability, .info#search {
   display: flex;
   align-items: center;
@@ -27,14 +32,29 @@
   font-size: 12px;
 } .info#search svg{ 
   font-size: 20px;
-} button#spotify-search, button#toggle-video {
+} button#toggle-spotify, button#toggle-video {
   margin-right: 5px;
   font-size: 14px;
-  padding: 2px 15px 2px 5px;
-} button#spotify-search:hover {
-  color: var(--black);
-  background-color: var(--white);
+  padding: 2px 12px 2px 4px;
+} 
+
+button#toggle-spotify {
+  color: var(--white);
+  background-color: var(--green);
+} button#toggle-spotify:hover {
+  color: var(--white);
+  background-color: var(--green);
+  box-shadow: var(--green) 0px 0px 8px;
+} 
+button#toggle-spotify:hover, button#toggle-spotify.close:hover {
   transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
+}
+button#toggle-spotify.close {
+  color: var(--black);
+  background-color: rgba(255, 255, 255, 0.712);
+} button#toggle-spotify.close:hover {
+  background-color: var(--white);
+  box-shadow: var(--gray) 0px 0px 8px;
 }
 
 span#pink {
@@ -221,21 +241,3 @@ button.pink-text {
     margin-bottom: 10px; /* line height lyric */
   }
 }
-
-.img-song {
-  text-align: left;
-}
-.img-song img{
-  object-fit: cover;
-  max-width: 100%;
-  height: 100%;
-  width: 250px;
-  border-radius: 10px;
-}
-@media only screen and (max-width: 767px) {
-  .img-song {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-}
-

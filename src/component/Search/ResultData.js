@@ -4,7 +4,8 @@ import { Col } from 'react-bootstrap';
 import "./ResultSearch.css";
 import { Loading } from "../Loading";
 import { backendSrc } from "../backendSrc";
-import { isArtist, isSeries } from "./ResultDataFunction"
+import { isArtist, isSeries } from "./ResultDataFunction";
+import { checkHeadFilter } from "./HeadFilterResult";
 
 export default function ResultData(props) {
     const alphabet = props.alphabet;
@@ -63,7 +64,9 @@ export default function ResultData(props) {
               {(!alphabet && allDataList.length > 0 && !props.spotify) &&
                 <div className="bg-search-all">
                   <h3 className="search-all" id="is-result">
-                    { src==="artists" ? 'ศิลปิน': 'ซีรีส์' }
+                    { src==="artists" ? 
+                      checkHeadFilter('artist') : checkHeadFilter('series')
+                    }
                   </h3>
                 </div>
               }

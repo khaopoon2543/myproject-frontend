@@ -146,5 +146,5 @@ export {
     checkLevel,
     reallyShowList,
     isOnlyNameSeries,
-    resultDetails,    
+    resultDetails,  
 }
