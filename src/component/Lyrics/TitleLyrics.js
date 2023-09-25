@@ -8,6 +8,7 @@ import { songImageLyric, noSongImageLyric, noSongImageSearch, isImage } from "..
 import './Video.css';
 import VideoPlayer from './VideoPlayer';
 import axios from 'axios';
+import { Loading } from "../Loading";
 
 import { FaSpotify } from 'react-icons/fa';
 import { SiApplemusic } from 'react-icons/si';
@@ -114,11 +115,12 @@ function TitleLyrics(props) {
 
 
   // -------------------------- VIDEO YOUTUBE -------------------------- //
-  const setVideoVisible = props.setVideoVisible
-  const videoVisible = props.isOpenVideo //false
+  const setVideoVisible = props.setVideoVisible;
+  const videoVisible = props.isOpenVideo; //false
   const embed_code = titleInfo.mv // const embed_code = '__HPQPjSdzw' //'PVrp_lNkoYE' '3vXqdNci_z8'
-  const [hasLoaded, setHasLoaded] = useState(false)
-  const [isVideoID, setIsVideoID] = useState(embed_code ? embed_code : '')
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [isVideoID, setIsVideoID] = useState(embed_code ? embed_code : '');
+  const [loadingVideo, setLoadingVideo] = useState(false);
 
   const toggleVideo = () => {
     setVideoVisible(!videoVisible);
@@ -129,14 +131,22 @@ function TitleLyrics(props) {
   const videoIDLocal = localStorage.getItem(keyVideoID);
 
   useEffect(() => {
-    // Check if the item exists and if it has expired
-    if (videoIDLocal) {
-      setIsVideoID(videoIDLocal);
+    let isMounted = true;
+    setLoadingVideo(true);
+    
+    if (isVideoID) {
+      setLoadingVideo(false);
     }
-    if (videoVisible && !videoIDLocal && !embed_code ) {
+    else if (videoIDLocal) {
+      setIsVideoID(videoIDLocal);
+      setLoadingVideo(false);
+    }
+    else if (!videoIDLocal && videoVisible && !embed_code ) {
+      const youtubeApiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
+
       axios.get("https://www.googleapis.com/youtube/v3/search", {
             params: {
-              key: 'AIzaSyDFbWWrgBGVvbMpB3jO-2haOSCTfAzXyJY',
+              key: youtubeApiKey,
               type: "video",
               q: title_name + title_artist_name,
               maxResults: 1
@@ -147,9 +157,10 @@ function TitleLyrics(props) {
               const videoId = response.data.items[0].id.videoId;
               setIsVideoID(videoId);
               localStorage.setItem(keyVideoID, videoId);
+              setLoadingVideo(false);
             })
             .catch(error => { console.log(error) });
-    }
+    } return () => { isMounted = false; };
   }, [videoVisible]);
 
   useEffect(() => {
@@ -169,6 +180,7 @@ function TitleLyrics(props) {
   const [tracksList, setTracksList] = useState([]);
   const [selectedTrack, setSelectedTrack] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [loadingSpotify, setLoadingSpotify] = useState(false);
 
   const handleClose = () => setShowModal(false);
 
@@ -182,8 +194,8 @@ function TitleLyrics(props) {
 
   useEffect(() => {
     if (showModal) {
-      const clientID = 'd97993bb6c89489bb43493cdfa949504';
-      const clientSecret = '4644510f77f646aa8f9ad2dd02d8c4b6';
+      const clientID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+      const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
       const base64Credentials = btoa(`${clientID}:${clientSecret}`);
 
       axios.post('https://accounts.spotify.com/api/token', 'grant_type=client_credentials', {
@@ -202,6 +214,8 @@ function TitleLyrics(props) {
   }, [showModal]);
 
   useEffect(() => {
+    let isMounted = true;
+    setLoadingSpotify(true);
     // Fetch featured playlists when the access token changes
     if (accessToken&&showModal) {
       axios
@@ -215,11 +229,12 @@ function TitleLyrics(props) {
         .then((response) => {
           setTracksList(response.data.tracks.items)
           console.log(response.data.tracks.items)
+          setLoadingSpotify(false);
         })
         .catch((error) => {
           console.error('Error fetching featured playlists:', error);
         });
-    }
+    } return () => { isMounted = false; };
   }, [accessToken]);
   
   return (
@@ -325,29 +340,28 @@ function TitleLyrics(props) {
       </Container>
     </Container>
 
-    <>
+    
     {(showModal&&tracksList!=[]) && 
       <Modal  
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            show={showModal} onHide={handleClose} 
-            animation={false}
-        > 
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={showModal} onHide={handleClose} 
+        animation={false}
+      > 
         <Modal.Header closeButton id="result-all">
           <Modal.Title className="d-flex align-items-center">
-              {(tracksList) &&
-                <div className="banner">
-                    {title_img ? isImage(title_img) : noSongImageSearch()}
-                    <div className="d-block" lang="jp">
-                      <strong>{title_name}</strong><br/>
-                      <span className="black-text"> {title_artist_name}</span><br/>
-                    </div>
+            {(tracksList) &&
+              <div className="banner">
+                {title_img ? isImage(title_img) : noSongImageSearch()}
+                <div className="d-block" lang="jp">
+                  <strong>{title_name}</strong><br/>
+                  <span className="black-text"> {title_artist_name}</span><br/>
                 </div>
-              }
+              </div>
+            }
           </Modal.Title>
         </Modal.Header>
-
         <Modal.Body id="result">
           <div className="tag-result mb-2">
             <span id="title">ผลการค้นหาเพลงจาก </span>
@@ -358,40 +372,42 @@ function TitleLyrics(props) {
             </div>
           </div>
 
-          {tracksList.map((track, i) => {
-            const album_img = track.album.images[2].url
-            const artist_name = track.artists[0].name
-            const track_name = track.name
-            return (
-                <Card key={i} className='spotify spotify-search'>
-                  <Card.Body>
-                    <Row className="items-center">
-                      <Col xxs={9} xs={10} md={10}>
-                        <div className="d-flex justify-content-left align-items-center">
-                          <Card.Img src={album_img} alt=''></Card.Img>
-                          <Container className="d-block">
-                            <Card.Title>{track_name}</Card.Title>
-                            <Card.Text>{artist_name}</Card.Text> 
-                          </Container>
-                        </div>
-                      </Col>
-                      <Col xxs={3} xs={2} md={2}>
-                        <div className="d-flex justify-content-end align-items-center">
-                          <button id="search-kashify" onClick={() => {toggleSelectedTrack(track.id); setShowModal(false)}}>
-                            <PiPlayBold /> 
-                          </button>
-                        </div>
-                      </Col> 
-                    </Row>
-                  </Card.Body>
-                </Card>
-            )
-          })}
-
+          {loadingSpotify ? ( <Loading /> ) :
+            (<>
+              {tracksList.map((track, i) => {
+                const album_img = track.album.images[2].url
+                const artist_name = track.artists[0].name
+                const track_name = track.name
+                return (
+                  <Card key={i} className='spotify spotify-search'>
+                    <Card.Body>
+                      <Row className="items-center">
+                        <Col xxs={9} xs={10} md={10}>
+                          <div className="d-flex justify-content-left align-items-center">
+                            <Card.Img src={album_img} alt=''></Card.Img>
+                            <Container className="d-block">
+                              <Card.Title>{track_name}</Card.Title>
+                              <Card.Text>{artist_name}</Card.Text> 
+                            </Container>
+                          </div>
+                        </Col>
+                        <Col xxs={3} xs={2} md={2}>
+                          <div className="d-flex justify-content-end align-items-center">
+                            <button id="search-kashify" onClick={() => {toggleSelectedTrack(track.id); setShowModal(false)}}>
+                              <PiPlayBold /> 
+                            </button>
+                          </div>
+                        </Col> 
+                      </Row>
+                    </Card.Body>
+                  </Card>
+                )
+              } ) }
+            </>)
+          }
         </Modal.Body>
       </Modal>
-    }  
-    </>     
+    }
 
     <Container fluid className="spotify-embed-container">
         {(selectedTrack!='') && 
@@ -412,7 +428,11 @@ function TitleLyrics(props) {
     <Container fluid className="video-container">
       <Container>
         {(videoVisible&&isVideoID) && 
-          <VideoPlayer setHasLoaded={()=>{setHasLoaded()}} videoId={isVideoID} />
+          <>
+          {loadingVideo ? ( <Loading /> ) :
+            ( <VideoPlayer setHasLoaded={()=>{setHasLoaded()}} videoId={isVideoID} /> )
+          }
+          </>
         }
       </Container>
     </Container>
