@@ -12,6 +12,7 @@
   --background: #f6f6f9;
   --green: #1DB954;
   --spotify: #1ED760;
+  --apple: #F94C57;
 
   --easyBG: #D1FBE9;
   --easySRT: #0EBFBF;
@@ -354,13 +355,14 @@ span.nav-button{
   display: flex;
   align-items: center;
   margin-bottom: 10px  !important;
-} .search #button-back {
+} .search #button-tag-data {
   padding: 1px 20px !important;
   font-size: 16px;
+  cursor: pointer;
 } .search h5 {
   margin: 0px !important;
   margin-right: 10px !important;
-}
+} 
 
 .bg-search {
   background-color: var(--white);

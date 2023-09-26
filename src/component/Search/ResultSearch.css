@@ -140,12 +140,12 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     border-radius: 25px;
     margin-bottom: 10px;
     font-weight: 500;
-} #button-back {
+} #button-tag-data  {
     font-size: 18px;
     padding-bottom: 0px !important;
     color: var(--white);
     background: var(--pink);
-} #button-back:hover {
+} #button-tag-data :hover {
     color: var(--white);
     background: var(--pink);
 } #type {
@@ -235,7 +235,7 @@ span#sub-data {
     top: 95px;
     z-index: 3;
     border-radius: 0 0 5px 5px;
-    margin-top: -10px;
+    margin-top: 10px;
     padding-top: 10px;
     transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
 }

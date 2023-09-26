@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from 'react-bootstrap';
 import SearchBar from "../component/Search/SearchBar";
-import { FiSearch } from 'react-icons/fi';
-import { FaSpotify, FaStar, FaSortAlphaDown } from 'react-icons/fa';
-import { IoMusicalNotes, IoLanguage } from 'react-icons/io5';
-import { MdMusicNote } from 'react-icons/md';
 import TopLists from "./TopLists";
+import { FiSearch } from 'react-icons/fi';
+import { FaSpotify } from 'react-icons/fa';
+import { IoMusicalNotes, IoLanguage } from 'react-icons/io5';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
+import { PiMusicNoteFill } from 'react-icons/pi';
 import useIsMobileLG from '../component/useIsMobileLG';
 
 const KASHIFY = <span className="font-semi-bold"> Kashify </span>
@@ -36,24 +36,26 @@ function Search() {
           <div className="header-left">
 
             <h1 className="font-bold">
-              ค้นหาเพลง<MdMusicNote/>         
+              ค้นหาเพลง<PiMusicNoteFill style={{marginTop:'-5px'}}/>         
             </h1>
 
             <div className="tag-series search">
               <h5 className="gray-text font-semi-bold"> ค้นหาโดยตัวอักษร </h5> 
               <Link to="/artists">
-                <span id="button-back"> ศิลปิน </span>
+                <span id="button-tag-data"> ศิลปิน </span>
               </Link>
               &nbsp;&nbsp; 
               <Link to="/series">
-                <span id="button-back"> ซีรีส์ </span>
+                <span id="button-tag-data"> ซีรีส์ </span>
               </Link>              
             </div>
 
             <div className="search">
               <h5 className="gray-text font-semi-bold"> ศิลปินและซีรี่ส์ยอดนิยม </h5> 
-              {!isOpen ? <TiArrowSortedDown  className="icon-playlists" onClick={() => setIsOpen(!isOpen)}/> 
-                       : <TiArrowSortedUp  className="icon-playlists" onClick={() => setIsOpen(!isOpen)}/>
+              {!isOpen ? 
+                  <TiArrowSortedDown className="icon-playlists" onClick={() => setIsOpen(!isOpen)}/> 
+                : 
+                  <TiArrowSortedUp className="icon-playlists" onClick={() => setIsOpen(!isOpen)}/> 
               }
             </div>
             <TopLists open={isOpen} />

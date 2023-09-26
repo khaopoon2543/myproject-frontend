@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { MdMusicNote, MdQueueMusic } from 'react-icons/md';
+import { MdQueueMusic } from 'react-icons/md';
 import { IoMusicalNotes, IoLanguage, IoMail } from 'react-icons/io5';
 import { FiSearch } from 'react-icons/fi';
-import { PlaylistsHome } from "../component/Navbar/NavbarButton";
+import { PiMusicNoteFill } from 'react-icons/pi';
 import { FaSpotify, FaFacebook } from 'react-icons/fa';
 import { VscCircleFilled } from 'react-icons/vsc';
 
@@ -63,7 +63,7 @@ function Home() {
                     เรียนรู้คำศัพท์
                     <br/>
                     <span className="font-semi-light">ไปพร้อมกับ</span>
-                    เสียงเพลง<MdMusicNote/> 
+                    เสียงเพลง<PiMusicNoteFill style={{marginTop:'-5px'}}/> 
                 </h2>
 
                 <div id="home-btn">

@@ -9,6 +9,7 @@ import './Video.css';
 import VideoPlayer from './VideoPlayer';
 import axios from 'axios';
 import { Loading } from "../Loading";
+import useIsMobileLG from '../useIsMobileLG';
 
 import { FaSpotify } from 'react-icons/fa';
 import { SiApplemusic } from 'react-icons/si';
@@ -58,16 +59,18 @@ function checkFeat(titleName) { //選んでくれてありがとう。 feat. 榎
     return titleName
   }
 }
-function buttonSearchSpotify(searchTitle, trackArtist) {
-    const title = checkSpecialChars(searchTitle)
-    const artist_id = trackArtist.replace(/-/," ")
+function buttonSearchSpotify(title_name, artist_name) {
+    const title = checkSpecialChars(title_name)
+    const artist_id = artist_name.replace(/-/," ")
     return (
       <div className="info text-left" id="search">
        <div className="d-flex align-items-center">
-        <span id="head" lang="th">ค้นหาเพลง</span>
+        <span id="head" className="media" lang="th">
+          <TbHeadphones/> ฟังเพลง
+        </span>
         <div id="spotify-btn">
           <a href={`https://open.spotify.com/search/${title}%20${artist_id}`} target="_blank" rel="noopener nore">
-          <button id="toggle-spotify" lang="th">
+          <button id="toggle-spotify" className="search-spotify" lang="th">
             <FaSpotify className="spotify-icon"/>
             Spotify 
           </button> 
@@ -75,7 +78,7 @@ function buttonSearchSpotify(searchTitle, trackArtist) {
         </div>
         <div id="spotify-btn">
           <a href={`https://music.apple.com/us/search?term=${title}%20${artist_id}`} target="_blank" rel="noopener nore">
-          <button id="toggle-spotify" lang="th">
+          <button id="toggle-spotify" className="search-apple" lang="th">
             <SiApplemusic className="spotify-icon"/>
             Apple Music 
           </button> 
@@ -106,13 +109,15 @@ function ResultEmbed(trackID) {
 /* -------------------------------------------------------------------------------------------------------------------------------- */
 
 function TitleLyrics(props) {
+  const screenSize = useIsMobileLG();
+
   const titleInfo = props.titleInfo
   const trackArtist = props.trackArtist
   const resultCheckTitle = titleInfo.name && checkFeat(titleInfo.name)
+
   const title_name = resultCheckTitle instanceof Array ? resultCheckTitle[1] : titleInfo.name
   const title_img = titleInfo.pic
   const title_artist_name = titleInfo.artist
-
 
   // -------------------------- VIDEO YOUTUBE -------------------------- //
   const setVideoVisible = props.setVideoVisible;
@@ -193,7 +198,7 @@ function TitleLyrics(props) {
   }
 
   useEffect(() => {
-    if (showModal) {
+    if (!screenSize && showModal) {
       const clientID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
       const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
       const base64Credentials = btoa(`${clientID}:${clientSecret}`);
@@ -217,10 +222,10 @@ function TitleLyrics(props) {
     let isMounted = true;
     setLoadingSpotify(true);
     // Fetch featured playlists when the access token changes
-    if (accessToken&&showModal) {
+    if (!screenSize && accessToken && showModal) {
       axios
         .get( `https://api.spotify.com/v1/search?q=` 
-              + title_name + '+' + title_artist_name
+              + checkSpecialChars(title_name) + '+' + title_artist_name
               + `&type=track&limit=7&market=jp`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -240,7 +245,7 @@ function TitleLyrics(props) {
   return (
     <>
     <Container className="titleLyric" fluid>
-      <Container fluid="md">
+      <Container fluid="md" className="title-info">
         <Row>
           <Col md={5} lg={4} xl={3} className="album-img">
             {title_img ? songImageLyric(title_img) : noSongImageLyric()}
@@ -290,6 +295,7 @@ function TitleLyrics(props) {
               :buttonSearchSpotify(title_name, trackArtist)
             */}
 
+            {(!screenSize) ?
             <div className="info text-left" id="search">
               <div className="d-flex align-items-center">
                 <span id="head" className="media" lang="th">
@@ -311,6 +317,9 @@ function TitleLyrics(props) {
                 </div>
               </div>
             </div>
+            :
+            buttonSearchSpotify(title_name, title_artist_name)     
+            }
 
             <div className="info text-left" id="search">
               <div className="d-flex align-items-center">

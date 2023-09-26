@@ -54,7 +54,7 @@ function SubData() {
               <div className="header-left">
                 <div className="tag-series">
                   <Link to="/artists">
-                    <span id="button-back"> ศิลปิน </span>
+                    <span id="button-tag-data"> ศิลปิน </span>
                   </Link>
                 </div>
                 <div lang="jp">
@@ -79,7 +79,7 @@ function SubData() {
               <div className="header-left">
                 <div className="tag-series">
                   <Link to="/series">
-                    <span id="button-back"> ซีรีส์ </span>
+                    <span id="button-tag-data"> ซีรีส์ </span>
                   </Link>
                   &nbsp;&nbsp; 
                   <span id="type" lang="jp"> {seriesInfo.type} </span>

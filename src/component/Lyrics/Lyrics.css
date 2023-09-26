@@ -57,6 +57,22 @@ button#toggle-spotify.close {
   box-shadow: var(--gray) 0px 0px 8px;
 }
 
+button#toggle-spotify.search-spotify, button#toggle-spotify.search-apple {
+  color: var(--white);
+  background-color: transparent;
+} button#toggle-spotify.search-spotify svg, button#toggle-spotify.search-apple svg {
+  color: var(--white);
+} 
+button#toggle-spotify.search-spotify:hover, button#toggle-spotify.search-apple:hover {
+  color: var(--black);
+  background-color: var(--white);
+  box-shadow: var(--white) 0px 0px 2px;
+} button#toggle-spotify.search-spotify:hover svg{
+  color: var(--spotify);
+} button#toggle-spotify.search-apple:hover svg{
+  color: var(--apple);
+}
+
 span#pink {
   color: var(--white);
   margin-left: 10px;
@@ -205,6 +221,9 @@ button.pink-text {
 }
 
 @media only screen and (max-width: 768px) {
+  .titleLyric .title-info * {
+    zoom: 99%;
+  }
   .titleLyric {
     padding: 40px 0px !important;
   } .titleLyric h5 {

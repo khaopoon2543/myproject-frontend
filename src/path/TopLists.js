@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { backendSrc } from "../component/backendSrc";
 import { Link } from "react-router-dom";
-import { RiUserStarLine } from 'react-icons/ri';
-import { MdMovie } from 'react-icons/md';
+import { PiUserGearBold, PiMonitorPlayBold } from 'react-icons/pi';
 
 
 function TopLists({open}) {
@@ -62,14 +61,14 @@ function TopLists({open}) {
     <div>
         <div className="description" id="search">
 
-            <h5 className="underline"><RiUserStarLine/> ศิลปินยอดนิยม </h5>
+            <h5 className="underline"><PiUserGearBold/> ศิลปินยอดนิยม </h5>
             <div id="search" style={{marginBottom: 20}}>
                 <div className="artist-series">
                     {ARTISTS(artistsTopLists)}
                 </div>
             </div>
 
-            <h5 className="underline"><MdMovie /> ซีรีส์ยอดนิยม </h5> 
+            <h5 className="underline"><PiMonitorPlayBold /> ซีรีส์ยอดนิยม </h5> 
             <div id="search">
                 <div className="artist-series">
                     {SERIES(seriesTopLists)}
