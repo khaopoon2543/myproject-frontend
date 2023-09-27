@@ -37,7 +37,7 @@ function App(){
           <Route path="/levels/:subLevels" element={ <SubLevels/> } />
           <Route path="/series" element={ <Data src="series"/> } />
           <Route path="/series/:subSeries" element={ <SubData/> } />
-          <Route path="/playlist/:codePlaylist" element={ <Playlist/> } />
+          <Route path="/playlist/:playlistCode" element={ <Playlist/> } />
           <Route path="/input" element={ <Input/> } />
 
           <Route path="/about" element={ <About/> } />

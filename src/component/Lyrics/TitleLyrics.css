@@ -1,0 +1,169 @@
+/* TitleLyric ---------------------------------------------------------- */
+
+/* Common styles for .titleLyric */
+.titleLyric {
+  background: linear-gradient(var(--black), var(--darkBlack));
+  color: var(--white);
+  padding: 40px;
+}
+
+/* Styles for .info inside .titleLyric */
+.titleLyric .info {
+  display: flex;
+  align-items: center;
+  color: var(--grayLight);
+  font-size: 16px;
+}
+
+/* Styles for .info spans with ID 'head' inside .titleLyric */
+.titleLyric .info span#head {
+  display: block;
+  padding: 1px 10px;
+  margin: 5px 10px 5px 0;
+  border-radius: 25px;
+  color: var(--grayLight);
+  border: 1px solid var(--gray);
+  font-weight: 600;
+}
+
+/* Additional styles for .info span#head.media */
+.titleLyric .info span#head.media {
+  padding: 1px 12px 1px 8px;
+}
+
+/* Adjustments for SVG icons inside .info span#head.media */
+.titleLyric .info span#head.media svg {
+  margin-top: -2px;
+}
+
+/* .info sections with IDs 'readability' and 'search' */
+.info#readability,
+.info#search {
+  display: flex;
+  align-items: center;
+}
+
+/* Spotify & Apple music search button ---------------------------------------------------------- */
+
+/* buttons and SVGs inside .info#search */
+.info#search button {
+  font-size: 12px;
+}
+.info#search svg {
+  font-size: 20px;
+}
+
+/* buttons with IDs 'toggle-spotify' and 'toggle-video' */
+button#toggle-spotify,
+button#toggle-video {
+  margin-right: 5px;
+  font-size: 14px;
+  padding: 2px 12px 2px 4px;
+}
+
+/* 'toggle-video' */
+button#toggle-video {
+  color: var(--white);
+  background-color: var(--pink);
+
+  } button#toggle-video.close {
+    color: var(--black);
+    background-color: var(--white);
+
+  } button#toggle-video:hover, button#toggle-video.close:hover {
+    color: var(--white);
+    background-color: var(--pink);
+    box-shadow: var(--pink) 0px 0px 8px;
+    transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
+}
+
+/* 'toggle-spotify' */
+button#toggle-spotify {
+  color: var(--white);
+  background-color: var(--green);
+  transition: background-color 0.2s cubic-bezier(0.09, 0.64, 0.49, 0.98);
+
+  } button#toggle-spotify:hover {
+    box-shadow: var(--green) 0px 0px 8px;
+  }
+
+  button#toggle-spotify.close {
+    color: var(--black);
+    background-color: rgba(255, 255, 255, 0.712);
+    box-shadow: var(--gray) 0px 0px 8px;
+}
+
+/* spotify & apple music button (in mobile screen size 992px) */
+button#toggle-spotify.search-spotify,
+button#toggle-spotify.search-apple {
+  color: var(--white);
+  background-color: transparent;
+}
+  button#toggle-spotify svg {
+    color: var(--white);
+  }
+
+  /* Hover for search buttons */
+  button#toggle-spotify.search-spotify:hover,
+  button#toggle-spotify.search-apple:hover {
+    color: var(--black);
+    background-color: var(--white);
+    box-shadow: var(--white) 0px 0px 2px;
+  }
+
+  /* Icon color change on hover for search buttons */
+  button#toggle-spotify.search-spotify:hover svg {
+    color: var(--spotify);
+  }
+  button#toggle-spotify.search-apple:hover svg {
+    color: var(--apple);
+}
+
+/* Tag level ----------------------------------------------------------------- */
+
+.tagLevel#title-lyric * {
+  height: 25px !important;
+}
+.tagLevel#title-lyric span {
+  margin: 0 auto;
+  line-height: 10px !important;
+}
+
+/* Artist & Singer ---------------------------------------------------------- */
+
+#singer,
+.info #artist {
+  padding: 3px 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s, text-decoration 0.2s !important;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+#singer {
+  font-weight: 300;
+}
+
+#singer:hover, #singer.no-id:hover {
+  background-color: #ffffff49;
+}
+
+#singer.no-id {
+  color: var(--grayLight) !important;
+}
+
+.info #artist {
+  font-weight: 500;
+  text-decoration: none !important;
+}
+
+.info #artist:hover {
+  background-color: #ffffff49;
+}
+
+/* Resetting text-decoration for artist on hover */
+.info #artist:hover {
+  text-decoration: none !important;
+}

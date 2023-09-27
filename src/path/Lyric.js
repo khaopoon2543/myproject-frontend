@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
+
 import "../component/Lyrics/Lyrics.css"
+import "../component/Lyrics/TitleLyrics.css"
 import "../component/Lyrics/Dict.css"
-import { Container, Row, Col } from 'react-bootstrap';
-import Tooltip from '../component/Lyrics/Tooltip';
-import PopupDict from '../component/Lyrics/PopupDict';
-import { LoadingIMG } from "../component/Loading";
-import { toHiragana, isJapanese } from 'wanakana';
+
 import useIsMobileLG from '../component/useIsMobileLG';
 import { backendSrc } from "../component/backendSrc";
+
+import Tooltip from '../component/Lyrics/Tooltip';
+import PopupDict from '../component/Lyrics/PopupDict';
 import TitleLyrics from "../component/Lyrics/TitleLyrics";
+import FontSizeButton from '../component/Lyrics/FontSizeButton';
+
+import { Container, Row, Col } from 'react-bootstrap';
+import { LoadingIMG } from "../component/Loading";
+import { toHiragana, isJapanese } from 'wanakana';
 import { PiBookOpenTextFill, PiMusicNotesFill, PiPlusBold, PiMinusBold } from 'react-icons/pi';
 
 function Lyric({inputLyric}) {
@@ -83,42 +89,7 @@ function Lyric({inputLyric}) {
       return () => { isMounted = false; };
     }
   }, [inputLyric]);
-
-  function buttonChangeSize() {
-    return (
-      <div className="tab-change-size" lang="jp">
-        <Row>
-          <Col xs={12} md={6} lg={12} xl={6}>
-            <div className="btn-change-size vocab">
-              <span id='icon'><PiBookOpenTextFill/></span>
-              <span id='topic' lang="th"> คำศัพท์ </span>
-              <button onClick={() => setFontSizeDict(fontSizeDict-2)}>
-                  <PiMinusBold/>
-              </button>
-              <span> {fontSizeDict} px </span>
-              <button onClick={() => setFontSizeDict(fontSizeDict+2)}>
-                  <PiPlusBold/>
-              </button>
-            </div>
-          </Col>
-          <Col xs={12} md={6} lg={12} xl={6}>
-            <div className="btn-change-size lyric">
-              <span id='icon'><PiMusicNotesFill/></span>
-              <span id='topic' lang="th"> เนื้อเพลง </span>
-              <button onClick={() => setFontSize(fontSize-2)}>
-                  <PiMinusBold/>
-              </button>
-              <span> {fontSize} px </span>
-              <button onClick={() => setFontSize(fontSize+2)}>
-                  <PiPlusBold/>
-              </button>
-            </div>
-          </Col>
-        </Row>
-      </div>
-      
-    )
-  }
+  
   
   if (loading) return <LoadingIMG />
   return (
@@ -150,7 +121,7 @@ function Lyric({inputLyric}) {
                     <PopupDict dictList={collectedWord} isOpen={isOpen} fontSize={fontSizeDict} />
                   </div>
                 }
-                {buttonChangeSize()}
+                <FontSizeButton fontSizeDict={fontSizeDict} setFontSizeDict={setFontSizeDict} fontSize={fontSize} setFontSize={setFontSize} />
                 <br/>
 
                 <div id="lyric" style={{ fontSize: fontSize }}>

@@ -1,0 +1,132 @@
+/* head spotify playlists ----------------------------- */
+/* title playlist ----------------------------- */
+
+.head-spotify-playlists, .title-playlist {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.title-playlist {
+    margin-top: 10px;
+    border-radius: 10px;
+    color: var(--white);
+    background: linear-gradient(var(--black), var(--darkBlack));
+    height: 150px;
+} 
+.title-playlist h3 {
+    padding: 0 15px;
+}
+.title-playlist img {
+    width: 150px;
+    margin-left: 0px;
+    border-radius:  10px 0 0 10px;
+}
+
+/* description button detail ----------------------------- */
+
+#playlist .description {
+    padding-top: 12px;
+    padding-bottom: 0px;
+}
+#btn-detail  {
+    margin-top: 10px;
+    height: 150px;
+}
+
+
+/* toggle show all spotify playlist ----------------------------- */
+
+#toggle-spotify-playlist {
+    font-weight: 600;
+    padding: 5px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px 10px 0 0;
+    color: var(--white);
+    background: var(--pink);
+}
+#toggle-spotify-playlist.close {
+    border-radius: 10px;
+}
+.icon-spotify-playlist {
+    font-size: 20px;
+    margin-top: -5px;
+    margin-right: 5px;
+}
+
+/* all spotify playlist ----------------------------- */
+
+.description#playlist-selection{
+    padding-top: 9px;
+    padding-bottom: 0px;
+}
+#playlist-selection span{
+    display: block;
+    padding: 5px 10px;
+    font-weight: 900 !important;
+    color: var(--pink);
+}
+
+
+/* ResultSpotify ----------------------------- */
+
+.spotify.card {
+  padding: 0 10px 0 0;
+}
+.spotify .card-body {
+  text-align: left;
+  margin: 0;
+  padding: 10px;
+  display: block;
+}
+.spotify .items {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.spotify img {
+  max-width: 100px;
+  height: auto;
+} .modal img {
+  max-width: 80px;  
+  height: auto;  
+}
+.spotify .card-title {
+  font-size: 18px; 
+  font-weight: bold;
+  margin-top:10px; 
+  margin-bottom:0;
+  color: var(--gray);
+}
+.spotify .card-text {
+  color: var(--grayLight);
+}
+.spotify .box-icon {
+  margin-top: 10px;
+  text-align: right;
+}.spotify .icon {
+  font-size: 40px; 
+  color: var(--black);
+  transition: all 0.2s;
+}.spotify .icon:hover {
+  color: var(--green);
+}
+.spotify .filters { /* BUTTON */
+  margin: 0;
+  font-size: 12px;
+  display: inline-block;
+}.spotify .filters button{ /* BUTTON */
+  border: 1px solid  var(--black)
+}
+@media only screen and (max-width: 768px) {
+  .spotify img {
+    max-width: 80px;  
+    height: auto;  
+  } 
+  .spotify .card-title {
+    font-size: 16px; 
+  }
+  .spotify .card-text {
+    font-size: 14px; 
+  }
+}

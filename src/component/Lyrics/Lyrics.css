@@ -1,121 +1,7 @@
 /* ----------------------------- Lyric ----------------------------- */
 
-.titleLyric {
-  background: linear-gradient(var(--black), black);
-  color: var(--white);
-  padding: 40px;
-}.titleLyric .info{
-  display: flex;
-  align-items: center;
-  color: var(--grayLight);
-  font-size: 16px;
-}.titleLyric .info span#head{
-  display: block;
-  padding: 1px 10px;
-  margin: 5px 10px 5px 0;
-  border-radius: 25px;
-  color: var(--grayLight);
-  border: 1px solid var(--gray);
-  font-weight: 600;
-}
-.titleLyric .info span#head.media {
-  padding: 1px 12px 1px 8px;
-} .titleLyric .info span#head.media svg {
-  margin-top: -2px;
-}
-.info#readability, .info#search {
-  display: flex;
-  align-items: center;
-}
+/* button change font size ---------------------------------------------------------- */
 
-.info#search button{ 
-  font-size: 12px;
-} .info#search svg{ 
-  font-size: 20px;
-} button#toggle-spotify, button#toggle-video {
-  margin-right: 5px;
-  font-size: 14px;
-  padding: 2px 12px 2px 4px;
-} 
-
-button#toggle-spotify {
-  color: var(--white);
-  background-color: var(--green);
-} button#toggle-spotify:hover {
-  color: var(--white);
-  background-color: var(--green);
-  box-shadow: var(--green) 0px 0px 8px;
-} 
-button#toggle-spotify:hover, button#toggle-spotify.close:hover {
-  transition: all 0.2s cubic-bezier(.09,.64,.49,.98)
-}
-button#toggle-spotify.close {
-  color: var(--black);
-  background-color: rgba(255, 255, 255, 0.712);
-} button#toggle-spotify.close:hover {
-  background-color: var(--white);
-  box-shadow: var(--gray) 0px 0px 8px;
-}
-
-button#toggle-spotify.search-spotify, button#toggle-spotify.search-apple {
-  color: var(--white);
-  background-color: transparent;
-} button#toggle-spotify.search-spotify svg, button#toggle-spotify.search-apple svg {
-  color: var(--white);
-} 
-button#toggle-spotify.search-spotify:hover, button#toggle-spotify.search-apple:hover {
-  color: var(--black);
-  background-color: var(--white);
-  box-shadow: var(--white) 0px 0px 2px;
-} button#toggle-spotify.search-spotify:hover svg{
-  color: var(--spotify);
-} button#toggle-spotify.search-apple:hover svg{
-  color: var(--apple);
-}
-
-span#pink {
-  color: var(--white);
-  margin-left: 10px;
-  font-weight: 400;
-}
-
- /* -------- tagLevel in title Lyric.js -------- */
-.tagLevel#title-lyric *{
-  height: 25px !important;
-} 
-.tagLevel#title-lyric span{ 
-  margin: 0 auto;
-  line-height: 10px !important;
-} 
-
-#singer, .info #artist {
-  padding: 3px 10px;
-  margin-right: 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: all 0.2s;
-} 
-#singer {
-  font-weight: 300;
-  color: var(--white);
-  background: rgba(255, 255, 255, 0.15);
-} #singer:hover {
-  background-color: #ffffff49;
-} #singer.no-id {
-  color: var(--grayLight) !important;
-} #singer.no-id:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-} 
-.info #artist {
-  font-weight: 500;
-  color: var(--white);
-  background: rgba(255, 255, 255, 0.15);
-} .info #artist:hover {
-  background-color:  #ffffff49;
-  text-decoration: none !important;
-}
-
-/* btn change font size */
 .tab-change-size {
   display: flex; justify-content: left; align-items: center;
   padding: 15px 10px 15px 10px;
@@ -170,44 +56,56 @@ span#pink {
 }
 
 
- /* Lyric.js */
+ /* lyric section ---------------------------------------------------------- */
+
+span#pink {
+  color: var(--white);
+  margin-left: 10px;
+  font-weight: 400;
+}
+
+
 div#lyric{
   text-align: left;
   font-weight: 300;
   line-height: 1.5;
   font-size: 18px;
   letter-spacing: 1px;
-}div#lyric span{
+} div#lyric span{
   display: inline-block;
   padding:0;margin:0;
   margin-bottom: 25px; /* line height lyric */
 }
 
+/* highlight user seleted word button */
 button, button:focus{
   outline: none;
   background: transparent;
   border: 1px solid transparent;
-}button:active{
-  outline: none;
-  background: transparent;
+  } button:active{
+    outline: none;
+    background: transparent;
+  }
+
+  button.pink-text {
+    display: inline-block;
+    text-decoration: none !important;
+    color: #000000 !important;
+    border-bottom: 1px solid var(--pink);
+    padding:0;margin:0;
+    font-weight: 300;
+    margin-bottom: 25px; /* line height lyric */
+    } button.pink-text:hover {
+      color: var(--white) !important;
+      text-decoration: none;
+      background: var(--pink);
+      cursor: pointer;
+    } button.pink-text:active, button.pink-text:focus{
+      color: var(--white) !important;
+      background: var(--pink);
+
 }
-button.pink-text {
-  display: inline-block;
-  text-decoration: none !important;
-  color: #000000 !important;
-  border-bottom: 1px solid var(--pink);
-  padding:0;margin:0;
-  font-weight: 300;
-  margin-bottom: 25px; /* line height lyric */
-  } button.pink-text:hover {
-    color: var(--white) !important;
-    text-decoration: none;
-    background: var(--pink);
-    cursor: pointer;
-  }button.pink-text:active, button.pink-text:focus{
-    color: var(--white) !important;
-    background: var(--pink);
-}
+
 
 @media only screen and (max-width: 320px) {
   .info#readability, .info#search {
@@ -248,12 +146,13 @@ button.pink-text {
   .btn-on-lyric { /* btn change font size */
     margin: 0 10px;
   }
+
   div#lyric{
     font-weight: 300;
     font-size: 14px;
     line-height: 2;
     margin-left: 10px;
-  }div#lyric span{
+  } div#lyric span{
     margin-bottom: 10px; /* line height lyric */
   }
   button.pink-text {

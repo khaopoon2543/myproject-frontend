@@ -1,4 +1,5 @@
 :root {
+  --darkBlack: #000000;
   --black: #333333;
   --blackLight: #353b48;
   --gray: #666666;
@@ -69,6 +70,8 @@
   color: var(--gray);
 }.gray-text {
   color: var(--grayLight);
+}.pink-text {
+  color: var(--pink);
 }
 .font-small {
   font-size: 14px !important;
@@ -123,12 +126,6 @@ span.nav-button{
   border-radius: 0 10px 10px 10px;
 } .description p.radius {
   border-radius: 10px;
-} 
-.spotify .description .card {
-  padding: 20px 10px;
-  margin-top: 0px;
-} .spotify .description .underline {
-  margin-bottom: 0px;
 } 
 
 .underline {
@@ -286,69 +283,6 @@ span.nav-button{
   background-color: var(--black);
 }
 
-/* ----------------------------- ResultSpotify && Playlist ----------------------------- */
-
-.spotify.card {
-  padding: 0 10px 0 0;
-}
-.spotify .card-body {
-  text-align: left;
-  margin: 0;
-  padding: 10px;
-  display: block;
-}
-.spotify .items {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-}
-.spotify img {
-  max-width: 100px;
-  height: auto;
-} .modal img {
-  max-width: 80px;  
-  height: auto;  
-}
-.spotify .card-title {
-  font-size: 18px; 
-  font-weight: bold;
-  margin-top:10px; 
-  margin-bottom:0;
-  color: var(--gray);
-}
-.spotify .card-text {
-  color: var(--grayLight);
-}
-.spotify .box-icon {
-  margin-top: 10px;
-  text-align: right;
-}.spotify .icon {
-  font-size: 40px; 
-  color: var(--black);
-  transition: all 0.2s;
-}.spotify .icon:hover {
-  color: var(--green);
-}
-.spotify .filters { /* BUTTON */
-  margin: 0;
-  font-size: 12px;
-  display: inline-block;
-}.spotify .filters button{ /* BUTTON */
-  border: 1px solid  var(--black)
-}
-@media only screen and (max-width: 768px) {
-  .spotify img {
-    max-width: 80px;  
-    height: auto;  
-  } 
-  .spotify .card-title {
-    font-size: 16px; 
-  }
-  .spotify .card-text {
-    font-size: 14px; 
-  }
-}
-
 /* ----------------------------- Search ----------------------------- */
 
 .search {
@@ -497,22 +431,6 @@ span.nav-button{
   }
 } 
 
-/* ------ input btn ------ */
-#input-btn .filters button#process-lyric-btn{
-  margin-left: 0px !important;
-  color: var(--white);
-  background: var(--pink);
-  border: 1px solid var(--pink);
-}
-@media only screen and (max-width: 768px) {
-  #input-btn .filters{
-    text-align: center !important;
-  }
-  #input-btn .filters button#process-lyric-btn{
-    font-size: 16px;
-    padding: 3px 20px;
-  }
-} 
 /* ----------------------------- Artists ----------------------------- */
 
 .alphabet {
@@ -847,12 +765,6 @@ button#search-kashify {
   color: var(--pink);
   font-size: 24px;
 }
-#playlist span{
-  display: block;
-  padding: 5px 10px;
-  font-weight: 900 !important;
-  color: var(--pink);
-}
 #icon-headphone {
   font-size: 24px;
   margin: 0 5px;
@@ -873,7 +785,7 @@ button#search-kashify {
 
 .icon-playlists {
   color: var(--white);
-  background-color: var(--black);
+  background-color: var(--pink);
   font-size: 20px;
   padding: 0;
   border-radius: 2px;
@@ -939,9 +851,3 @@ button#search-kashify {
     padding-bottom: 20px;
   }
 }
-
-#btn-detail p {
-  margin-bottom: 0;
-} #btn-detail  {
-  padding-bottom: 0;
-} 

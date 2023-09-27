@@ -1,0 +1,59 @@
+/* ---------------- SPOTIFY EMBED 
+(AT TitleLyrics.JS) ---------------- */
+.spotify-embed-container {
+    z-index: 2000;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    left:0;
+    width: 100%; 
+    background: var(--darkBlack);
+    margin-top: -20px;
+}
+.spotify-embed {    
+    width: 100%;
+    height: 200px;
+    margin-bottom: -30px;
+    padding-top: 10px;
+} .spotify-embed.open {
+    display: flex;
+} .spotify-embed.close {
+    display: none;
+}
+.spotify-search {
+    width: 100%;
+}
+.modal {
+    z-index: 2000 !important;
+}
+
+@media only screen and (max-width: 992px) {
+    .video-frame {
+        width: 100%;
+        max-height: 200px;
+    }
+}
+@media only screen and (max-width: 768px) {
+}
+
+
+/* ---------------- SPOTIFY EMBED 
+(AT Playlist.JS) ---------------- */
+
+/*
+.spotify-embed-container#spotify-playlists {
+    background: var(--white);
+    padding-top: 55px;
+    padding-bottom: 0;
+    z-index: 2000;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 40px;
+    left:0;
+    height: 150px;
+}
+*/
+.spotify-embed-container#spotify-playlists {
+    background: transparent;
+    margin: 10px 0;
+}

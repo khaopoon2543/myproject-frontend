@@ -1,0 +1,25 @@
+/* input btn ----------------------------- */
+
+#input-btn .process-lyric-btn button {
+    float: right;
+    padding: 10px 30px;
+    color: var(--white);
+    background: var(--pink);
+    border-radius: 10px;
+    font-weight: bold;
+}
+#input-btn .process-lyric-btn button:hover {
+    transition: all 0.2s cubic-bezier(.09,.64,.49,.98);
+    box-shadow: var(--pinkPastel) 0px 0px 50px;
+}
+
+.input-lyric {
+    margin-top: 100px;
+}
+
+
+@media only screen and (max-width: 1200px) {
+    .input-lyric {
+      margin-top: 20px;
+    }
+}

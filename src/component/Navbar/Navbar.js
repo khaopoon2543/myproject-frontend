@@ -44,7 +44,7 @@ function Header(){
             <Container fluid>
             <Navbar.Brand href="/"><span className="navbar-logo">kashify</span></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"> <HiMenu /> </Navbar.Toggle>
-            <Navbar.Offcanvas style={{width:'70%', border:'none'}}
+            <Navbar.Offcanvas style={{width:'70%', border:'none', zIndex: 3000}} //z-index : 3000
                 id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel"
                 placement="end"

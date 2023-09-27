@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
 import TagLevels from "../Levels/TagLevels";
 import { checkSpecialChars } from '../Spotify/checkSpecialChars'
 import { ArtistLink, SeriesLink } from "../linkPath";
 import { songImageLyric, noSongImageLyric, noSongImageSearch, isImage } from "../ImageSong/ImageSongFunction";
-import './Video.css';
-import VideoPlayer from './VideoPlayer';
-import axios from 'axios';
 import { Loading } from "../Loading";
 import useIsMobileLG from '../useIsMobileLG';
+import VideoPlayer from './VideoPlayer';
+import './VideoPlayer.css';
+import '../Spotify/SpotifyEmbed.css';
 
 import { FaSpotify } from 'react-icons/fa';
 import { SiApplemusic } from 'react-icons/si';

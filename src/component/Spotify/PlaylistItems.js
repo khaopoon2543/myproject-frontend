@@ -4,6 +4,10 @@ export const PlaylistItems = [
         url: '/playlist/37i9dQZEVXbKXQ4mDTEBXq',
     },
     {
+        title: 'Spotify Japan 急上昇チャート',
+        url: '/playlist/37i9dQZF1DX9vYRBO9gjDe',
+    },
+    {
         title: 'Tokyo Super Hits!',
         url: '/playlist/37i9dQZF1DXafb0IuPwJyF',
     },
@@ -12,8 +16,8 @@ export const PlaylistItems = [
         url: '/playlist/37i9dQZF1DXdbRLJPSmnyq',
     },
     {
-        title: 'Global Hits From Japan 2021',
-        url: '/playlist/37i9dQZF1DX9hThfji1Q6J',
+        title: 'Japanese Top Hits',
+        url: '/playlist/2SLokaKcysXRIY4IxsJ7o9',
     }, 
     {
         title: 'Jpop 2020s -2022',
