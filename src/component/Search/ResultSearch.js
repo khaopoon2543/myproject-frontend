@@ -43,6 +43,7 @@ export default function ResultSearch(props) {
                 .then((response) => {
                   if(isMounted){
                     setSongsList(response.data);
+                    console.log(response.data);
                     setLoading(false);
                   }
                 })

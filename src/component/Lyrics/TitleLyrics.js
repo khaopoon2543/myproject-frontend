@@ -126,11 +126,16 @@ function TitleLyrics(props) {
   const embed_code = titleInfo.mv // const embed_code = '__HPQPjSdzw' //'PVrp_lNkoYE' '3vXqdNci_z8'
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isVideoID, setIsVideoID] = useState(embed_code ? embed_code : '');
+  const [isLimitAPI, setIsLimitAPI] = useState(false);
   const [loadingVideo, setLoadingVideo] = useState(false);
 
   const toggleVideo = () => {
     setVideoVisible(!videoVisible);
     setSelectedTrack('');
+  }
+  function setVideoIdAPI(keyVideoID, videoId) {
+    setIsVideoID(videoId)
+    localStorage.setItem(keyVideoID, videoId)
   }
 
   const keyVideoID = `${title_name + title_artist_name}`;
@@ -160,9 +165,13 @@ function TitleLyrics(props) {
           })
             .then((response) => {
               console.log('collected video id from youtube api');
+              
               const videoId = response.data.items[0].id.videoId;
-              setIsVideoID(videoId);
-              localStorage.setItem(keyVideoID, videoId);
+
+              videoId && (setVideoIdAPI(keyVideoID, videoId))
+
+              !videoId && setIsLimitAPI(true);
+
               setLoadingVideo(false);
             })
             .catch(error => { console.log(error) });
@@ -336,7 +345,7 @@ function TitleLyrics(props) {
                     :
                       <button id="toggle-video" className="close" lang="th" onClick={toggleVideo}>
                         <AiFillCloseCircle className="spotify-icon"/>
-                        ปิดคลิปวีดีโอ
+                        {(isLimitAPI) ? 'ไม่มีคลิปวีดีโอ' : 'ปิดคลิปวีดีโอ'}
                       </button>
                   }
                 </div>
@@ -374,10 +383,10 @@ function TitleLyrics(props) {
         </Modal.Header>
         <Modal.Body id="result">
           <div className="tag-result mb-2">
-            <span id="title">ผลการค้นหาเพลงจาก </span>
+            <span id="title">ผลการค้นหาจาก </span>
             <div id="spotify-btn">
-              <span id="by">
-                <FaSpotify className="spotify-icon"/> Spotify
+              <span id="result-by-spotify">
+                <FaSpotify className="spotify-icon"/> Spotify 
               </span>
             </div>
           </div>

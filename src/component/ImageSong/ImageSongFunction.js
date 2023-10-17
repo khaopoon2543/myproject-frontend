@@ -1,12 +1,13 @@
 import "./ImageSong.css";
 import { PiMusicNoteFill } from "react-icons/pi";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 /* -------------- img-song search -------------- */
 
 function songImageSearch(pic_url) {
     return (
         <div className="img-song search">
-          <img src={pic_url} loading="lazy"/>
+          <LazyLoadImage  src={pic_url} alt="TRACK-IMAGE"/>
         </div>
     );
   }
@@ -24,7 +25,7 @@ function songImageLyric(img_url) { // width="761" height="426"
     // const img_url="https://www.lyrical-nonsense.com/wp-content/uploads/2022/08/HoneyWorks-Kawaii-ne-tte-Iwarechatta-feat-Juri-Hattori-Ayane-Sakura.jpg"
     return (
         <div className="img-song lyric">
-          <img src={img_url} width="761" height="426" loading="lazy"/>
+          <LazyLoadImage src={img_url} width="761" height="426" alt="TRACK-IMAGE"/>
         </div>
     );
   }
@@ -40,7 +41,7 @@ function noSongImageLyric() {
 
 function isImage(trackImage) {
   if (trackImage) 
-    return <img src={trackImage} alt="song image"/>
+    return <LazyLoadImage src={trackImage} alt="TRACK-IMAGE"/>
 }
 
 

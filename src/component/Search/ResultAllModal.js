@@ -64,7 +64,7 @@ export default function ResultAllModal(props) {
               <Modal.Body id="result">
                 <div className="tag-result mb-2">
                   <span id="title">ผลการค้นหาจาก</span>
-                  <span id="by">Kashify</span>
+                  <span id="result-by-kashify">Kashify</span>
                 </div>
                 <ResultData src="artists" searchTerm={searchArtist.toLowerCase()} spotify={true} />
                 <ResultSearch searchTerm={typing} filter={'spotify'} searchArtist={searchArtist} />

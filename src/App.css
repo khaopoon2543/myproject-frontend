@@ -675,11 +675,14 @@ button#search-kashify {
   margin: 0px 5px;
   color: var(--white);
   background-color: var(--grayLight)
-} .tag-result #by {
-  background-color: var(--white);
-  border: 1px solid var(--grayLight);
-  color: var(--grayLight);
-  padding: 2px 12px 2px 4px;
+} .tag-result #result-by-spotify { /* result search Modal in TitleLyrics.js */
+  background-color: var(--green);
+  color: var(--white);
+  padding: 2px 15px 2px 4px;
+} .tag-result #result-by-kashify { /* result search Modal in ResultAllModal.js */
+  background-color: var(--pink);
+  color: var(--white);
+  padding: 2px 15px;
 }
 
 #error-head {
