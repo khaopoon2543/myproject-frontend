@@ -23,6 +23,7 @@
   --diffSRT: #E85394;  
   --naBG: #dbdbdb;
   --naSRT: #666666;
+  --grayVeryLight: rgba(0, 0, 0, 0.056);
 }
 
 .App {

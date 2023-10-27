@@ -57,9 +57,12 @@ function SubData() {
                     <span id="button-tag-data"> ศิลปิน </span>
                   </Link>
                 </div>
-                <div lang="jp">
+                <div className="title-sub_data" lang="jp">
                   <h3 className="title-series"> {artistName} </h3>  
-                  <span className="sub-title-series">{subArtists.replace(/-/g, ' ')}</span>
+                  <div>
+                    <span className="topic-sub-title">よみ：</span> 
+                    <span className="sub-title-series">{subArtists.replace(/-/g, ' ')}</span>
+                  </div>
                 </div>
               </div>
             </Col>
@@ -84,9 +87,12 @@ function SubData() {
                   &nbsp;&nbsp; 
                   <span id="type" lang="jp"> {seriesInfo.type} </span>
                 </div>
-                <div lang="jp">
+                <div className="title-sub_data" lang="jp">
                   <h3 className="title-series"> {seriesInfo.name} </h3>  
-                  <span className="sub-title-series">{subSeries.replace(/-/g, ' ')}</span>
+                  <div>
+                    <span className="topic-sub-title">よみ：</span> 
+                    <span className="sub-title-series">{subSeries.replace(/-/g, ' ')}</span>
+                  </div>
                 </div>
               </div>
             </Col>

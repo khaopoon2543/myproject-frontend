@@ -53,7 +53,7 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     padding: 1px 7px;
     border-radius: 5px;
     color: var(--gray);
-    background-color: rgba(0, 0, 0, 0.046);
+    background-color: var(--grayVeryLight);
 } #artist:hover {
     background-color: var(--pinkLight);
 }
@@ -154,20 +154,29 @@ a:link, a:hover { /* LINK (in ResultSearch.js) */
     color: var(--pink);
     border: 1px solid  var(--pink);
 }
-.title-series, .sub-title-series {
-    display: block;
+
+.title-sub_data {
     margin-top: 10px;
-    margin-bottom: 5px;
-    padding: 20px;
+    margin-bottom: 20px;
+}
+.title-series, .sub-title-series {
     border-radius: 10px;
 } .title-series {
+    display: block;
     color: var(--white);
     background: var(--black);
+    padding: 20px;
 } .sub-title-series {
+    display: inline-block;
     font-size: 16px;
-    color: var(--grayLight);
-    border: 1px solid  var(--grayLight);
-} 
+    color: var(--gray);
+    background: var(--pinkLight);
+    padding: 10px 20px;
+} .topic-sub-title {
+    font-weight: bold;
+    padding: 10px 5px 10px 20px;
+    color: var(--gray);
+}
 
 .tagData * {
     height: auto;
