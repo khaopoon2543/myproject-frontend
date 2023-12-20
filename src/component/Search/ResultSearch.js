@@ -26,7 +26,7 @@ export default function ResultSearch(props) {
   const [songs_list, setSongsList] = useState([])
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(!searchAll ? 20 : 8);
-  function loadMore() { setVisible(visible + 10) }
+  function loadMore() { setVisible(visible + 20) }
   const navigate = useNavigate();
 
   useEffect(() => {
